@@ -1,4 +1,4 @@
-package com.cmput301f20t30.habiteer;
+package com.CMPUT301F21T30.Habiteer;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.cmput301f20t30.habiteer", appContext.getPackageName());
+        assertEquals("com.CMPUT301F21T30.Habiteer", appContext.getPackageName());
     }
 }

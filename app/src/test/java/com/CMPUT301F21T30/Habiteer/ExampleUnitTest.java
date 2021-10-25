@@ -1,4 +1,4 @@
-package com.cmput301f20t30.habiteer;
+package com.CMPUT301F21T30.Habiteer;
 
 import org.junit.Test;
 
