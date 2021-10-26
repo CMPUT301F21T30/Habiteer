@@ -31,12 +31,13 @@ public class ListHabitFragment extends Fragment {
     private RecyclerView habitRecycler;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
-        habitList = new ArrayList<>();
-        habitRecycler = habitRecycler.findViewById(R.id.habit_recycler);
-
+        // inflate the binding first
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
+        habitList = new ArrayList<>();
+        habitRecycler = root.findViewById(R.id.habit_recycler);
+
 
 //        final RecyclerView habitList = binding.habitRecycler;
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
