@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.R;
+import com.CMPUT301F21T30.Habiteer.R;
 
 public class AddEditHabitFragment extends Fragment {
 
