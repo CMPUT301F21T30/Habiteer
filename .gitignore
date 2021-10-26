@@ -16,3 +16,4 @@ local.properties
 .settings/org.eclipse.buildship.core.prefs
 .project
 .idea/
+.idea/misc.xml
