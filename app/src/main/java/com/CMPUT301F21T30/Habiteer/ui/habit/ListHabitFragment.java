@@ -38,8 +38,6 @@ public class ListHabitFragment extends Fragment {
         habitList = new ArrayList<>();
         habitRecycler = root.findViewById(R.id.habit_recycler);
 
-
-//        final RecyclerView habitList = binding.habitRecycler;
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
@@ -50,7 +48,7 @@ public class ListHabitFragment extends Fragment {
         return root;
     }
     private void recyclerSetup() {
-        habitAdapter = new HabitAdapter(habitList);
+        habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());

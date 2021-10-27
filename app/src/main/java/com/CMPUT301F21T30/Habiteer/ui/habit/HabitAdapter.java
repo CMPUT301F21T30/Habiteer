@@ -15,20 +15,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F21T30.Habiteer.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
-    private ArrayList<Habit> habitArrayList;
+    private List<Habit> habitArrayList;
+    private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public HabitAdapter(ArrayList<Habit> habitArrayList) {
+    public HabitAdapter(List<Habit> habitArrayList) {
         this.habitArrayList = habitArrayList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView habitNameText;
 
         public ViewHolder(final View view) {
             super(view);
             habitNameText = view.findViewById(R.id.habit_name);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            notifyItemChanged(selectedIndex);
+            selectedIndex = getLayoutPosition();
+            System.out.println(selectedIndex);
+            notifyItemChanged(selectedIndex);
         }
     }
 
@@ -41,6 +52,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
+        holder.itemView.setSelected(selectedIndex == position);
         String habitName = habitArrayList.get(position).getHabitName();
         holder.habitNameText.setText(habitName);
 
@@ -50,4 +62,5 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public int getItemCount() {
         return habitArrayList.toArray().length;
     }
+
 }

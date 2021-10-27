@@ -18,11 +18,13 @@ import java.util.List;
 public class ListHabitViewModel extends ViewModel {
 
     private MutableLiveData<List<Habit>> mHabits;
-    private ArrayList<Habit> habitData = new ArrayList<>();
+    private ArrayList<Habit> habitData;
 
     public LiveData<List<Habit>> getHabits() {
+        habitData = new ArrayList<>();
         mHabits = new MutableLiveData<>();
         habitData.add(new Habit("Habit 1")); // TODO remove example data
+        habitData.add(new Habit("Habit 2")); // TODO remove example data
         mHabits.setValue(habitData);
         return mHabits;
     }
