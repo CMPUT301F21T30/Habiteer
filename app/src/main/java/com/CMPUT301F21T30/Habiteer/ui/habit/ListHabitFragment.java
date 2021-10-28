@@ -9,8 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,7 +53,8 @@ public class ListHabitFragment extends Fragment {
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
         habitRecycler.setAdapter(habitAdapter);
-
+        DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(), ((LinearLayoutManager) layoutManager).getOrientation());
+        habitRecycler.addItemDecoration(divider);
     }
 
     @Override
