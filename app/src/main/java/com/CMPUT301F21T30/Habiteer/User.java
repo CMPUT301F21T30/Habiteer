@@ -11,6 +11,8 @@ public class User {
     private ArrayList<User> followers;
     private ArrayList<User> following;
     private ArrayList<User> blocked;
+    public User() { }
+
     User(String email) {
         this.email = email;
         this.habits = new ArrayList<>();
