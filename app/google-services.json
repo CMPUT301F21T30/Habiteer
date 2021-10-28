@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "947274720197",
+    "project_id": "habiteer-465bd",
+    "storage_bucket": "habiteer-465bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947274720197:android:4cf32f0315ad80448ba1ac",
+        "android_client_info": {
+          "package_name": "com.CMPUT301F21T30.Habiteer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947274720197-2jm2nn353gcp8chhufkpu46dl4900659.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYZaBGTW7MSROOqAGz46elztsVMQZ5FWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947274720197-2jm2nn353gcp8chhufkpu46dl4900659.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
