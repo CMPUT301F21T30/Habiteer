@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
