@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/activity_main.xml" value="0.18070652173913043" />
+        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_dashboard.xml" value="0.18070652173913043" />
+        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.18070652173913043" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/activity_main.xml" value="0.25317028985507245" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_home.xml" value="0.33" />
