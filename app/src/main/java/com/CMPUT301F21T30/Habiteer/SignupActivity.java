@@ -1,9 +1,12 @@
 package com.CMPUT301F21T30.Habiteer;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,9 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     TextView signupHeading, alreadyHaveAccount;
@@ -90,8 +100,26 @@ public class SignupActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        FirebaseFirestore db;
+
                         if(task.isSuccessful()){
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.SignupActivity.this, "You have been registered", Toast.LENGTH_SHORT).show();
+                            User newUser = new User(email);
+                            // Add user to database
+                            db = FirebaseFirestore.getInstance();
+                            CollectionReference collectionReference = db.collection("Users");
+                            collectionReference.document(email).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d(TAG, "Data has been added successfully!");
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // These are a method which gets executed if there’s any problem
+                                    Log.d(TAG, "Data could not be added!" + e.toString());
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(), MainActivity.class)); //if registered, the user goes to the main activity
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.SignupActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
