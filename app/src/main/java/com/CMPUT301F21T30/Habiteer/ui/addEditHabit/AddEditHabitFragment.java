@@ -27,6 +27,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -74,7 +75,7 @@ public class AddEditHabitFragment extends Fragment  {
                             SimpleDateFormat simpleFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
                             Date StartDate = new Date((long) selection.first + offsetFromUTC);
                             Date EndDate = new Date((long) selection.second + offsetFromUTC);
-                            habitDateInput.getEditText().setText(simpleFormat.format(StartDate) + " — " + simpleFormat.format(EndDate) );
+                            habitDateInput.getEditText().setText(MessageFormat.format("{0} — {1}", simpleFormat.format(StartDate), simpleFormat.format(EndDate)));
 
 //                            habitDateInput.getEditText().setText(picker.getHeaderText());
                             habitDateInput.clearFocus();
