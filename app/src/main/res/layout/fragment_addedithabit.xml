@@ -45,7 +45,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitStartDate">
+            android:hint="@string/hint_HabitDateRange">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_DayOfTheWeek" />
+                android:text="@string/hint_HabitDateRange" />
 
             <ca.antonious.materialdaypicker.MaterialDayPicker
                 android:id="@+id/day_picker"
