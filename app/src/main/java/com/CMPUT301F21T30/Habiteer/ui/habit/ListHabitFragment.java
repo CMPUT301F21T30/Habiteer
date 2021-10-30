@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,18 @@ public class ListHabitFragment extends Fragment {
             }
         });
         recyclerSetup();
+
+        FloatingActionButton fab = root.findViewById(R.id.FAB_addHabit);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent addIntent = new Intent(getContext(), AddEditHabitActivity.class);
+//                startActivity(addIntent);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_listhabit_to_addEditHabitFragment);
+
+            }
+        });
+
         return root;
     }
     private void recyclerSetup() {
