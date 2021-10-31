@@ -16,7 +16,12 @@ public class Habit {
     Habit(String habitName) {
         this.habitName = habitName;
     }
-
+    public Habit(String habitName,Date startDate,Date endDate,String reason) {
+        this.habitName = habitName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.reason = reason;
+    }
     public String getHabitName() {
         return habitName;
     }
@@ -28,7 +33,10 @@ public class Habit {
     public Date getEndDate() {
         return endDate;
     }
-    
+
+    public String getReason() {
+        return reason;
+    }
 
     public void setHabitName(String habitName) {
         this.habitName = habitName;
@@ -40,5 +48,9 @@ public class Habit {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }
