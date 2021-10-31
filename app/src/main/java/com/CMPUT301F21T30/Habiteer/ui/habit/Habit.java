@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Habit {
     private String habitName;
-//    private Date startDate;
-//    private Date endDate;
-//    private String reason;
+    private Date startDate;
+    private Date endDate;
+    private String reason;
 //    private Integer progress;
 
     Habit() {
@@ -19,5 +19,26 @@ public class Habit {
 
     public String getHabitName() {
         return habitName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+    
+
+    public void setHabitName(String habitName) {
+        this.habitName = habitName;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }
