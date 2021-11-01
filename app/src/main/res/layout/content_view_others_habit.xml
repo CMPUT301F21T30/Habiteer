@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/habit_title_text"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Habit title"
+        android:textSize="30sp">
+
+    </TextView>
+
+    <com.app.progresviews.ProgressWheel
+        android:id="@+id/wheelProgress_habits"
+        android:layout_width="144dp"
+        android:layout_height="88dp"
+        app:barWidth="10dp"
+        app:countText=""
+        app:countTextColor="@android:color/black"
+        app:countTextSize="14dp"
+        app:defTextColor="@android:color/black"
+        app:defTextSize="10sp"
+        app:marginBtwText="10dp"
+        app:percentage="0"
+        app:progressColor="#94673AB7" />
+
+</LinearLayout>

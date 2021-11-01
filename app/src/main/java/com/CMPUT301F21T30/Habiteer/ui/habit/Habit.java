@@ -13,7 +13,7 @@ public class Habit {
         this.habitName = "Untitled";
     }
 
-    Habit(String habitName) {
+    public Habit(String habitName) {
         this.habitName = habitName;
     }
 

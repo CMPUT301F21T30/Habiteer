@@ -59,6 +59,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
+
         return habitArrayList.toArray().length;
     }
 
