@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habiteer">
         <activity
+            android:name=".ViewOthersHabits"
+            android:exported="true">
+
+
+        </activity>
+        <activity
             android:name=".SignupActivity"
             android:exported="true">
             <intent-filter>
@@ -24,9 +30,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
-
-
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
