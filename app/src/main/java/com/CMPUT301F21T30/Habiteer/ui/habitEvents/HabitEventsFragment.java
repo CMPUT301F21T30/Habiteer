@@ -1,13 +1,17 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +22,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class HabitEventsFragment extends AppCompatActivity  implements HabitEventAdapter.OnItemListener
+public class HabitEventsFragment extends Fragment implements HabitEventAdapter.OnItemListener
 {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -26,18 +30,20 @@ public class HabitEventsFragment extends AppCompatActivity  implements HabitEven
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_habit_events, container, false);
         super.onCreate(savedInstanceState);
-        initWidgets();
+        initWidgets(root);
         selectedDate = LocalDate.now();
         setMonthView();
+        return root;
     }
 
-    private void initWidgets()
+    private void initWidgets(View root)
     {
-        calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        monthYearText = findViewById(R.id.monthYearTV);
+        calendarRecyclerView = root.findViewById(R.id.calendarRecyclerView);
+        monthYearText = root.findViewById(R.id.monthYearTV);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -47,7 +53,7 @@ public class HabitEventsFragment extends AppCompatActivity  implements HabitEven
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
         HabitEventAdapter HabitEventAdapter = new HabitEventAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(HabitEventAdapter);
     }
@@ -105,7 +111,7 @@ public class HabitEventsFragment extends AppCompatActivity  implements HabitEven
         if(!dayText.equals(""))
         {
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 }
