@@ -52,8 +52,6 @@ public class ListHabitFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent addIntent = new Intent(getContext(), AddEditHabitActivity.class);
-//                startActivity(addIntent);
                 Navigation.findNavController(view).navigate(R.id.action_navigation_listhabit_to_addEditHabitFragment);
 
             }

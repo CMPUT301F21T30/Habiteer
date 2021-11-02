@@ -107,7 +107,6 @@ public class AddEditHabitFragment extends Fragment  {
                 Date endDate = mViewModel.getEndDate();
                 Habit newHabit = new Habit(habitName,startDate,endDate,reason);
 
-
                 return true;
         }
         return false;

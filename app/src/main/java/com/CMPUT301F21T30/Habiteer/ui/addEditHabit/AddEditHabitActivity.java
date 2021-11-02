@@ -25,12 +25,6 @@ public class AddEditHabitActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
 
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, AddEditHabitFragment.newInstance())
-                    .commitNow();
-        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -18,11 +18,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:elevation="4dp"/>
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
