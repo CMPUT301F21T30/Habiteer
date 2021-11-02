@@ -4,14 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/activity_main.xml" value="0.18070652173913043" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.18206521739130435" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/add_edit_habit_activity.xml" value="0.17831813576494426" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_addedithabit.xml" value="0.41612200435729846" />
         <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_dashboard.xml" value="0.18070652173913043" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.33" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/menu/add_habit_menu.xml" value="0.35648148148148145" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20520833333333333" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/menu/custom_menu.xml" value="0.33" />
+        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.18070652173913043" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/activity_main.xml" value="0.25317028985507245" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_home.xml" value="0.33" />
@@ -20,8 +14,6 @@
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.2324074074074074" />
-        <entry key="..\:/Warren/Programs/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.2015625" />
-        <entry key="..\:/Warren/Programs/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.9" />
       </map>
     </option>
   </component>
