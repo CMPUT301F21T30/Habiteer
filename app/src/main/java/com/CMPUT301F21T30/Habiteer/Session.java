@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Session {
     FirebaseFirestore db;
+    User user;
 
     /**
      * Session constructor
@@ -19,10 +20,14 @@ public class Session {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
+                user = documentSnapshot.toObject(User.class);
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
                 System.out.println("User email: " + user.getEmail());
             }
         });
+    }
+
+    public User getUser() {
+        return user;
     }
 }
