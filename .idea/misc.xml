@@ -16,16 +16,16 @@
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.2324074074074074" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.12916666666666668" />
-        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_others_habits.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/content_view_others_habit.xml" value="0.22" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_others_habits.xml" value="0.28958333333333336" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/add_edit_habit_activity.xml" value="0.1" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/content_view_others_habit.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_addedithabit.xml" value="0.2577565632458234" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_dashboard.xml" value="0.3023758099352052" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.1" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/others_habits_list_fragment.xml" value="0.14427083333333332" />
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/view_others_habits_activity.xml" value="0.22" />
-<<<<<<< Updated upstream
         <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3333333333333333" />
-=======
->>>>>>> Stashed changes
       </map>
     </option>
   </component>

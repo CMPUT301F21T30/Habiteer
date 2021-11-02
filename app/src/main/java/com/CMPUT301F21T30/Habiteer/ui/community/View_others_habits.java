@@ -18,17 +18,13 @@ public class View_others_habits extends AppCompatActivity {
     ArrayAdapter<Habit> habitArrayAdapter;
     ArrayList<Habit> habitList;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_others_habits);
 
-
+        //set the title of the activity
+        this.setTitle("Username");
     }
-
-
-
 
 }
