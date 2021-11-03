@@ -59,14 +59,14 @@
         android:layout_marginTop="20dp"
         android:background="@color/cardview_shadow_end_color"/>
 
-    <Button
+    <ca.antonious.materialdaypicker.MaterialDayPicker
         android:id="@+id/days"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/daysHeading"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="350dp"
-        android:text="M"/>
+        android:layout_marginRight="10dp"
+        android:background="@color/cardview_shadow_end_color"/>
 
     <TextView
         android:id="@+id/reasonHeading"

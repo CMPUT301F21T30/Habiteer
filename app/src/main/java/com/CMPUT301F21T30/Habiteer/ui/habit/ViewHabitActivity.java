@@ -13,14 +13,20 @@ import android.widget.TextView;
 
 import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
+import com.google.android.gms.common.util.ArrayUtils;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
-    Button days, addHabitEvent, delete, edit;
+    Button addHabitEvent, delete, edit;
     ProgressBar progress;
     Switch privateSwitch;
+    MaterialDayPicker days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         //habitName.setText();
         //dates.setText();
         //reason.setText();
+        //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
+        //days.setSelectedDays(daysSelected);
 
         /**
          * Checking if the user made the habit private
