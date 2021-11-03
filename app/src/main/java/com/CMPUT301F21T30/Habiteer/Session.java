@@ -1,23 +1,27 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
+import android.app.Application;
+
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class Session {
+public class Session extends Application {
     FirebaseFirestore db;
-    User user;
+    private User user;
+
+
+    public Session() { }
 
     /**
-     * Session constructor
+     * Initialize Session
      * @param email, which is the document name in firestore
      */
-    public Session(String email) {
+    public void init(String email) {
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(email);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -30,8 +34,10 @@ public class Session {
         });
     }
 
-    public void storeHabits(List<Habit> habitList) {
-        user.setHabits();
-
+    public void storeHabits(ArrayList<Habit> habitList) {
+        user.setHabitList(habitList);
+    }
+    public User getUser() {
+        return this.user;
     }
 }

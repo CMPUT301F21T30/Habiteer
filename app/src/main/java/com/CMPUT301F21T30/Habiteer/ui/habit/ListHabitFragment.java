@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class ListHabitFragment extends Fragment {
             }
         });
         recyclerSetup();
+//        getActivity().getActionBar().setTitle(((Session) getActivity().getApplication()).getUser().getEmail() + "'s habits");
         return root;
     }
     private void recyclerSetup() {

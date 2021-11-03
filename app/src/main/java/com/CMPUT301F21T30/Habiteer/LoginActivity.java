@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 /**
                  * Get User object from Firestore
                  */
-                Session session = new Session(email);
+                ((Session) getApplication()).init(email);
             }
         });
 
