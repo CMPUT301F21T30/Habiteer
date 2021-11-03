@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Session extends Application {
     FirebaseFirestore db;
@@ -29,15 +30,18 @@ public class Session extends Application {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
-                System.out.println("User email: " + user.getEmail());
+                System.out.println("Logged in as: " + user.getEmail());
             }
         });
     }
 
-    public void storeHabits(ArrayList<Habit> habitList) {
-        user.setHabitList(habitList);
-    }
+
     public User getUser() {
         return this.user;
+    }
+    public void storeHabits(List<Habit> habitList) {
+        user.setHabitList(new ArrayList<Habit>(habitList));
+        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
+
     }
 }
