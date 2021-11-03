@@ -42,6 +42,7 @@ public class ListHabitFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
+                System.out.println(habits);
             }
         });
         recyclerSetup();
