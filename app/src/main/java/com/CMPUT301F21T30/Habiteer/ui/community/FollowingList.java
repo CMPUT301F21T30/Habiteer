@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
     String name;
     List<String> dataFollowing = new ArrayList<>();
+    ArrayList<User> following = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,19 +43,19 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
         this.setTitle("Following");
 
-        //JUST FOR TESTING
+        //TODO: get the user for which the following list is to be displayed using INTENT
+
+        /**JUST FOR TESTING*/
 
         User user1 = new User();
         user1.setEmail("123@gm.ca");
 
         User user2 = new User();
-        user2.setEmail("ww@tgg");
+        user2.setEmail("john@gmail.com");
 
         User user3 = new User();
-        user3.setEmail("ggg@ff.ca");
+        user3.setEmail("pink121@gmail.com");
 
-
-        ArrayList<User> following = new ArrayList<>();
 
         following.add(user2);
         following.add(user3);
@@ -60,44 +63,51 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
         user1.setFollowingList(following);
 
 
-        givenUser = new User("123@gm.ca"); //need to change the argument
-
-
-
         followingArrayList = new ArrayList<>();
-        followingArrayList = givenUser.getFollowingList();
-
-        /**
-        followingAdapter = new ArrayAdapter<>(this, R.layout.content_following, followingArrayList);
-
-        followingListView.setAdapter(followingAdapter); */
+        followingArrayList = user1.getFollowingList();
 
 
         for (int i = 0; i<followingArrayList.size(); i++){
             User userFollowingList = followingArrayList.get(i);
             name =  userFollowingList.getEmail();
-            dataFollowing.add(name);
+            dataFollowing.add(name);  //add the user's email in the followingArrayList to dataFollowing
         }
 
-
-        dataFollowing.add("12e@gm.ca");
-        dataFollowing.add("new@cz");
-
+        //Displays the following list in recycler view
         FollowingListAdapter followingAdapter = new FollowingListAdapter(this, dataFollowing);
-
         followingRecycler.setAdapter(followingAdapter);
         followingRecycler.setLayoutManager(new LinearLayoutManager(this));
-
 
     }
 
 
     @Override
     public void onUserSelected(String userName) {
-        Intent intent = new Intent(FollowingList.this, View_others_habits.class);
-        intent.putExtra("User", userName);
-        startActivity(intent);
 
+        User sendUser;
+
+        //TODO: get the User object sendUser from the database
+
+        /**FOR TESTING*/
+
+        ArrayList<Habit> habitList = new ArrayList<>();
+
+        Habit habit1 = new Habit("Cycling");
+        Habit habit2 =  new Habit("Reading");
+
+
+        habit1.setProgress(50);
+        habit2.setProgress(40);
+
+        habitList.add(habit1);
+        habitList.add(habit2);
+
+        sendUser = new User(userName);
+        sendUser.setHabitList(habitList);
+
+        Intent intent = new Intent(FollowingList.this, View_others_habits.class);
+        intent.putExtra("User", sendUser);
+        startActivity(intent);
 
     }
 }

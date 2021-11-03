@@ -36,7 +36,8 @@ public class User implements Serializable {
     }
 
     public ArrayList<User> getFollowingList() {
-        return followingList;
+        return this.followingList;
+
     }
 
     public ArrayList<User> getBlockList() {
@@ -57,4 +58,6 @@ public class User implements Serializable {
     public void setFollowingList(ArrayList<User> followingList) {
         this.followingList = followingList;
     }
+
+
 }

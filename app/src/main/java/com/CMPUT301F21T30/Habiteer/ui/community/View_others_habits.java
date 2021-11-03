@@ -21,9 +21,7 @@ import java.util.List;
 public class View_others_habits extends AppCompatActivity {
 
     RecyclerView habitRecyclerView;
-
     ArrayList<Habit> habitList;
-
 
     Integer progress;
     String habitName;
@@ -31,10 +29,7 @@ public class View_others_habits extends AppCompatActivity {
     List<String> dataHabitTitles = new ArrayList<>();
     List<Integer> dataProgress = new ArrayList<>();
 
-    String name;
-
-
-    User main_user; //the user who is following others
+    User mainUser; //the user who is following others
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,46 +39,26 @@ public class View_others_habits extends AppCompatActivity {
 
         habitRecyclerView = findViewById(R.id.list_habits_others);
 
+        mainUser = (User) getIntent().getSerializableExtra("User"); //User object from Intent
 
-        name = getIntent().getStringExtra("User");
-
-        this.setTitle(name);
-
-        main_user = new User(name);
+        this.setTitle(mainUser.getEmail());
+        habitList = mainUser.getHabitList();
 
 
-        //set the title of the activity
-        //this.setTitle(main_user.getEmail());
+        for (int j = 0; j<habitList.size(); j++){
+            //TODO: check if the habit is public or private using an if condition
 
-        habitList = main_user.getHabitList();
+            habitName = habitList.get(j).getHabitName(); //get the name of the habits for the user
+            progress = habitList.get(j).getProgress(); //get the progress for each habit of the user
 
+            dataHabitTitles.add(habitName);
+            dataProgress.add(progress);
 
-            for (int j = 0; j<habitList.size(); j++){
-                habitName = habitList.get(j).getHabitName(); //get the name of the habits for the user
-                progress = habitList.get(j).getProgress(); //get the progress for each habit of the user
-
-                dataHabitTitles.add(habitName);
-                dataProgress.add(progress);
-
-            }
+        }
 
 
-
-        //for testing
-
-        List<String> dataHabitTitles = new ArrayList<>();
-        List<Integer> dataProgress = new ArrayList<>();
-
-
-        dataHabitTitles.add("Habit 1");
-        dataHabitTitles.add("habit 2");
-
-        dataProgress.add(10);
-        dataProgress.add(20);
-
-
+        //displays the habit name and progress.
         ViewOthersHabitsAdapter habitAdapter = new ViewOthersHabitsAdapter(this, dataHabitTitles, dataProgress);
-
         habitRecyclerView.setAdapter(habitAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -24,9 +24,7 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
 
         context = ct;
         this.dataUserName = dataUserName;
-
         onUserListener = (FollowingList)context;
-
 
     }
 
@@ -47,7 +45,6 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
                 onUserListener.onUserSelected(dataUserName.get(holder.getAbsoluteAdapterPosition()));
             }
         });
-
 
 
     }
