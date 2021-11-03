@@ -1,9 +1,16 @@
 package com.CMPUT301F21T30.Habiteer;
 
+import static android.content.ContentValues.TAG;
+
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -15,6 +22,7 @@ public class Session {
     FirebaseFirestore db;
     private User user;
     private static Session instance = null;
+    private DocumentReference document;
 
     /**
      * Singleton Session constructor
@@ -46,5 +54,20 @@ public class Session {
         user.setHabitList(new ArrayList<Habit>(habitList));
         System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
 
+        /* Store onto Firebase */
+        db.collection("Users").document(user.getEmail())
+                .update("habitList", user.getHabitList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 }
