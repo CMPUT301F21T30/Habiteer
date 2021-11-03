@@ -82,7 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                 /**
                  * Get User object from Firestore
                  */
-                ((Session) getApplication()).init(email);
+                Session session = Session.getInstance(email);
+                User user = session.getUser();
+                System.out.println("Logged in as: " + user);
             }
         });
 

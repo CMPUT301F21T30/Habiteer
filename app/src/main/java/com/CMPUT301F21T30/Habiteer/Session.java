@@ -11,18 +11,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Session extends Application {
+public class Session {
     FirebaseFirestore db;
     private User user;
-
-
-    public Session() { }
+    private static Session instance = null;
 
     /**
-     * Initialize Session
+     * Singleton Session constructor
      * @param email, which is the document name in firestore
      */
-    public void init(String email) {
+    private Session(String email) {
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(email);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -30,11 +28,16 @@ public class Session extends Application {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
-                System.out.println("Logged in as: " + user.getEmail());
             }
         });
     }
 
+    public static Session getInstance(String email) {
+        if (instance == null) {
+            instance = new Session(email);
+        }
+        return instance;
+    }
 
     public User getUser() {
         return this.user;
