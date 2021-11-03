@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 
+import java.util.ArrayList;
+
 public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
     Button days, addHabitEvent, delete, edit;
@@ -40,21 +42,27 @@ public class ViewHabitActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
 
+        ArrayList<Habit> privateHabits;
+        privateHabits = new ArrayList<>();
 
+        /**
+         * Checking if the user made the habit private
+         */
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
-                    //set this habit to private
 
+                    privateHabits.add(new Habit());//adding habit to the list of private habits
 
                 }
-                else{
-                    //keep this habit public
-                }
+
             }
         });
 
+        /**
+         * If the user clicks on the add habit event button
+         */
         addHabitEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,12 +70,20 @@ public class ViewHabitActivity extends AppCompatActivity {
 
             }
         });
+
+        /**
+         * if the user clicks on the delete habit button
+         */
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
             }
         });
+
+        /**
+         * if the user clicks on the edit habit button
+         */
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
