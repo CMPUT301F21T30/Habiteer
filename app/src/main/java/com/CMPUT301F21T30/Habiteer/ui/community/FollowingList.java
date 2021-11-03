@@ -23,12 +23,6 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
     RecyclerView followingRecycler;
     ArrayList<User> followingArrayList;
-    ArrayAdapter<User> followingAdapter;
-
-    User givenUser;
-
-    //User userFollowingList;
-
 
     String name;
     List<String> dataFollowing = new ArrayList<>();
@@ -98,6 +92,9 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
         habit1.setProgress(50);
         habit2.setProgress(40);
+
+        habit1.setPublicHabit(Boolean.TRUE);
+        habit2.setPublicHabit(Boolean.FALSE);
 
         habitList.add(habit1);
         habitList.add(habit2);

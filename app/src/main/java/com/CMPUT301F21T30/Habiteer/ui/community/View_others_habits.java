@@ -48,11 +48,13 @@ public class View_others_habits extends AppCompatActivity {
         for (int j = 0; j<habitList.size(); j++){
             //TODO: check if the habit is public or private using an if condition
 
-            habitName = habitList.get(j).getHabitName(); //get the name of the habits for the user
-            progress = habitList.get(j).getProgress(); //get the progress for each habit of the user
 
-            dataHabitTitles.add(habitName);
-            dataProgress.add(progress);
+                habitName = habitList.get(j).getHabitName(); //get the name of the habits for the user
+                progress = habitList.get(j).getProgress(); //get the progress for each habit of the user
+
+                dataHabitTitles.add(habitName);
+                dataProgress.add(progress);
+
 
         }
 

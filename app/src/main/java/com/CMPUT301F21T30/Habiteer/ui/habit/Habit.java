@@ -10,6 +10,8 @@ public class Habit implements Serializable {
 //    private String reason;
     private Integer progress;
 
+    private Boolean publicHabit;
+
     Habit() {
         this.habitName = "Untitled";
     }
@@ -30,4 +32,12 @@ public class Habit implements Serializable {
         this.progress = progress;
     }
 
+
+    public void setPublicHabit(Boolean publicHabit) {
+        this.publicHabit = publicHabit;
+    }
+
+    public Boolean getPublicHabit() {
+        return publicHabit;
+    }
 }
