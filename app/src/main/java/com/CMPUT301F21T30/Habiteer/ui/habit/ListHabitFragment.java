@@ -43,11 +43,13 @@ public class ListHabitFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
-                System.out.println(habits);
+                Session session = Session.getInstance("email");
+                session.storeHabits(habits);
+                System.out.println(session.getUser().getHabitList());
             }
         });
         recyclerSetup();
-        getActivity().getActionBar().setTitle(Session.getInstance("email").getUser().getEmail() + "'s habits");
+//        getActivity().getActionBar().setTitle(Session.getInstance("email").getUser().getEmail() + "'s habits");
         return root;
     }
     private void recyclerSetup() {

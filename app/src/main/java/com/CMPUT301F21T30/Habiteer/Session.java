@@ -30,7 +30,6 @@ public class Session {
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
             }
         });
-        System.out.println("Session initialization complete: " + user);
     }
 
     public static Session getInstance(String email) {
