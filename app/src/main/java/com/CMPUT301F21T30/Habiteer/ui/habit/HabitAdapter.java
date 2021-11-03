@@ -21,6 +21,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     private int selectedIndex = RecyclerView.NO_POSITION;
 
     public HabitAdapter(List<Habit> habitArrayList) {
+
         this.habitArrayList = habitArrayList;
     }
 

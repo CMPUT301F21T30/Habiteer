@@ -47,5 +47,14 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    //for the test
 
+
+    public void setHabitList(ArrayList<Habit> habitList) {
+        this.habitList = habitList;
+    }
+
+    public void setFollowingList(ArrayList<User> followingList) {
+        this.followingList = followingList;
+    }
 }

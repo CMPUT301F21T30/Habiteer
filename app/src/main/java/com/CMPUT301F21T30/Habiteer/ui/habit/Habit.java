@@ -7,7 +7,7 @@ public class Habit {
 //    private Date startDate;
 //    private Date endDate;
 //    private String reason;
-//    private Integer progress;
+    private Integer progress;
 
     Habit() {
         this.habitName = "Untitled";
@@ -20,4 +20,9 @@ public class Habit {
     public String getHabitName() {
         return habitName;
     }
+
+    public Integer getProgress(){
+        return progress;
+    }
+
 }
