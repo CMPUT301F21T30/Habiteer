@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +24,16 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class HabitEventsFragment extends Fragment implements HabitEventAdapter.OnItemListener
+public class HabitEventsFragment extends Fragment
 {
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
+    private CalendarView calendar;
     private LocalDate selectedDate;
+    String date = "";
+    String TAG = "Sample";
+//    DatePicker datePicker;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -34,28 +41,28 @@ public class HabitEventsFragment extends Fragment implements HabitEventAdapter.O
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_habit_events, container, false);
         super.onCreate(savedInstanceState);
-        initWidgets(root);
         selectedDate = LocalDate.now();
-        setMonthView();
+        calendar = root.findViewById(R.id.calendarView);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                date = dayOfMonth + "/" + month + "/" + year;
+                Log.d(TAG, date);
+            }
+        });
         return root;
     }
 
-    private void initWidgets(View root)
-    {
-        calendarRecyclerView = root.findViewById(R.id.calendarRecyclerView);
-        monthYearText = root.findViewById(R.id.monthYearTV);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView()
     {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
-        HabitEventAdapter HabitEventAdapter = new HabitEventAdapter(daysInMonth, this);
+        //HabitEventAdapter HabitEventAdapter = new HabitEventAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(HabitEventAdapter);
+        //calendarRecyclerView.setAdapter(HabitEventAdapter);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -105,13 +112,16 @@ public class HabitEventsFragment extends Fragment implements HabitEventAdapter.O
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
+    //@Override
     public void onItemClick(int position, String dayText)
     {
         if(!dayText.equals(""))
         {
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
             Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
+
         }
-    }
+        String selected_date = dayText;
+    }*/
 }
