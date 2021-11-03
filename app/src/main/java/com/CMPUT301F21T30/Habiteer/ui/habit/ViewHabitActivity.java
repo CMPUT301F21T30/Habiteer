@@ -45,6 +45,10 @@ public class ViewHabitActivity extends AppCompatActivity {
         ArrayList<Habit> privateHabits;
         privateHabits = new ArrayList<>();
 
+        //habitName.setText();
+        //dates.setText();
+        //reason.setText();
+
         /**
          * Checking if the user made the habit private
          */
