@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -58,6 +57,7 @@ public class ListHabitFragment extends Fragment {
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_navigation_listhabit_to_addEditHabitFragment);
 
+
             }
         });
 
@@ -72,7 +72,14 @@ public class ListHabitFragment extends Fragment {
         DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(), ((LinearLayoutManager) layoutManager).getOrientation());
         habitRecycler.addItemDecoration(divider);
     }
+    @Override
+    public void onResume() {
+        // when the fragment resumes (navigated to)
 
+//        Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
+        habitAdapter.updateDataFromSession();
+        super.onResume();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

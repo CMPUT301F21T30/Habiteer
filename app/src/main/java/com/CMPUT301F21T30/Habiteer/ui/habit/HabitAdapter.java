@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
         }
+    }
+    public void updateDataFromSession() {
+        this.habitArrayList = Session.getInstance().getUser().getHabitList() ;
+        notifyDataSetChanged();
     }
 
     @NonNull
