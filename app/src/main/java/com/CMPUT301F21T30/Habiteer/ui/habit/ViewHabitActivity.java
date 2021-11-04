@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.common.collect.Lists;
 
@@ -48,12 +49,18 @@ public class ViewHabitActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
 
-        ArrayList<Habit> privateHabits;
-        privateHabits = new ArrayList<>();
+        //ArrayList<Habit> privateHabits;
+        //privateHabits = new ArrayList<>();
 
-        //habitName.setText();
-        //dates.setText();
-        //reason.setText();
+        //String habitname = Session.User.getHabitList().get(0).getHabitName();
+        //String startdate = Session.User.getHabitList().get(0).startDate();
+        //String enddate = Session.user.getHabitList().get(0).endDate();
+        //String reason_ = Session.user.getHabitList().get(0).reason();
+
+
+        //habitName.setText(habitname);
+        //dates.setText(startdate +"-"+enddate);
+        //reason.setText(reason_);
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
         //days.setSelectedDays(daysSelected);
 
@@ -65,7 +72,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
 
-                    privateHabits.add(new Habit());//adding habit to the list of private habits
+                    //privateHabits.add(new Habit());//adding habit to the list of private habits
 
                 }
 
