@@ -18,6 +18,7 @@ import com.google.android.gms.common.util.ArrayUtils;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
@@ -28,6 +29,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     ProgressBar progress;
     Switch privateSwitch;
     MaterialDayPicker days;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +54,18 @@ public class ViewHabitActivity extends AppCompatActivity {
         //ArrayList<Habit> privateHabits;
         //privateHabits = new ArrayList<>();
 
-        //String habitname = Session.User.getHabitList().get(0).getHabitName();
-        //String startdate = Session.User.getHabitList().get(0).startDate();
-        //String enddate = Session.user.getHabitList().get(0).endDate();
-        //String reason_ = Session.user.getHabitList().get(0).reason();
+        String habitname = Session.user.getHabitList().get(0).getHabitName();
+        Date startdate = Session.user.getHabitList().get(0).getStartDate();
+        Date enddate = Session.user.getHabitList().get(0).getEndDate();
+        String reason_ = Session.user.getHabitList().get(0).getReason();
+
+        //String habitname = user.getHabitList;
 
 
-        //habitName.setText(habitname);
-        //dates.setText(startdate +"-"+enddate);
-        //reason.setText(reason_);
+        habitName.setText(habitname);
+        dates.setText(startdate +"-"+enddate);
+        reason.setText(reason_);
+
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
         //days.setSelectedDays(daysSelected);
 
