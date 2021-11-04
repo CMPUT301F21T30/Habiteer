@@ -36,6 +36,7 @@ public class Session {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
+                System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); //TODO
             }
         });
     }
@@ -44,12 +45,14 @@ public class Session {
         if (instance == null) {
             instance = new Session(email);
         }
+        System.out.println(instance.getUser());
         return instance;
     }
 
     public User getUser() {
         return this.user;
     }
+
     public void storeHabits(List<Habit> habitList) {
         user.setHabitList(new ArrayList<Habit>(habitList));
         System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());

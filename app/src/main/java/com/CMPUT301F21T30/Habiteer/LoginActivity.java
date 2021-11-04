@@ -83,8 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                  * Get User object from Firestore
                  */
                 Session session = Session.getInstance(email);
+                System.out.println("LoginActivity Session: " + session); //TODO remove
                 User user = session.getUser();
-                System.out.println("Logged in as: " + user);
+                System.out.println("LoginActivity user: " + user); //TODO remove
             }
         });
 
