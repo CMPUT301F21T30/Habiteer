@@ -70,8 +70,12 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "You have been logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //if logged in, go to the main activity
+                            /**
+                             * Get User object from Firestore
+                             */
+                            Session session = Session.getInstance(email,getApplicationContext());
+                            User user = session.getUser();
+
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -79,13 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-                /**
-                 * Get User object from Firestore
-                 */
-                Session session = Session.getInstance(email);
-                System.out.println("LoginActivity Session: " + session); //TODO remove
-                User user = session.getUser();
-                System.out.println("LoginActivity user: " + user); //TODO remove
+
             }
         });
 

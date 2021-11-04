@@ -43,8 +43,8 @@ public class ListHabitFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
-                Session session = Session.getInstance("email");
-//                session.storeHabits(habits); TODO put back in
+                Session session = Session.getInstance();
+                session.storeHabits(habits);
                 System.out.println("ListHabitFragment Session: " + session);
                 System.out.println("ListHabitFragment user: " + session.getUser());
             }
