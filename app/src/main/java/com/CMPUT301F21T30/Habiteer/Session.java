@@ -26,7 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Session {
-    FirebaseFirestore db;
+    /**
+     * This class holds the current user's User object, which contains the user's
+     * habits, following and followers, and blocked accounts.
+     */
+    private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
     private DocumentReference document;
