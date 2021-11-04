@@ -29,6 +29,7 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email) {
+
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(email);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -46,6 +47,9 @@ public class Session {
             instance = new Session(email);
         }
         System.out.println(instance.getUser());
+        return instance;
+    }
+    public static Session getInstance() {
         return instance;
     }
 
