@@ -40,7 +40,6 @@ public class ListHabitFragment extends Fragment {
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
         habitList = new ArrayList<>();
         habitRecycler = root.findViewById(R.id.habit_recycler);
-
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
