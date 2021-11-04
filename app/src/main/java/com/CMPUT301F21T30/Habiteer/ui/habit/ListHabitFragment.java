@@ -50,7 +50,6 @@ public class ListHabitFragment extends Fragment {
             }
         });
         recyclerSetup();
-//        getActivity().getActionBar().setTitle(Session.getInstance("email").getUser().getEmail() + "'s habits");
         return root;
     }
     private void recyclerSetup() {
