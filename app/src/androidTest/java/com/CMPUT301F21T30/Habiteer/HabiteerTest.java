@@ -43,11 +43,7 @@ public class HabiteerTest {
         solo.enterText((EditText) solo.getView(R.id.loginEmail), "as@gmail.com");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
-
-    }
-
-    @Test
-    public void login() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
     }
+    
 }
