@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                              * Get User object from Firestore
                              */
                             Session session = Session.getInstance(email,getApplicationContext());
-                            User user = session.getUser();
 
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -94,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class)); //move to the signup activity
+                finish(); // close the current activity, so user can't go back
             }
         });
 
