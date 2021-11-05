@@ -9,10 +9,6 @@ public class  Habit {
     private String reason;
 //    private Integer progress;
 
-    Habit() {
-        this.habitName = "Untitled";
-    }
-
     Habit(String habitName) {
         this.habitName = habitName;
     }
