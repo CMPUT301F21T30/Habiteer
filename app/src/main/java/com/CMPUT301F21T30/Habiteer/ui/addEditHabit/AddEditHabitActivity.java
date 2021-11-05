@@ -3,6 +3,7 @@ package com.CMPUT301F21T30.Habiteer.ui.addEditHabit;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,23 @@ public class AddEditHabitActivity extends AppCompatActivity {
         //enable back button
         assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        Boolean EditMode = extras.getBoolean("EditMode");
+        Fragment destFrag;
+        if (EditMode) {
+            destFrag = EditHabitFragment.newInstance();
+            this.setTitle(R.string.title_editHabit);
+        }
+        else {
+            destFrag = AddEditHabitFragment.newInstance();
+            this.setTitle(R.string.title_addHabit);
+        }
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, destFrag)
+                    .commitNow();
+        }
 
 
     }

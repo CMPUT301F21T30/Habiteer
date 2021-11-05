@@ -1,4 +1,4 @@
-package com.CMPUT301F21T30.Habiteer.ui.addedithabit;
+package com.CMPUT301F21T30.Habiteer.ui.addEditHabit;
 
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -26,6 +27,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class EditHabitFragment extends Fragment {
@@ -42,6 +44,7 @@ public class EditHabitFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_edit_habit, container, false);
         setHasOptionsMenu(true);
         mViewModel = new ViewModelProvider(this).get(com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel.class);
+
 
 
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitEndDate);
@@ -91,11 +94,17 @@ public class EditHabitFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.button_addHabit:
-                // create the new habit
+                // edit the habit
                 String habitName = NameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
                 Date endDate = mViewModel.getEndDate();
-//                Habit newHabit = new Habit(habitName,startDate,endDate,reason);
+                Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(0); // TODO replace with actual index
+
+                currentHabit.setHabitName(habitName);
+                currentHabit.setReason(reason);
+                currentHabit.setEndDate(endDate);
+                requireActivity().finish();
+//
 
                 return true;
         }
