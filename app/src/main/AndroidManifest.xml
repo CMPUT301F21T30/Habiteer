@@ -31,7 +31,16 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name" />
+            android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name=".ui.addEditHabit.AddEditHabitActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Habiteer.NoActionBar"
+            android:exported="true" />
+
+
     </application>
 
 </manifest>

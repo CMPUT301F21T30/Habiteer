@@ -7,6 +7,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
+
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +16,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Session {
-    FirebaseFirestore db;
+    private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
     private DocumentReference document;
@@ -47,8 +51,9 @@ public class Session {
                 System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); // TODO
                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
                 context.startActivity(intent); // if logged in, go to the main activity
+
             }
         });
     }
@@ -61,7 +66,11 @@ public class Session {
     }
 
     public static Session getInstance() {
+        if (instance == null) {
+            throw new IllegalArgumentException("Session not instantiated! Instantiate using getInstance(String email, Context context) before calling this.");
+        }
         return instance;
+
     }
 
     public User getUser() {
@@ -86,4 +95,5 @@ public class Session {
                     }
                 });
     }
+    public void addHabit(Habit habit) {user.addHabit(habit);}
 }
