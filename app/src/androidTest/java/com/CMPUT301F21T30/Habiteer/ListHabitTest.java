@@ -59,7 +59,7 @@ public class ListHabitTest {
 
     @After
     public void tearDown() throws Exception {
-        sharedActions.
+        sharedActions.deleteHabit(solo);
         solo.finishOpenedActivities();
     }
 
