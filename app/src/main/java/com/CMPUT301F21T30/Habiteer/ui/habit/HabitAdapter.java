@@ -16,6 +16,10 @@ import com.CMPUT301F21T30.Habiteer.R;
 
 import java.util.List;
 
+/**
+ * Custom adapter for habitList.
+ * Allows for updates to the list as Habits are added, edited, or deleted
+ */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
     private List<Habit> habitArrayList;
     private int selectedIndex = RecyclerView.NO_POSITION;

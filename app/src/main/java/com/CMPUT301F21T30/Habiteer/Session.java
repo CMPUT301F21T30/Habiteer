@@ -30,6 +30,7 @@ import java.util.List;
  * This class holds the current user's User object, which contains the user's
  * habits, following and followers, and blocked accounts. It is a Singleton class
  * which allows global access to the User object.
+ * Handles getting and setting of Habits on Firebase
  */
 public class Session {
     private FirebaseFirestore db;
