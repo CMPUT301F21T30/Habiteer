@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/button_addHabit"
-        android:title="@string/add"
+        android:title="Save"
         app:showAsAction="ifRoom" />
 </menu>

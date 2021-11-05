@@ -82,9 +82,8 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        habitName.setText(habitname);
-        dates.setText(finalStartDate + " - " + finalEndDate);
-        reason.setText(reason_);
+        displayHabitInfo(habitname,finalStartDate,finalEndDate,reason_);
+
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
         //days.setSelectedDays(daysSelected);
@@ -150,9 +149,17 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddEditHabitActivity.class)); //the user goes to the EditHabit activity
-                int habitIndex = new AddEditHabitActivity().getIntent().getExtras().getInt("habitIndex");
+                Intent intent = new Intent(getApplicationContext(), AddEditHabitActivity.class);
+                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.putExtra("EditMode",true); // let the activity know to use the edit fragment
+                startActivity(intent); //the user goes to the EditHabit activity
             }
         });
     }
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate,String reason_) {
+        habitName.setText(habitname);
+        dates.setText(finalStartDate + " - " + finalEndDate);
+        reason.setText(reason_);
+    }
+
 }
