@@ -2,39 +2,39 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import static androidx.core.content.ContextCompat.startActivity;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+/**
+ * This class holds the current user's User object, which contains the user's
+ * habits, following and followers, and blocked accounts. It is a Singleton class
+ * which allows global access to the User object.
+ * Handles getting and setting of Habits on Firebase
+ */
 public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
     private DocumentReference document;
-
     /**
      * Singleton Session constructor
      * 
@@ -58,6 +58,12 @@ public class Session {
         });
     }
 
+    /**
+     * Used to instantiate the Session singleton.
+     * @param email email of the logged in user
+     * @param context android context used for starting activities
+     * @return the Session object
+     */
     public static Session getInstance(String email, Context context) {
         if (instance == null) {
             instance = new Session(email, context);
@@ -65,6 +71,10 @@ public class Session {
         return instance;
     }
 
+    /**
+     * Used to get the Session singleton. Cannot be used if the Session is not instantiate with getInstance(String email, Context context) first.
+     * @return the Session object
+     */
     public static Session getInstance() {
         if (instance == null) {
             throw new IllegalArgumentException("Session not instantiated! Instantiate using getInstance(String email, Context context) before calling this.");
@@ -72,11 +82,17 @@ public class Session {
         return instance;
 
     }
-
+    /**
+     * @return the User object for the currently logged in user.
+     */
     public User getUser() {
         return this.user;
     }
 
+    /**
+     * Overwrites the list of habits into the User object with the given list, then overwrites the habitList on firebase with the given list.
+     * @param habitList a list of habits objects to write in
+     */
     public void storeHabits(List<Habit> habitList) {
         user.setHabitList(new ArrayList<Habit>(habitList));
 //        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
@@ -95,6 +111,40 @@ public class Session {
                     }
                 });
     }
+
+    /**
+     * adds a habit into the user habit list.
+     * @param habit a Habit object.
+     */
     public void addHabit(Habit habit) {user.addHabit(habit);}
+    /**
+     * Deletes a habit from the user habit list.
+     * @param habit a Habit object.
+     */
     public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
+
+    public void storeEvent(List<Event> eventList) {
+        user.setEventList(new ArrayList<Event>(eventList));
+//        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
+
+        /* Store onto Firebase */
+        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error writing document", e);
+            }
+        });
+    }
+
+    public void addEvent(Event event) {
+        user.addEvent(event);
+        storeEvent(user.getEventList());
+    }
+    public void deleteEvent(Event event) {user.deleteEvent(event);}
 }

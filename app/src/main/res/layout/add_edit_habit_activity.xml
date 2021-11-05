@@ -19,7 +19,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
-        android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddHabitFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
