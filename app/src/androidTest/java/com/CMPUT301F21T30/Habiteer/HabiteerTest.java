@@ -50,7 +50,8 @@ public class HabiteerTest {
 
     @Test
     public void testHabitList() {
-        solo.getCurrentActivity().getFragmentManager().findFragmentById(R.id.habit_list).isVisible();
+//        solo.getCurrentActivity().getFragmentManager().findFragmentById(R.id.habit_list).isVisible();
+        solo.waitForText("Edmonton",1,2000);
     }
 
     @After
