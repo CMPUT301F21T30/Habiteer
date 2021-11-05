@@ -112,7 +112,6 @@ public class SignupActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.d(TAG, "Data has been added successfully!");
-                                    Session session = Session.getInstance(email,getApplicationContext()); //if registered, start session and go goes to the main activity
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -121,7 +120,7 @@ public class SignupActivity extends AppCompatActivity {
                                     Log.d(TAG, "Data could not be added!" + e.toString());
                                 }
                             });
-
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //if registered, the user goes to the main activity
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.SignupActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -139,7 +138,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //goes to the login activity
-                finish(); // close the current activity, so user can't go back
             }
         });
     }

@@ -30,11 +30,6 @@ public class User implements Serializable {
     public ArrayList<Habit> getHabitList() {
         return habitList;
     }
-    public void addHabit(Habit habit) {this.habitList.add(habit);}
-
-    public void setHabitList(ArrayList<Habit> habitList) {
-        this.habitList = habitList;
-    }
 
     public ArrayList<User> getFollowerList() {
         return followerList;
@@ -63,8 +58,6 @@ public class User implements Serializable {
     public void setFollowingList(ArrayList<User> followingList) {
         this.followingList = followingList;
     }
-
-
 
 
 }
