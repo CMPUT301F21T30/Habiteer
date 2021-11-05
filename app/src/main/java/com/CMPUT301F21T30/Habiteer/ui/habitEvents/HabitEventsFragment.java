@@ -48,8 +48,8 @@ public class HabitEventsFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_habit_events, container, false);
         super.onCreate(savedInstanceState);
 
-        date = getArguments().getString("todayDate");
-        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
+//        date = getArguments().getString("todayDate");
+//        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
 
         selectedDate = LocalDate.now();
         calendar = root.findViewById(R.id.calendarView);
@@ -61,6 +61,8 @@ public class HabitEventsFragment extends Fragment
                 //session.getUser().getHabitList();
             }
         });
+        ArrayList<Event> eventList = Session.getInstance().getUser().getEventList();
+
         return root;
     }
 
