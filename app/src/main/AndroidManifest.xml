@@ -10,15 +10,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habiteer">
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:name=".ui.habit.ViewHabitActivity"
+            android:exported="true"/>
+
+
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name=".ui.addEditHabit.AddEditHabitActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Habiteer.NoActionBar"
+            android:exported="true" />
+
+
     </application>
 
 </manifest>
