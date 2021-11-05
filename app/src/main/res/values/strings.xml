@@ -5,4 +5,10 @@
         <string name="tab_2_text">All Habits</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="hint_HabitName">Habit name</string>
+    <string name="hint_HabitDateRange">Start/end date</string>
+    <string name="hint_DayOfTheWeek">Days of the week</string>
+    <string name="hint_HabitReason">Habit reason</string>
+    <string name="title_addHabit">Add habit</string>
+    <string name="add">Add</string>
 </resources>
