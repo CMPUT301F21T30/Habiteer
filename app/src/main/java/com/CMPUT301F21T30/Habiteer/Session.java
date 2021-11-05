@@ -38,7 +38,7 @@ public class Session {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
-                System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); // TODO remove
+                System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); // TODO
                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
@@ -86,5 +86,4 @@ public class Session {
                 });
     }
     public void addHabit(Habit habit) {user.addHabit(habit);}
-    public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
 }

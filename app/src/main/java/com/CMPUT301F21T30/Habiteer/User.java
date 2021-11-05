@@ -31,7 +31,6 @@ public class User implements Serializable {
         return habitList;
     }
     public void addHabit(Habit habit) {this.habitList.add(habit);}
-    public void deleteHabit(Habit habit) {this.habitList.remove(habit);}
 
 
 

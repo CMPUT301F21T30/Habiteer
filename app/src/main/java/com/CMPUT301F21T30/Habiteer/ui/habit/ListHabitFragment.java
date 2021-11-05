@@ -1,6 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +45,6 @@ public class ListHabitFragment extends Fragment {
             }
         });
         recyclerSetup();
-
-        FloatingActionButton fab = root.findViewById(R.id.FAB_addHabit);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               Intent intent = new Intent(getContext(), AddEditHabitActivity.class);
-               intent.putExtra("EditMode",false);
-               startActivity(intent);
-            }
-        });
-
         return root;
     }
     private void recyclerSetup() {
