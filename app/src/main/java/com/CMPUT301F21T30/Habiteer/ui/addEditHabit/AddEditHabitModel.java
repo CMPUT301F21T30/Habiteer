@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.Date;
 
+/**
+ * View model that stores the start and end dates, so they can be passed from the datepicker to the Save button listener.
+ * Used by the edit and add fragments.
+ */
 public class AddEditHabitModel extends ViewModel {
     private Date startDate;
     private Date endDate;

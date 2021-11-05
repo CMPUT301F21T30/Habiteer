@@ -33,7 +33,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
-
+/**
+ * This fragment handles the editing of habits from the habit list. Allows the user to edit name, end date, days of the week, and habit reason.
+ * Known issues:
+ *  See Github #44, date picker can sometimes be one day off due to timezone issues
+ *  TODO: Days of the week picker yet to be implemented
+ */
 public class EditHabitFragment extends Fragment {
 
     private com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel mViewModel;
@@ -46,7 +51,7 @@ public class EditHabitFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_edit_habit, container, false);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true); // enable the "SAVE" button on the top right
         mViewModel = new ViewModelProvider(this).get(com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel.class);
 
         // get the selected habit
@@ -63,15 +68,17 @@ public class EditHabitFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // hide keyboard
-
                 InputMethodManager in = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
+                // create single date picker
                 MaterialDatePicker picker = MaterialDatePicker.Builder.datePicker()
                         .setTitleText("Edit end date")
                         .setSelection(MaterialDatePicker.todayInUtcMilliseconds()).build();
                 picker.show(getChildFragmentManager(), "date");
+
                 picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+                    // when the save button is clicked in the Datepicker
                     @Override
                     public void onPositiveButtonClick(Long selection) {
                         // Get the offset from our timezone and UTC.
@@ -83,7 +90,7 @@ public class EditHabitFragment extends Fragment {
                         Date EndDate = new Date(selection + offsetFromUTC);
                         // send data to viewmodel
                         mViewModel.setEndDate(EndDate);
-                        // send dates to the text field
+                        // send date to the text field
                         habitDateInput.getEditText().setText(simpleFormat.format(EndDate));
                         habitDateInput.clearFocus();
 

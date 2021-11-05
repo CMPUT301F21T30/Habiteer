@@ -6,7 +6,7 @@
     android:id="@+id/add_edit_habit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addEditHabit.AddEditHabitFragment">
+    tools:context=".ui.addEditHabit.AddHabitFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
