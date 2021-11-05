@@ -24,7 +24,7 @@ public class sharedActions {
         solo.clickOnView(solo.getView(R.id.FAB_addHabit));
         solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
         solo.clickOnButton(1);
-        //solo.clickOnButton(2);
+        solo.clickOnButton(2);
         solo.clickOnText("Save");
 
         // fill in name and reason
