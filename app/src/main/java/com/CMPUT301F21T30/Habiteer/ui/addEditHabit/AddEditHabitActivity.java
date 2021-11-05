@@ -35,7 +35,7 @@ public class AddEditHabitActivity extends AppCompatActivity {
         Fragment destFrag;
         if (EditMode) { // if editing
             destFrag = EditHabitFragment.newInstance();
-            this.setTitle(R.string.title_editHabit);
+            this.setTitle("Edit habit");
         }
         else { // if adding
             destFrag = AddHabitFragment.newInstance();
