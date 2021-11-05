@@ -2,7 +2,7 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import java.util.Date;
 
-public class Habit {
+public class  Habit {
     private String habitName;
     private Date startDate;
     private Date endDate;
