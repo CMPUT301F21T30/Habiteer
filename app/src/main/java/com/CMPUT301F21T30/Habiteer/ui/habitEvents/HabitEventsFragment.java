@@ -19,12 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class HabitEventsFragment extends Fragment
 {
@@ -33,6 +35,7 @@ public class HabitEventsFragment extends Fragment
     private LocalDate selectedDate;
     String date = "";
     String TAG = "Sample";
+    Session session = Session.getInstance();
 //    DatePicker datePicker;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,6 +51,7 @@ public class HabitEventsFragment extends Fragment
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 date = dayOfMonth + "/" + month + "/" + year;
                 Log.d(TAG, date);
+                //session.getUser().getHabitList();
             }
         });
         return root;
