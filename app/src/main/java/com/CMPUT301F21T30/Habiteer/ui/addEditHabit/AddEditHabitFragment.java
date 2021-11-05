@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
@@ -106,6 +107,9 @@ public class AddEditHabitFragment extends Fragment  {
                 Date startDate = mViewModel.getStartDate();
                 Date endDate = mViewModel.getEndDate();
                 Habit newHabit = new Habit(habitName,startDate,endDate,reason);
+                Session.getInstance().addHabit(newHabit);
+                getActivity().finish();
+
 
                 return true;
         }
