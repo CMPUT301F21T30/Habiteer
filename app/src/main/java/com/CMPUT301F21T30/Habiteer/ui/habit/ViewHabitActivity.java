@@ -54,10 +54,18 @@ public class ViewHabitActivity extends AppCompatActivity {
         //ArrayList<Habit> privateHabits;
         //privateHabits = new ArrayList<>();
 
-        String habitname = Session.getInstance().getUser().getHabitList().get(0).getHabitName();
-        Date startdate = Session.getInstance().getUser().getHabitList().get(0).getStartDate();
-        Date enddate = Session.getInstance().getUser().getHabitList().get(0).getEndDate();
-        String reason_ = Session.getInstance().getUser().getHabitList().get(0).getReason();
+        // get the habit index from the intent
+        Bundle bundle = getIntent().getExtras();
+        int habitIndex = bundle.getInt("habitIndex");
+
+        // get current habit at that index
+        Habit currentHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
+
+        // get habit info
+        String habitname = currentHabit.getHabitName();
+        Date startdate = currentHabit.getStartDate();
+        Date enddate = currentHabit.getEndDate();
+        String reason_ = currentHabit.getReason();
 
         //String habitname = user.getHabitList;
 
@@ -90,7 +98,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         addHabitEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
+//                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
 
             }
         });
@@ -111,7 +119,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), EditHabit.class)); //the user goes to the EditHabit activity
+//                startActivity(new Intent(getApplicationContext(), EditHabit.class)); //the user goes to the EditHabit activity
             }
         });
     }
