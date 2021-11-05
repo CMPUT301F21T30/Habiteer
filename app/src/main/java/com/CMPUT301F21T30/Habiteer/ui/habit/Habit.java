@@ -18,12 +18,7 @@ public class  Habit implements Serializable {
     Habit(String habitName) {
         this.habitName = habitName;
     }
-    public Habit(String habitName,Date startDate,Date endDate,String reason) {
-        this.habitName = habitName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.reason = reason;
-    }
+
     public String getHabitName() {
         return habitName;
     }

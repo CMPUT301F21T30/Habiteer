@@ -12,8 +12,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.CMPUT301F21T30.Habiteer.Session;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +19,18 @@ public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
     private MutableLiveData<List<Habit>> mHabits = new MutableLiveData<>();
-    private ArrayList<Habit> habitList;
+    private ArrayList<Habit> habitData;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
 
 
     public LiveData<List<Habit>> getHabits() {
-        habitList = Session.getInstance().getUser().getHabitList();
-        mHabits.setValue(habitList);
+        habitData = new ArrayList<>();
+        habitData.add(new Habit("Habit 1")); // TODO remove example data
+        habitData.add(new Habit("Habit 2")); // TODO remove example data
+        mHabits.setValue(habitData);
         return mHabits;
-    }
-
-    public void addHabit(Habit habit) {
-        habitList = Session.getInstance().getUser().getHabitList();
-        habitList.add(habit);
-        getHabits();
     }
 
     public void setIndex(int index) {

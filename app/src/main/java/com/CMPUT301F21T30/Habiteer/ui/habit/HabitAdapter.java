@@ -4,7 +4,6 @@
  */
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
-import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.util.List;
 
@@ -42,18 +40,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             selectedIndex = getLayoutPosition();
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
-
-            // Create new intent to start view habit activity
-            Intent intent = new Intent(view.getContext(),ViewHabitActivity.class);
-            intent.putExtra("habitIndex",selectedIndex); // pass through the index of the clicked item
-            view.getContext().startActivity(intent); // start the view habit activity
         }
-    }
-    public void updateDataFromSession() {
-        Session session = Session.getInstance();
-        this.habitArrayList = session.getUser().getHabitList();
-        session.storeHabits(session.getUser().getHabitList());
-        notifyDataSetChanged();
     }
 
     @NonNull
