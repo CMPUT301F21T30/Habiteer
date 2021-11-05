@@ -54,10 +54,10 @@ public class ViewHabitActivity extends AppCompatActivity {
         //ArrayList<Habit> privateHabits;
         //privateHabits = new ArrayList<>();
 
-        String habitname = Session.user.getHabitList().get(0).getHabitName();
-        Date startdate = Session.user.getHabitList().get(0).getStartDate();
-        Date enddate = Session.user.getHabitList().get(0).getEndDate();
-        String reason_ = Session.user.getHabitList().get(0).getReason();
+        String habitname = Session.getInstance().getUser().getHabitList().get(0).getHabitName();
+        Date startdate = Session.getInstance().getUser().getHabitList().get(0).getStartDate();
+        Date enddate = Session.getInstance().getUser().getHabitList().get(0).getEndDate();
+        String reason_ = Session.getInstance().getUser().getHabitList().get(0).getReason();
 
         //String habitname = user.getHabitList;
 

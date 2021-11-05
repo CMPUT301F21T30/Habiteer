@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Session {
     FirebaseFirestore db;
-    public static User user;
+    private User user;
     private static Session instance = null;
     private DocumentReference document;
 
