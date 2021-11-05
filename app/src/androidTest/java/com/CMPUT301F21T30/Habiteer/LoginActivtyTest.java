@@ -99,7 +99,7 @@ public class LoginActivtyTest {
 
 
         //Click on the Login Button
-        solo.clickOnButton("Login up"); //Select Sign up Button
+        solo.clickOnButton("Login"); //Select login Button
 
         // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
