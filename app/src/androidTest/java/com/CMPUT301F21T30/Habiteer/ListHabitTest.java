@@ -16,7 +16,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
 import com.google.android.material.textfield.TextInputLayout;
