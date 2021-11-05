@@ -48,7 +48,7 @@ public class HabitEventsFragment extends Fragment
         View root = inflater.inflate(R.layout.fragment_habit_events, container, false);
         super.onCreate(savedInstanceState);
 
-        date = (String) ((ViewHabitActivity) getActivity()).getIntent().getStringExtra("eventDate");
+        date = getArguments().getString("todayDate");
         Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
 
         selectedDate = LocalDate.now();

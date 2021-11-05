@@ -16,6 +16,7 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventsFragment;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.common.collect.Lists;
 
@@ -112,10 +113,19 @@ public class ViewHabitActivity extends AppCompatActivity {
                 calendar = Calendar.getInstance();
                 dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 todayDate = dateFormat.format(calendar.getTime());
-                Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
-                intent.putExtra("habitIndex", habitIndex);
-                intent.putExtra("eventDate", todayDate);
-                startActivity(intent);
+
+                HabitEventsFragment eventsFragment = new HabitEventsFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.add_habit_event, eventsFragment)
+                        .addToBackStack(ViewHabitActivity.class.getSimpleName())
+                        .commit();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("habitIndex", habitIndex);
+                bundle.putString("todayDate", todayDate);
+
+                eventsFragment.setArguments(bundle);
+                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
 //                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
 
             }
@@ -128,6 +138,9 @@ public class ViewHabitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
+                Session.getInstance().deleteHabit(currentHabit);
+                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
+                finish();
             }
         });
 
