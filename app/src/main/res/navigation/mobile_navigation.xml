@@ -9,7 +9,17 @@
         android:id="@+id/navigation_listhabit"
         android:name="com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment"
         android:label="@string/title_ListHabit"
-        tools:layout="@layout/fragment_listhabit" />
+        tools:layout="@layout/fragment_listhabit" >
+        <action
+            android:id="@+id/action_navigation_listhabit_to_addEditHabitFragment"
+            app:destination="@id/addEditHabitActivity"
+            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:exitAnim="@anim/wait_anim"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/navigation_listhabit" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +32,8 @@
         android:name="com.CMPUT301F21T30.Habiteer.ui.community.CommunityFragment"
         android:label="Community"
         tools:layout="@layout/fragment_community" />
+    <activity
+        android:id="@+id/addEditHabitActivity"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity"
+        android:label="AddEditHabitActivity" />
 </navigation>
