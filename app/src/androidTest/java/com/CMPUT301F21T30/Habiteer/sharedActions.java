@@ -35,4 +35,9 @@ public class sharedActions {
         //save
         solo.clickOnText("Save");
     }
+    public static void deleteHabit(Solo solo){
+        solo.clickOnView(solo.getView(R.id.habit_recycler));
+        solo.clickOnView(solo.getView(R.id.delete));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
 }
