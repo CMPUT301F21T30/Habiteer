@@ -107,7 +107,9 @@ public class AddEditHabitFragment extends Fragment  {
                 Date startDate = mViewModel.getStartDate();
                 Date endDate = mViewModel.getEndDate();
                 Habit newHabit = new Habit(habitName,startDate,endDate,reason);
-                Session.getInstance().addHabit(newHabit);
+                Session session = Session.getInstance();
+                session.addHabit(newHabit);
+                session.storeHabits(session.getUser().getHabitList());
                 getActivity().finish();
 
 
