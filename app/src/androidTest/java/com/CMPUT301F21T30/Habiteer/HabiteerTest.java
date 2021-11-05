@@ -13,6 +13,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +45,16 @@ public class HabiteerTest {
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
+
+    @Test
+    public void testHabitList() {
+        
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
     
 }
