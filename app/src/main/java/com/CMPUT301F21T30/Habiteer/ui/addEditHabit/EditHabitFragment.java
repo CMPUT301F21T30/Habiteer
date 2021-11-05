@@ -1,5 +1,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.addEditHabit;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -111,6 +113,12 @@ public class EditHabitFragment extends Fragment {
         habitDateInput.getEditText().setText(oldDate);
 
     }
+
+    /**
+     * Triggers when a button on the top action bar is pressed. In this case, it is only the save button.
+     * @param item the menu item that was selected.
+     * @return if the button was pressed or not
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         TextInputLayout NameBox = requireView().findViewById(R.id.textInput_habitName);
@@ -124,19 +132,25 @@ public class EditHabitFragment extends Fragment {
                 String habitName = NameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
 
-
+                // get selected habit from User
                 int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
                 Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(habitIndex);
-                if (mViewModel.getEndDate() != null) { // Set the date only if it was changed
+
+                // Set the date only if it was changed
+                if (mViewModel.getEndDate() != null) {
                     Date endDate = mViewModel.getEndDate();
                     currentHabit.setEndDate(endDate);
                 }
-
+                // set other data
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
-                requireActivity().finish();
+
+                requireActivity().finish(); // close the activity
+
+                // update and navigate back to view habit
                 Intent intent = new Intent(getContext(), ViewHabitActivity.class);
                 intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // update the existing view habit activity instead of making a new one
                 startActivity(intent);
 //
 
