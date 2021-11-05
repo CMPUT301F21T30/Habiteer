@@ -38,39 +38,29 @@ import org.junit.runner.RunWith;
 public class ListHabitTest {
     private Solo solo;
 
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.CMPUT301F21T30.Habiteer", appContext.getPackageName());
-    }
-
     @Rule
     public ActivityTestRule<SignupActivity> rule = new ActivityTestRule<>(SignupActivity.class, true, true);
 
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "tester@robotium.com");
-        solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
-        solo.clickOnView(solo.getView(R.id.loginBtn));
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        sharedActions.login(solo);
     }
 
     @Test
     public void testHabitList() {
         // solo.getCurrentActivity().getFragmentManager().findFragmentById(R.id.habit_list).isVisible();
-        solo.waitForText("Edmonton", 1, 2000);
+        sharedActions.addHabit(solo);
+        solo.assertCurrentActivity("Main Activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.habit_recycler));
+        solo.waitForText("Run", 1, 2000);
 
     }
 
     @After
     public void tearDown() throws Exception {
+        sharedActions.
         solo.finishOpenedActivities();
     }
-
-}
-
 
 }
