@@ -5,21 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
->
+    >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/bar_add_habit"
+        android:id="@+id/bar_add_habit_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:title="Add Habit Event"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:elevation="4dp"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
-        android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

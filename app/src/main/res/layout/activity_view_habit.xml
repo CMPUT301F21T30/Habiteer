@@ -122,11 +122,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/privateSwitch"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:layout_marginRight="75dp"
         android:layout_marginLeft="75dp"
-        android:text="Add Habit Event"/>
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="75dp"
+        android:gravity="center"
+        android:text="Add Habit Event" />
 
     <Button
         android:id="@+id/delete"

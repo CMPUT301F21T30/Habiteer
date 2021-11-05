@@ -15,10 +15,14 @@ import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventsFragment;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.common.collect.Lists;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +34,9 @@ public class ViewHabitActivity extends AppCompatActivity {
     ProgressBar progress;
     Switch privateSwitch;
     MaterialDayPicker days;
+    Calendar calendar;
+    String todayDate;
+    SimpleDateFormat dateFormat;
 
 
     @Override
@@ -52,8 +59,6 @@ public class ViewHabitActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
 
-
-
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
         int habitIndex = bundle.getInt("habitIndex");
@@ -62,8 +67,6 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         // get current habit at that index
         Habit currentHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
-
-
 
         // get habit info
         String habitname = currentHabit.getHabitName();
@@ -79,9 +82,8 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        habitName.setText(habitname);
-        dates.setText(finalStartDate + " - " + finalEndDate);
-        reason.setText(reason_);
+        displayHabitInfo(habitname,finalStartDate,finalEndDate,reason_);
+
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
         //days.setSelectedDays(daysSelected);
@@ -107,6 +109,22 @@ public class ViewHabitActivity extends AppCompatActivity {
         addHabitEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                calendar = Calendar.getInstance();
+                dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                todayDate = dateFormat.format(calendar.getTime());
+
+                HabitEventsFragment eventsFragment = new HabitEventsFragment();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.add_habit_event, eventsFragment)
+                        .addToBackStack(ViewHabitActivity.class.getSimpleName())
+                        .commit();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("habitIndex", habitIndex);
+                bundle.putString("todayDate", todayDate);
+
+                eventsFragment.setArguments(bundle);
+                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
 //                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
 
             }
@@ -119,6 +137,9 @@ public class ViewHabitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
+                Session.getInstance().deleteHabit(currentHabit);
+                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
+                finish();
             }
         });
 
@@ -128,9 +149,17 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), AddEditHabitActivity.class)); //the user goes to the EditHabit activity
-                int habitIndex = new AddEditHabitActivity().getIntent().getExtras().getInt("habitIndex");
+                Intent intent = new Intent(getApplicationContext(), AddEditHabitActivity.class);
+                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.putExtra("EditMode",true); // let the activity know to use the edit fragment
+                startActivity(intent); //the user goes to the EditHabit activity
             }
         });
     }
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate,String reason_) {
+        habitName.setText(habitname);
+        dates.setText(finalStartDate + " - " + finalEndDate);
+        reason.setText(reason_);
+    }
+
 }
