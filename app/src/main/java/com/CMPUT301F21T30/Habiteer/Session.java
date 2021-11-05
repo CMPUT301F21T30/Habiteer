@@ -28,14 +28,12 @@ public class Session {
     private User user;
     private static Session instance = null;
     private DocumentReference document;
-    private String emailEvent;
     /**
      * Singleton Session constructor
      * 
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
-        emailEvent = email;
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(email);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
