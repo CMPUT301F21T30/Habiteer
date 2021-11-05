@@ -79,7 +79,7 @@ public class Session {
 
     public void storeHabits(List<Habit> habitList) {
         user.setHabitList(new ArrayList<Habit>(habitList));
-        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
+//        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
 
         /* Store onto Firebase */
         db.collection("Users").document(user.getEmail()).update("habitList", user.getHabitList())
@@ -96,4 +96,5 @@ public class Session {
                 });
     }
     public void addHabit(Habit habit) {user.addHabit(habit);}
+    public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
 }
