@@ -33,7 +33,7 @@ public class AddHabitEventTest {
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "abc@gmail.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEmail), "s@g.com");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
