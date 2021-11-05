@@ -1,28 +1,17 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
-import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.time.LocalDate;
 
 public class AddHabitEventActivity extends AppCompatActivity {
     private CalendarView calendar;
@@ -30,7 +19,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     String TAG = "Sample";
     int habitIndex;
     String indexString;
-    TextView eventDate;
+    TextView eventDateView;
     TextInputEditText eventNameInput;
     String eventName;
 
@@ -48,9 +37,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
         habitIndex = Integer.parseInt(indexString);
         // date of event
         date = getIntent().getStringExtra("eventDate");
-        eventDate = findViewById(R.id.textInput_habitEventDate);
+        eventDateView = findViewById(R.id.textInput_habitEventDate);
 
-        eventDate.setText("Event date: " + date);
+        eventDateView.setText("Event date: " + date);
 
         Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit index: " + habitIndex, Toast.LENGTH_SHORT).show();
 
@@ -63,7 +52,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
         eventCommentInput = findViewById(R.id.event_comment_input);
         eventComment = eventCommentInput.getText().toString();
 
-        Event event = new Event(eventName, eventComment);
+
+        Event event = new Event(eventName, eventComment,date);
         Session.getInstance().addEvent(event);
         finish();
     }
