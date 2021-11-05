@@ -31,6 +31,10 @@ public class User implements Serializable {
         return habitList;
     }
 
+    public void setHabitList(ArrayList<Habit> habitList) {
+        this.habitList = habitList;
+    }
+
     public ArrayList<User> getFollowerList() {
         return followerList;
     }

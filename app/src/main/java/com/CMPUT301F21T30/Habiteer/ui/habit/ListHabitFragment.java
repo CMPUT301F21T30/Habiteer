@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -44,6 +45,10 @@ public class ListHabitFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
+                Session session = Session.getInstance();
+                session.storeHabits(habits);
+                System.out.println("ListHabitFragment Session: " + session);
+                System.out.println("ListHabitFragment user: " + session.getUser());
             }
         });
         recyclerSetup();

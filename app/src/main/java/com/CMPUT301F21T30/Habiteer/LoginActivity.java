@@ -70,17 +70,20 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "You have been logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class)); //if logged in, go to the main activity
+                            /**
+                             * Get User object from Firestore
+                             */
+                            Session session = Session.getInstance(email,getApplicationContext());
+
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
-                        }
-                    });
-                }
+                    }
+                });
 
 
+            }
         });
 
         /**
@@ -90,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class)); //move to the signup activity
+                finish(); // close the current activity, so user can't go back
             }
         });
 
