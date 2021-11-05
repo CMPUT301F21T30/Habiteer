@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.CMPUT301F21T30.Habiteer.R;
 
+
 public class AddEditHabitActivity extends AppCompatActivity {
 
     @Override
@@ -33,7 +34,7 @@ public class AddEditHabitActivity extends AppCompatActivity {
             this.setTitle(R.string.title_editHabit);
         }
         else {
-            destFrag = AddEditHabitFragment.newInstance();
+            destFrag = AddHabitFragment.newInstance();
             this.setTitle(R.string.title_addHabit);
         }
         if (savedInstanceState == null) {

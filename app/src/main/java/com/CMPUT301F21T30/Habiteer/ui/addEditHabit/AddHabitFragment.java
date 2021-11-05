@@ -23,27 +23,25 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.w3c.dom.Text;
-
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class AddEditHabitFragment extends Fragment  {
+public class AddHabitFragment extends Fragment  {
 
     private AddEditHabitModel mViewModel;
 
-    public static AddEditHabitFragment newInstance() {
-        return new AddEditHabitFragment();
+    public static AddHabitFragment newInstance() {
+        return new AddHabitFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_addedithabit, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_habit, container, false);
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitStartDate);
         setHasOptionsMenu(true);
         mViewModel = new ViewModelProvider(this).get(AddEditHabitModel.class);
