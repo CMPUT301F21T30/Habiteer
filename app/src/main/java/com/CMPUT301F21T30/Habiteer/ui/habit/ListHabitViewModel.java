@@ -15,6 +15,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles data sent to the HabitAdapter
+ */
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
