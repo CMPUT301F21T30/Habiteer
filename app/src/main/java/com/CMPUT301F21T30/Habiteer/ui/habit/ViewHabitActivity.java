@@ -153,6 +153,7 @@ public class ViewHabitActivity extends AppCompatActivity {
                 intent.putExtra("habitIndex",habitIndex); // include the index of the habit
                 intent.putExtra("EditMode",true); // let the activity know to use the edit fragment
                 startActivity(intent); //the user goes to the EditHabit activity
+                finish();
             }
         });
     }
@@ -161,4 +162,5 @@ public class ViewHabitActivity extends AppCompatActivity {
         dates.setText(finalStartDate + " - " + finalEndDate);
         reason.setText(reason_);
     }
+
 }

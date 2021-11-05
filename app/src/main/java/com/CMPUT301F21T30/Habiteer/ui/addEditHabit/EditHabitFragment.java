@@ -4,6 +4,7 @@ import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -133,6 +135,9 @@ public class EditHabitFragment extends Fragment {
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
                 requireActivity().finish();
+                Intent intent = new Intent(getContext(), ViewHabitActivity.class);
+                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                startActivity(intent);
 //
 
                 return true;
