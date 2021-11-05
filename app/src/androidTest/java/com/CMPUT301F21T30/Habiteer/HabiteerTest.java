@@ -11,6 +11,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -41,7 +42,7 @@ public class HabiteerTest {
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "as@gmail.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEmail), "tester@robotium.com");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -49,7 +50,7 @@ public class HabiteerTest {
 
     @Test
     public void testHabitList() {
-        
+        solo.getCurrentActivity().getFragmentManager().findFragmentById(R.id.habit_list).isVisible();
     }
 
     @After
