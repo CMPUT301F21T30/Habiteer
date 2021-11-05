@@ -54,57 +54,5 @@ public class HabiteerTest {
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
     }
-
-    /**
-     * Test if clicking the floating action button changes to the correct add habit fragment
-     */
-    @Test
-    public void testFABViewChange() {
-        solo.clickOnView(solo.getView(R.id.FAB_addHabit));
-        // see if right activity appears
-        solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
-
-        // see if the right fragment appears
-        AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
-        assertEquals(addedit.getSupportFragmentManager().findFragmentById(R.id.container).getClass(), AddEditHabitFragment.class);
-    }
-
-    @Test
-    public void TestAddHabitDatePicker() {
-        solo.clickOnView(solo.getView(R.id.FAB_addHabit));
-        solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
-        solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
-        // see if the right fragment appears
-        AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
-        solo.clickOnButton(1);
-        solo.clickOnButton(2);
-        solo.clickOnText("Save");
-
-        TextInputLayout dateField = (TextInputLayout) solo.getView(R.id.textInput_habitStartDate);
-        assertNotNull("Date field is empty!",dateField.getEditText().getText().toString()); // cannot test correctness yet, see #44 on github
-
-    }
-
-        @Test
-    public void testAddHabit() {
-            solo.clickOnView(solo.getView(R.id.FAB_addHabit));
-            solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
-            solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
-            // see if the right fragment appears
-            AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
-            solo.clickOnButton(1);
-            solo.clickOnButton(2);
-            solo.clickOnText("Save");
-
-            TextInputLayout dateField = (TextInputLayout) solo.getView(R.id.textInput_habitStartDate);
-            assertNotNull("Date field is empty!",dateField.getEditText().getText().toString()); // cannot test correctness yet, see #44 on github
-
-            TextInputLayout nameField = (TextInputLayout) solo.getView(R.id.textInput_habitName);
-            TextInputLayout reasonField = (TextInputLayout) solo.getView(R.id.textInput_habitReason);
-            solo.enterText(nameField.getEditText(),"Run");
-            solo.enterText(reasonField.getEditText(),"Get fit");
-            solo.clickOnText("Save");
-            assertTrue(solo.waitForText("Run",1,2000));
-
-    }
+    
 }
