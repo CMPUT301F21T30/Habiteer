@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Habiteer">
         <activity
             android:name=".ui.habit.ViewHabitActivity"
+            android:label="View habit"
             android:exported="true"/>
 
 
