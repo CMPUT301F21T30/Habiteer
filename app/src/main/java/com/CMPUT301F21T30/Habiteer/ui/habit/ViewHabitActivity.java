@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.gms.common.util.ArrayUtils;
 import com.google.common.collect.Lists;
 
@@ -51,27 +52,35 @@ public class ViewHabitActivity extends AppCompatActivity {
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
 
-        //ArrayList<Habit> privateHabits;
-        //privateHabits = new ArrayList<>();
+
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
         int habitIndex = bundle.getInt("habitIndex");
 
+
+
         // get current habit at that index
         Habit currentHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
 
+
+
         // get habit info
         String habitname = currentHabit.getHabitName();
-        Date startdate = currentHabit.getStartDate();
-        Date enddate = currentHabit.getEndDate();
+        String startdate = currentHabit.getStartDate().toString();
+        String enddate = currentHabit.getEndDate().toString();
         String reason_ = currentHabit.getReason();
 
-        //String habitname = user.getHabitList;
+        // formatting the date properly
+        String unwanted = "00:00:00 MDT ";
+        String replacement = "";
+        String finalStartDate = startdate.replaceAll(unwanted, replacement).substring(4);
+        String finalEndDate = enddate.replaceAll(unwanted, replacement).substring(4);
 
 
+        // displaying the habit info
         habitName.setText(habitname);
-        dates.setText(startdate +"-"+enddate);
+        dates.setText(finalStartDate + " - " + finalEndDate);
         reason.setText(reason_);
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -119,7 +128,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), EditHabit.class)); //the user goes to the EditHabit activity
+                startActivity(new Intent(getApplicationContext(), AddEditHabitActivity.class)); //the user goes to the EditHabit activity
+                int habitIndex = new AddEditHabitActivity().getIntent().getExtras().getInt("habitIndex");
             }
         });
     }
