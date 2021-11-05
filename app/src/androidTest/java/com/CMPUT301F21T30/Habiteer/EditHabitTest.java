@@ -42,7 +42,7 @@ public class EditHabitTest {
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        new sharedActions().addHabit(solo);
+        sharedActions.addHabit(solo);
     }
     
 }
