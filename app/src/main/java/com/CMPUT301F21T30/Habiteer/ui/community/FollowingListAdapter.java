@@ -13,6 +13,11 @@ import com.CMPUT301F21T30.Habiteer.R;
 
 import java.util.List;
 
+/**
+ * This is an adapter class for the FollowingList class
+ * that is used to list the following list of a user
+ * also used to return the name of the user as String when clicked on a user from the following list
+ */
 public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdapter.ViewHolder> {
 
 

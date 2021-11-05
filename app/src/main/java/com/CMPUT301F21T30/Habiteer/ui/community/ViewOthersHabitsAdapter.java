@@ -10,9 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
-import com.CMPUT301F21T30.Habiteer.ui.habit.HabitAdapter;
 
 import java.util.List;
+
+/**
+ * this is an adapter class for View_others_habits class
+ * this is used to list the habits and thier progress indicator of a particular user
+ */
 
 public class ViewOthersHabitsAdapter extends RecyclerView.Adapter<ViewOthersHabitsAdapter.ViewHolder> {
 

@@ -1,13 +1,15 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class  Habit {
+public class  Habit implements Serializable {
     private String habitName;
     private Date startDate;
     private Date endDate;
     private String reason;
-//    private Integer progress;
+    private Integer progress;
+    private Boolean publicHabit;
 
     Habit() {
         this.habitName = "Untitled";
@@ -52,6 +54,22 @@ public class  Habit {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+
+    public Boolean getPublicHabit() {
+        return publicHabit;
+    }
+
+    public void setPublicHabit(Boolean publicHabit) {
+        this.publicHabit = publicHabit;
     }
 }
 

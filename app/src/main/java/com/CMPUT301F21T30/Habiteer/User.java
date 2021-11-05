@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class User implements Serializable {
     private String email;
     private ArrayList<Habit> habitList;
-//    private ArrayList<HabitEvent> habitEvents;
+    //private ArrayList<HabitEvent> habitEvents;
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
     private ArrayList<User> blockList;
@@ -30,6 +30,9 @@ public class User implements Serializable {
     public ArrayList<Habit> getHabitList() {
         return habitList;
     }
+    public void addHabit(Habit habit) {this.habitList.add(habit);}
+
+
 
     public ArrayList<User> getFollowerList() {
         return followerList;
@@ -48,7 +51,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    //for the test
 
 
     public void setHabitList(ArrayList<Habit> habitList) {
@@ -58,6 +60,8 @@ public class User implements Serializable {
     public void setFollowingList(ArrayList<User> followingList) {
         this.followingList = followingList;
     }
+
+
 
 
 }

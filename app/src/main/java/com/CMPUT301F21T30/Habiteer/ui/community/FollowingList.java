@@ -1,6 +1,8 @@
 package com.CMPUT301F21T30.Habiteer.ui.community;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,11 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class lists the following list of a particular user
+ * The user is send by intent from another activity
+ */
 public class FollowingList extends AppCompatActivity implements FollowingListAdapter.OnUserListener {
 
     RecyclerView followingRecycler;
@@ -33,27 +40,6 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
         this.setTitle("Following");
 
         //TODO: get the user for which the following list is to be displayed using INTENT
-
-        /**JUST FOR TESTING*/
-
-        User user1 = new User();
-        user1.setEmail("123@gm.ca");
-
-        User user2 = new User();
-        user2.setEmail("john@gmail.com");
-
-        User user3 = new User();
-        user3.setEmail("pink121@gmail.com");
-
-
-        following.add(user2);
-        following.add(user3);
-
-        user1.setFollowingList(following);
-
-
-        followingArrayList = new ArrayList<>();
-        followingArrayList = user1.getFollowingList();
 
 
         for (int i = 0; i<followingArrayList.size(); i++){
@@ -75,40 +61,26 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
     }
 
+    /**
+     * when a user from the following list is clicked, a new activity is opened
+     * that shows details about the user that was clicked
+     * @param userName
+     */
 
     @Override
     public void onUserSelected(String userName) {
 
 
-        User sendUser;
+        Session sendUser = null;
+        sendUser = Session.getInstance(userName, FollowingList.this);
 
-        //TODO: get the User object sendUser from the database
+        sendUser.getUser();
 
-        /**FOR TESTING*/
-
-        /**
-        ArrayList<Habit> habitList = new ArrayList<>();
-
-        Habit habit1 = new Habit("Cycling");
-        Habit habit2 =  new Habit("Reading");
-
-
-        habit1.setProgress(50);
-        habit2.setProgress(40);
-
-        habit1.setPublicHabit(Boolean.TRUE);
-        habit2.setPublicHabit(Boolean.FALSE);
-
-        habitList.add(habit1);
-        habitList.add(habit2);
-
-        sendUser = new User(userName);
-        sendUser.setHabitList(habitList);
 
         Intent intent = new Intent(FollowingList.this, View_others_habits.class);
-        intent.putExtra("User", sendUser);
+        intent.putExtra("User", (Parcelable) sendUser);
         startActivity(intent);
 
-        */
+
     }
 }

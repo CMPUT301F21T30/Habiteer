@@ -3,6 +3,9 @@ package com.CMPUT301F21T30.Habiteer.ui.community;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
@@ -11,6 +14,11 @@ import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Used to list the public habits and their progress indicator of a particular user
+ * the user object is send through intent
+ */
 
 public class View_others_habits extends AppCompatActivity {
 
@@ -31,7 +39,7 @@ public class View_others_habits extends AppCompatActivity {
 
         setContentView(R.layout.activity_view_others_habits);
 
-        /** habitRecyclerView = findViewById(R.id.list_habits_others);
+        habitRecyclerView = findViewById(R.id.list_habits_others);
 
         mainUser = (User) getIntent().getSerializableExtra("User"); //User object from Intent
 
@@ -65,7 +73,7 @@ public class View_others_habits extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(habitRecyclerView.getContext(), layoutManager.getOrientation());
         habitRecyclerView.addItemDecoration(divider);
 
-         */
+
     }
 
 }
