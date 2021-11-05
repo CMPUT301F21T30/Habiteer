@@ -1,22 +1,15 @@
 package com.CMPUT301F21T30.Habiteer.ui.community;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,12 +79,14 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
     @Override
     public void onUserSelected(String userName) {
 
+
         User sendUser;
 
         //TODO: get the User object sendUser from the database
 
         /**FOR TESTING*/
 
+        /**
         ArrayList<Habit> habitList = new ArrayList<>();
 
         Habit habit1 = new Habit("Cycling");
@@ -114,5 +109,6 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
         intent.putExtra("User", sendUser);
         startActivity(intent);
 
+        */
     }
 }

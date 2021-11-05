@@ -1,21 +1,13 @@
 package com.CMPUT301F21T30.Habiteer.ui.community;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.CMPUT301F21T30.Habiteer.ui.habit.HabitAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +31,7 @@ public class View_others_habits extends AppCompatActivity {
 
         setContentView(R.layout.activity_view_others_habits);
 
-        habitRecyclerView = findViewById(R.id.list_habits_others);
+        /** habitRecyclerView = findViewById(R.id.list_habits_others);
 
         mainUser = (User) getIntent().getSerializableExtra("User"); //User object from Intent
 
@@ -73,7 +65,7 @@ public class View_others_habits extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(habitRecyclerView.getContext(), layoutManager.getOrientation());
         habitRecyclerView.addItemDecoration(divider);
 
-
+         */
     }
 
 }
