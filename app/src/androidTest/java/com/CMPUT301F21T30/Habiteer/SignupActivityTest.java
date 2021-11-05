@@ -1,5 +1,10 @@
 package com.CMPUT301F21T30.Habiteer;
 
+/**
+ * Test class for SignupActivity. All the UI tests are written here. Robotium test framework is
+ used
+ */
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -15,10 +20,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-/**
- * Test class for SignupActivity. All the UI tests are written here. Robotium test framework is
- used
- */
 
 public class SignupActivityTest {
     private Solo solo;
