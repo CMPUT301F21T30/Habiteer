@@ -2,6 +2,7 @@ package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     TextInputEditText eventCommentInput;
     String eventComment;
 
+    Button addButton;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -42,6 +45,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         eventDateView.setText("Event date: " + date);
 
         Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit index: " + habitIndex, Toast.LENGTH_SHORT).show();
+        addButton = findViewById(R.id.button_addHabitEvent);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addEvent(view);
+            }
+        });
 
     }
 
