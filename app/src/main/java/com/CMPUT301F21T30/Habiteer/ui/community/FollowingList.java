@@ -1,6 +1,8 @@
 package com.CMPUT301F21T30.Habiteer.ui.community;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,8 +71,14 @@ public class FollowingList extends AppCompatActivity implements FollowingListAda
 
         //Displays the following list in recycler view
         FollowingListAdapter followingAdapter = new FollowingListAdapter(this, dataFollowing);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         followingRecycler.setAdapter(followingAdapter);
-        followingRecycler.setLayoutManager(new LinearLayoutManager(this));
+        followingRecycler.setLayoutManager(layoutManager);
+
+        // animation and borders
+        followingRecycler.setItemAnimator(new DefaultItemAnimator());
+        DividerItemDecoration divider = new DividerItemDecoration(followingRecycler.getContext(), layoutManager.getOrientation());
+        followingRecycler.addItemDecoration(divider);
 
     }
 

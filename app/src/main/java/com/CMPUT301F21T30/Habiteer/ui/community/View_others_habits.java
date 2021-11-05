@@ -1,6 +1,8 @@
 package com.CMPUT301F21T30.Habiteer.ui.community;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,8 +64,14 @@ public class View_others_habits extends AppCompatActivity {
 
         //displays the habit name and progress.
         ViewOthersHabitsAdapter habitAdapter = new ViewOthersHabitsAdapter(this, dataHabitTitles, dataProgress);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         habitRecyclerView.setAdapter(habitAdapter);
-        habitRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        habitRecyclerView.setLayoutManager(layoutManager);
+
+        // animation and borders
+        habitRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        DividerItemDecoration divider = new DividerItemDecoration(habitRecyclerView.getContext(), layoutManager.getOrientation());
+        habitRecyclerView.addItemDecoration(divider);
 
 
     }
