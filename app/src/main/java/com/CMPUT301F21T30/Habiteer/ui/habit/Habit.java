@@ -2,17 +2,13 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import java.util.Date;
 
-public class Habit {
+public class  Habit {
     private String habitName;
     private Date startDate;
     private Date endDate;
     private String reason;
 //    private Integer progress;
-
-    Habit() {
-        this.habitName = "Untitled";
-    }
-
+    Habit() {} // no-argument constructor for firebase
     Habit(String habitName) {
         this.habitName = habitName;
     }

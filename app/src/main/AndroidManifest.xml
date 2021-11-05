@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habiteer">
         <activity
+            android:name=".ui.habit.ViewHabitActivity"
+            android:exported="true"/>
+
+
+        <activity
             android:name=".SignupActivity"
             android:exported="true">
             <intent-filter>
@@ -18,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".LoginActivity"
             android:exported="true" />

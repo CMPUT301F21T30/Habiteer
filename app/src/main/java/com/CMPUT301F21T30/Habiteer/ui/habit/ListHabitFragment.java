@@ -56,8 +56,6 @@ public class ListHabitFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.action_navigation_listhabit_to_addEditHabitFragment);
-
-
             }
         });
 
