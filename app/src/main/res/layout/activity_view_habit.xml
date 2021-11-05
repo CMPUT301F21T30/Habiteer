@@ -113,17 +113,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="340dp" />
-
-    <TextView
-        android:id="@+id/privateSwitchText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progress"
-        android:text="Switch to private"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="60dp"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Switch to private" />
 
     <Button
         android:id="@+id/addHabitEvent"
