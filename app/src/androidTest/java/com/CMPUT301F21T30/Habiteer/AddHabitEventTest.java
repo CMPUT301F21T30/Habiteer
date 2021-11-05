@@ -29,6 +29,7 @@ public class AddHabitEventTest {
     @Rule
     public ActivityTestRule<SignupActivity> rule = new ActivityTestRule<>(SignupActivity.class, true, true);
 
+    // This is for auto user login test
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
@@ -39,6 +40,7 @@ public class AddHabitEventTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
     }
 
+    // To test adding a new habit event
     @Test
     public void AddHabitEvent()
     {
