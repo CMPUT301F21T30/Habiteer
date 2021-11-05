@@ -2,32 +2,26 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import static androidx.core.content.ContextCompat.startActivity;
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -41,7 +35,6 @@ public class Session {
     private User user;
     private static Session instance = null;
     private DocumentReference document;
-
     /**
      * Singleton Session constructor
      * 
@@ -129,4 +122,29 @@ public class Session {
      * @param habit a Habit object.
      */
     public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
+
+    public void storeEvent(List<Event> eventList) {
+        user.setEventList(new ArrayList<Event>(eventList));
+//        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
+
+        /* Store onto Firebase */
+        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error writing document", e);
+            }
+        });
+    }
+
+    public void addEvent(Event event) {
+        user.addEvent(event);
+        storeEvent(user.getEventList());
+    }
+    public void deleteEvent(Event event) {user.deleteEvent(event);}
 }

@@ -37,6 +37,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     Calendar calendar;
     String todayDate;
     SimpleDateFormat dateFormat;
+    int habitIndex;
 
 
     @Override
@@ -61,7 +62,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
-        int habitIndex = bundle.getInt("habitIndex");
+        habitIndex = bundle.getInt("habitIndex");
 
 
 
@@ -113,18 +114,10 @@ public class ViewHabitActivity extends AppCompatActivity {
                 dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 todayDate = dateFormat.format(calendar.getTime());
 
-                HabitEventsFragment eventsFragment = new HabitEventsFragment();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.add_habit_event, eventsFragment)
-                        .addToBackStack(ViewHabitActivity.class.getSimpleName())
-                        .commit();
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("habitIndex", habitIndex);
-                bundle.putString("todayDate", todayDate);
-
-                eventsFragment.setArguments(bundle);
-                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
+                Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
+                intent.putExtra("habitIndex", String.valueOf(habitIndex));
+                intent.putExtra("eventDate", todayDate);
+                startActivity(intent);
 //                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
 
             }
