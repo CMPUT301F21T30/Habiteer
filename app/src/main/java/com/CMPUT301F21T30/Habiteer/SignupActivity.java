@@ -138,6 +138,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class)); //goes to the login activity
+                finish(); // close the current activity, so user can't go back
             }
         });
     }
