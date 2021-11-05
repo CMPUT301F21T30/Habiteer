@@ -54,7 +54,7 @@ public class EditHabitFragment extends Fragment {
             public void onClick(View view) {
                 // hide keyboard
 
-                InputMethodManager in = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager in = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 in.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                 MaterialDatePicker picker = MaterialDatePicker.Builder.datePicker()
@@ -87,8 +87,8 @@ public class EditHabitFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextInputLayout NameBox = getView().findViewById(R.id.textInput_habitName);
-        TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
+        TextInputLayout NameBox = requireView().findViewById(R.id.textInput_habitName);
+        TextInputLayout reasonBox = requireView().findViewById(R.id.textInput_habitReason);
 
 
         switch (item.getItemId()) {
@@ -98,7 +98,8 @@ public class EditHabitFragment extends Fragment {
                 String habitName = NameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
                 Date endDate = mViewModel.getEndDate();
-                Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(0); // TODO replace with actual index
+                int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
+                Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(habitIndex);
 
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
