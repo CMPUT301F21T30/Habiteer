@@ -11,9 +11,8 @@ public class  Habit implements Serializable {
     private Integer progress;
     private Boolean publicHabit;
 
-    Habit() {
-        this.habitName = "Untitled";
-    }
+
+    Habit() {} // no-argument constructor for firebase
 
     Habit(String habitName) {
         this.habitName = habitName;

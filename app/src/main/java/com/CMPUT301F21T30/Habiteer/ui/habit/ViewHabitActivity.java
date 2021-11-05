@@ -14,6 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventsFragment;
+import com.google.android.gms.common.util.ArrayUtils;
+import com.google.common.collect.Lists;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 //import ca.antonious.materialdaypicker.MaterialDayPicker;
 
@@ -22,7 +32,10 @@ public class ViewHabitActivity extends AppCompatActivity {
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
     Switch privateSwitch;
-    //MaterialDayPicker days;
+    MaterialDayPicker days;
+    Calendar calendar;
+    String todayDate;
+    SimpleDateFormat dateFormat;
 
 
     @Override
