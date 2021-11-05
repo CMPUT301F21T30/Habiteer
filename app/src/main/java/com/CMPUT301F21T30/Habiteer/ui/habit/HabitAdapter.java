@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
@@ -27,10 +29,14 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView habitNameText;
+        private TextView habitEndDate;
+        private TextView habitRepeats;
 
         public ViewHolder(final View view) {
             super(view);
             habitNameText = view.findViewById(R.id.habit_name);
+            habitRepeats = view.findViewById(R.id.repeats);
+            habitEndDate = view.findViewById(R.id.end_date);
             view.setOnClickListener(this);
         }
 
@@ -52,9 +58,15 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
+        // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
         String habitName = habitArrayList.get(position).getHabitName();
+        SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
+        String habitDate = dateFormatter.format(habitArrayList.get(position).getEndDate());
         holder.habitNameText.setText(habitName);
+        holder.habitEndDate.setText(habitDate);
+//        holder.habitRepeats.setText(); //TODO set repeat
+
 
     }
 

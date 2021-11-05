@@ -9,9 +9,9 @@
         android:title="@string/title_ListHabit" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_habit_event"
+        android:icon="@drawable/ic_habit_events"
+        android:title="@string/habit_events" />
 
     <item
         android:id="@+id/navigation_community"
