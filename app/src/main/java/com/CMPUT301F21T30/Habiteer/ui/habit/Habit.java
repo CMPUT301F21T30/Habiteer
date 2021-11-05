@@ -2,6 +2,10 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import java.util.Date;
 
+/**
+ * This class stores Habit details and allows creation of new Habits.
+ * It holds a habit's name, start date, end date, and reason
+ */
 public class Habit {
     private String habitName;
     private Date startDate;
