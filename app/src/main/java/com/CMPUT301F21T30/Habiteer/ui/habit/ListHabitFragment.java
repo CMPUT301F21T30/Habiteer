@@ -26,6 +26,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment that holds the Habits recyclerview.
+ * Holds the habit list.
+ */
 public class ListHabitFragment extends Fragment {
 
     private ListHabitViewModel listHabitViewModel;
