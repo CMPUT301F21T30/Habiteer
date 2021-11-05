@@ -12,7 +12,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment;
+import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddHabitFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.Solo;
 
@@ -56,7 +56,7 @@ public class AddHabitTests {
 
         // see if the right fragment appears
         AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
-        assertEquals(addedit.getSupportFragmentManager().findFragmentById(R.id.container).getClass(), AddEditHabitFragment.class);
+        assertEquals(addedit.getSupportFragmentManager().findFragmentById(R.id.container).getClass(), AddHabitFragment.class);
     }
 
     @Test
