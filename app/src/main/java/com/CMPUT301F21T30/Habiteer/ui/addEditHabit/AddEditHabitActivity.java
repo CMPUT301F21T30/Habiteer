@@ -39,6 +39,9 @@ public class AddEditHabitActivity extends AppCompatActivity {
 
             case R.id.button_addHabit:
                 return false;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return false;
     }
