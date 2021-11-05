@@ -16,10 +16,12 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.RobotiumUtils;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,14 +33,8 @@ import org.junit.runner.RunWith;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class HabiteerTest {
+public class ListHabitTest {
     private Solo solo;
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.CMPUT301F21T30.Habiteer", appContext.getPackageName());
-    }
 
     @Rule
     public ActivityTestRule<SignupActivity> rule = new ActivityTestRule<>(SignupActivity.class, true, true);
@@ -47,6 +43,22 @@ public class HabiteerTest {
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         sharedActions.login(solo);
+    }
+
+    @Test
+    public void testHabitList() {
+        // solo.getCurrentActivity().getFragmentManager().findFragmentById(R.id.habit_list).isVisible();
+        sharedActions.addHabit(solo);
+        solo.assertCurrentActivity("Main Activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.habit_recycler));
+        solo.waitForText("Run", 1, 2000);
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        sharedActions.deleteHabit(solo);
+        solo.finishOpenedActivities();
     }
 
 }

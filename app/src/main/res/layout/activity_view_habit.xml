@@ -145,9 +145,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/addHabitEvent"
         android:layout_marginLeft="250dp"
-        android:layout_marginRight="50dp"
         android:layout_marginTop="40dp"
-        android:text="Edit"/>
+        android:layout_marginRight="50dp"
+        android:text="Edit" />
 
 
 
