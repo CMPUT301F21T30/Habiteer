@@ -59,7 +59,7 @@ public class EditHabitFragment extends Fragment {
         // fill in the text fields with existing details
         fillInHabitDetails(view,habitDateInput,selectedHabit);
 
-        habitDateInput.setOnClickListener(new View.OnClickListener() {
+        habitDateInput.getEditText().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // hide keyboard
