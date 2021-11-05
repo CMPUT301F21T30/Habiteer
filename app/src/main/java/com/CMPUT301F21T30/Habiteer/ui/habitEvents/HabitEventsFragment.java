@@ -31,6 +31,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * To create a calendar view that will allow the user to select
+ * specific days to display all habit events that occurred on that date
+ */
 public class HabitEventsFragment extends Fragment
 {
     private TextView monthYearText;
@@ -41,6 +45,15 @@ public class HabitEventsFragment extends Fragment
     Session session = Session.getInstance();
 //    DatePicker datePicker;
 
+    /**
+     * To set view for habit event denoting layout
+     * and actively listen for date change on calendar view,
+     * get new date every time user clicks on new date on calendar view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,8 +64,11 @@ public class HabitEventsFragment extends Fragment
 //        date = getArguments().getString("todayDate");
 //        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
 
+        // To set calendar view
         selectedDate = LocalDate.now();
         calendar = root.findViewById(R.id.calendarView);
+
+        // To set on date change listener on calendar view
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -61,6 +77,7 @@ public class HabitEventsFragment extends Fragment
                 //session.getUser().getHabitList();
             }
         });
+        // To fetch event list from database
         ArrayList<Event> eventList = Session.getInstance().getUser().getEventList();
 
         return root;

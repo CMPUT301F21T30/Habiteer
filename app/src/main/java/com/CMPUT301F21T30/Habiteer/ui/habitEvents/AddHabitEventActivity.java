@@ -14,10 +14,12 @@ import com.CMPUT301F21T30.Habiteer.Session;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Class to add new habit event
+ */
 public class AddHabitEventActivity extends AppCompatActivity {
-    private CalendarView calendar;
+    // To initialize variables
     String date = "";
-    String TAG = "Sample";
     int habitIndex;
     String indexString;
     TextView eventDateView;
@@ -29,22 +31,31 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
     Button addButton;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    /**
+     * To set habit event layout, get intent and set event date
+     * Creates an on click listener for add button
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_habit_event_activity);
 
+        // To pass habit index
         indexString = getIntent().getStringExtra("habitIndex");
         habitIndex = Integer.parseInt(indexString);
+
         // date of event
         date = getIntent().getStringExtra("eventDate");
         eventDateView = findViewById(R.id.textInput_habitEventDate);
 
+        // To set event date
         eventDateView.setText("Event date: " + date);
 
+        // This toast confirms correct date is being passed
         Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit index: " + habitIndex, Toast.LENGTH_SHORT).show();
+
+        // To connect to the add button and set an on click listener
         addButton = findViewById(R.id.button_addHabitEvent);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +66,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * function to get event name and event comment
+     * and update the database with these new details
+     * @param view
+     */
     public void addEvent(View view) {
         eventNameInput = findViewById(R.id.event_name_input);
         eventName = eventNameInput.getText().toString();
