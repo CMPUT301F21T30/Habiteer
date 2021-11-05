@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-//import ca.antonious.materialdaypicker.MaterialDayPicker;
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
