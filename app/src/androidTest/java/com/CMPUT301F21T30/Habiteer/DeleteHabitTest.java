@@ -42,6 +42,7 @@ public class DeleteHabitTest {
     @Test
     public void deleteHabit()
     {
+        sharedActions.addHabit(solo);
         solo.clickOnView(solo.getView(R.id.habit_recycler));
         solo.clickOnView(solo.getView(R.id.delete));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
