@@ -1,5 +1,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import static android.content.Intent.getIntent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -44,6 +47,10 @@ public class HabitEventsFragment extends Fragment
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_habit_events, container, false);
         super.onCreate(savedInstanceState);
+
+        date = (String) ((ViewHabitActivity) getActivity()).getIntent().getStringExtra("eventDate");
+        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
+
         selectedDate = LocalDate.now();
         calendar = root.findViewById(R.id.calendarView);
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

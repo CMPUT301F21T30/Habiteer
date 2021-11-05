@@ -6,5 +6,5 @@ import java.util.Date;
 
 public class AddHabitEventModel extends ViewModel {
     private Date eventDate;
-    private  endDate;
+    private Date endDate;
 }
