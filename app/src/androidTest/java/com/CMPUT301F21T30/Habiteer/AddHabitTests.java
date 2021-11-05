@@ -97,4 +97,5 @@ public class AddHabitTests {
             assertTrue(solo.waitForText("Run",1,2000));
 
     }
+    // TODO: teardown using delete
 }
