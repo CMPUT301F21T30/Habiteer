@@ -45,9 +45,15 @@ public class EditHabitFragment extends Fragment {
         setHasOptionsMenu(true);
         mViewModel = new ViewModelProvider(this).get(com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel.class);
 
-
+        // get the selected habit
+        int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
+        Habit selectedHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
 
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitEndDate);
+
+
+        // fill in the text fields with existing details
+        fillInHabitDetails(view,habitDateInput,selectedHabit);
 
         habitDateInput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +89,26 @@ public class EditHabitFragment extends Fragment {
         });
         return view;
 
-    }
+    }/**
+     fill in the text fields with existing details
+        **/
+    private void  fillInHabitDetails(View view,TextInputLayout habitDateInput,Habit habit) {
+        TextInputLayout nameInput = view.findViewById(R.id.textInput_habitName);
+        TextInputLayout reasonInput = view.findViewById(R.id.textInput_habitReason);
 
+        // get existing data
+        String oldName = habit.getHabitName();
+        String oldReason = habit.getReason();
+
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+        String oldDate = simpleFormat.format(habit.getEndDate()); // date as a string using the above format
+
+        // set text to existing data
+        nameInput.getEditText().setText(oldName);
+        reasonInput.getEditText().setText(oldReason);
+        habitDateInput.getEditText().setText(oldDate);
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         TextInputLayout NameBox = requireView().findViewById(R.id.textInput_habitName);
@@ -97,13 +121,17 @@ public class EditHabitFragment extends Fragment {
                 // edit the habit
                 String habitName = NameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
-                Date endDate = mViewModel.getEndDate();
+
+
                 int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
                 Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(habitIndex);
+                if (mViewModel.getEndDate() != null) { // Set the date only if it was changed
+                    Date endDate = mViewModel.getEndDate();
+                    currentHabit.setEndDate(endDate);
+                }
 
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
-                currentHabit.setEndDate(endDate);
                 requireActivity().finish();
 //
 
