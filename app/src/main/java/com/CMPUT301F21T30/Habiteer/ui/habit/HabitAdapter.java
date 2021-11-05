@@ -49,7 +49,9 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         }
     }
     public void updateDataFromSession() {
-        this.habitArrayList = Session.getInstance().getUser().getHabitList() ;
+        Session session = Session.getInstance();
+        this.habitArrayList = session.getUser().getHabitList();
+        session.storeHabits(session.getUser().getHabitList());
         notifyDataSetChanged();
     }
 
