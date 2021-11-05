@@ -7,6 +7,8 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
+
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -49,8 +51,9 @@ public class Session {
                 System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); // TODO
                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
                 context.startActivity(intent); // if logged in, go to the main activity
+
             }
         });
     }
