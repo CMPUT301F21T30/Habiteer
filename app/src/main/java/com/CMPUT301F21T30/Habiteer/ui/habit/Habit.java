@@ -8,11 +8,7 @@ public class  Habit {
     private Date endDate;
     private String reason;
 //    private Integer progress;
-
-    Habit() {
-        this.habitName = "Untitled";
-    }
-
+    Habit() {} // no-argument constructor for firebase
     Habit(String habitName) {
         this.habitName = habitName;
     }
