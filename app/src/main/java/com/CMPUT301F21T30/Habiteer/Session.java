@@ -96,4 +96,5 @@ public class Session {
                 });
     }
     public void addHabit(Habit habit) {user.addHabit(habit);}
+    public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
 }
