@@ -191,8 +191,11 @@ public class Session {
         /* Delete habit in in-app list */
         habitList.remove(habit);
         String habitID = habit.getId();
-        user.getHabitIdList().remove(habitID);
+        ArrayList<String> habitIdList = user.getHabitIdList();
+        habitIdList.remove(habitID);
+        user.setHabitIdList(habitIdList);
         /* Delete on Firebase Habits Collection */
+        Log.d(TAG, "habit id: " + habitID); // TODO remove
         db.collection("Habits").document(habitID)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
