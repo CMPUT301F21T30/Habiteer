@@ -33,7 +33,6 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private String habitID;
     private ArrayList<Habit> habitList;
 
     /**
@@ -51,24 +50,26 @@ public class Session {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
+                for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                    DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                    habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Habit habit = documentSnapshot.toObject(Habit.class);
+                            habitList.add(habit);
+                            Log.d(TAG,"Habit List: " + habitList); // TODO remove
+                        }
+                    });
+                }
             }
         });
-        // TODO get habits that belong to User from Firestore and append to habitList
-        try {
-            for (int i = 0; i < user.getHabitIdList().size(); i++) {
-                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
-                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Habit habit = documentSnapshot.toObject(Habit.class);
-                        habitList.add(habit);
-                    }
-                });
-            }
-        }
-        catch (NullPointerException e) {
-            System.out.println("Habit ID list is empty: " + e);
-        }
+        // Get habits that belong to User from Firestore and append to habitList
+//        try {
+
+//        }
+//        catch (NullPointerException e) {
+//            System.out.println("Habit ID list is empty: " + e);
+//        }
         Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
@@ -130,11 +131,11 @@ public class Session {
     }
 
     /**
-     * adds a habit into the habit list.
+     * adds a habit into Firestore.
      * @param habit a Habit object.
      */
     public void addHabit(Habit habit) {
-        /* Add to in app list */
+        /* Add to in-app list */
         habitList.add(habit);
         /* Store onto Firebase Habits Collection */
         db.collection("Habits")
@@ -142,8 +143,21 @@ public class Session {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        habitID = documentReference.getId();
+                        String habitID = documentReference.getId();
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
+                        /* Store onto Firebase Users Collection */
+                        db.collection("Users").document(user.getEmail()).update("habitIdList", FieldValue.arrayUnion(habitID)) //FIXME this is producing null on firestore even though it prints as intended
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + habitID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -153,19 +167,7 @@ public class Session {
                     }
                 });
 
-        /* Store onto Firebase Users Collection */
-        db.collection("Users").document(user.getEmail()).update("habitList", FieldValue.arrayUnion(habitID)) //FIXME this is producing null on firestore even though it prints as intended
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + habitID);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+
     }
     /**
      * Deletes a habit from the user habit list.
