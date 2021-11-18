@@ -158,6 +158,7 @@ public class Session {
                     public void onSuccess(DocumentReference documentReference) {
                         String habitID = documentReference.getId();
                         documentReference.update("id", habitID);
+                        habit.setId(habitID);
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
                         db.collection("Users").document(user.getEmail()).update("habitIdList", FieldValue.arrayUnion(habitID))
