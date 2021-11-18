@@ -4,13 +4,14 @@ import java.util.Date;
 
 /**
  * This class stores Habit details and allows creation of new Habits.
- * It holds a habit's name, start date, end date, and reason
+ * It holds a habit's name, start date, end date, reason, and ID
  */
 public class Habit {
     private String habitName;
     private Date startDate;
     private Date endDate;
     private String reason;
+    private String id;
 //    private Integer progress;
     /**
      * No-argument constructor, used only for firebase.
@@ -56,6 +57,8 @@ public class Habit {
         return reason;
     }
 
+    public String getId() { return id; }
+
     public void setHabitName(String habitName) {
         this.habitName = habitName;
     }
@@ -71,4 +74,6 @@ public class Habit {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public void setId(String id) { this.id = id; }
 }
