@@ -33,7 +33,6 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private DocumentReference document;
     private String habitID;
     private ArrayList<Habit> habitList;
 
@@ -44,6 +43,7 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
+        habitList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
