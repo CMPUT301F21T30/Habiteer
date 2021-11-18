@@ -1,19 +1,11 @@
 package com.CMPUT301F21T30.Habiteer;
 
-import static org.junit.Assert.assertEquals;
-
-import android.content.Context;
 import android.widget.EditText;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
-
 import androidx.test.rule.ActivityTestRule;
 
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitFragment;
-import com.CMPUT301F21T30.Habiteer.ui.habit.ListHabitFragment;
-import com.google.android.material.textfield.TextInputEditText;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
