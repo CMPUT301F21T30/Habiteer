@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -97,12 +98,50 @@ public class Session {
         user.setHabitList(new ArrayList<Habit>(habitList));
 //        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
 
-        /* Store onto Firebase */
-        db.collection("Users").document(user.getEmail()).update("habitList", user.getHabitList())
+        /* Store onto Firebase Users Collection */
+//        db.collection("Users").document(user.getEmail()).update("habitList", user.getHabitList())
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d(TAG, "DocumentSnapshot successfully written!");
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG, "Error writing document", e);
+//                    }
+//                });
+    }
+
+    /**
+     * adds a habit into the user habit list.
+     * @param habit a Habit object.
+     */
+    public void addHabit(Habit habit) {
+        /* Store onto Firebase Habits Collection */
+        final String[] habitID = new String[1];
+        db.collection("Habits")
+                .add(habit)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        habitID[0] = documentReference.getId();
+                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID[0]);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+        /* Store onto Firebase Users Collection */
+        db.collection("Users").document(user.getEmail()).update("habitList", FieldValue.arrayUnion(habitID[0]))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -111,12 +150,6 @@ public class Session {
                     }
                 });
     }
-
-    /**
-     * adds a habit into the user habit list.
-     * @param habit a Habit object.
-     */
-    public void addHabit(Habit habit) {user.addHabit(habit);}
     /**
      * Deletes a habit from the user habit list.
      * @param habit a Habit object.

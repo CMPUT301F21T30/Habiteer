@@ -36,12 +36,6 @@ public class ListHabitViewModel extends ViewModel {
         return mHabits;
     }
 
-    public void addHabit(Habit habit) {
-        habitList = Session.getInstance().getUser().getHabitList();
-        habitList.add(habit);
-        getHabits();
-    }
-
     public void setIndex(int index) {
         mIndex.setValue(index);
     }
