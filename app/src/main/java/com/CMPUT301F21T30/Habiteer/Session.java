@@ -34,6 +34,7 @@ public class Session {
     private User user;
     private static Session instance = null;
     private ArrayList<Habit> habitList;
+    private ArrayList<Event> habitEventsList;
 
     /**
      * Singleton Session constructor
@@ -121,29 +122,6 @@ public class Session {
     }
 
     /**
-     * Overwrites the list of habits into the User object with the given list, then overwrites the habitList on firebase with the given list.
-     * @param habitList a list of habits objects to write in
-     */
-    public void storeHabits(List<String> habitList) {
-        user.setHabitIdList(new ArrayList<String>(habitList));
-//        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
-
-        /* Store onto Firebase Users Collection */
-//        db.collection("Users").document(user.getEmail()).update("habitList", user.getHabitList())
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d(TAG, "DocumentSnapshot successfully written!");
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error writing document", e);
-//                    }
-//                });
-    }
-
-    /**
      * adds a habit into Firestore.
      * @param habit a Habit object.
      */
@@ -196,7 +174,6 @@ public class Session {
         habitIdList.remove(habitID);
         user.setHabitIdList(habitIdList);
         /* Delete on Firebase Habits Collection */
-        Log.d(TAG, "habit id: " + habitID); // TODO remove
         db.collection("Habits").document(habitID)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -124,7 +124,6 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
                 Session.getInstance().deleteHabit(currentHabit);
-//                Session.getInstance().storeHabits(Session.getInstance().getHabitList()); // TODO figure out what storeHabits does
                 finish();
             }
         });

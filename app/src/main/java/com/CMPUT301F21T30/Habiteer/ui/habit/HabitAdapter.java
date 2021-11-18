@@ -64,7 +64,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
          */
         Session session = Session.getInstance();
         this.habitArrayList = session.getHabitList();
-//        session.storeHabits(session.getHabitList()); // TODO figure out what storeHabits does
         notifyDataSetChanged();
     }
 

@@ -45,10 +45,8 @@ public class ListHabitFragment extends Fragment {
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
-                Log.d("TAG","HabitList in Frag: " + habits); // TODO remove
                 habitAdapter.notifyDataSetChanged();
                 Session session = Session.getInstance();
-//                session.storeHabits(habits); // TODO figure out what storeHabits does
                 System.out.println("ListHabitFragment Session: " + session);
                 System.out.println("ListHabitFragment user: " + session.getUser());
             }
