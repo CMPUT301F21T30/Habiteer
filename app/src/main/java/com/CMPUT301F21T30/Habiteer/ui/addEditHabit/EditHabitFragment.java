@@ -149,6 +149,9 @@ public class EditHabitFragment extends Fragment {
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
 
+                // call Session to update data on Firestore
+                Session.getInstance().updateHabit(currentHabit);
+
                 requireActivity().finish(); // close the activity
 
                 // update and navigate back to view habit

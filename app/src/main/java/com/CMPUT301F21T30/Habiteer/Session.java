@@ -227,6 +227,25 @@ public class Session {
 
     }
 
+    public void updateHabit(Habit habit) {
+        String habitID = habit.getId();
+        db.collection("Habits")
+            .document(habitID)
+            .set(habit)
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error updating document", e);
+            }
+        });
+    }
+
     public void storeEvent(List<Event> eventList) {
         user.setEventList(new ArrayList<Event>(eventList));
 //        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
