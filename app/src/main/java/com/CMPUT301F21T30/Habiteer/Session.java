@@ -20,9 +20,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -36,27 +34,45 @@ public class Session {
     private User user;
     private static Session instance = null;
     private DocumentReference document;
+    private String habitID;
+    private ArrayList<Habit> habitList;
+
     /**
      * Singleton Session constructor
+     * Reads data from Users collection in Firestore and converts to User object
      * 
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("Users").document(email);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        DocumentReference usersDocRef = db.collection("Users").document(email);
+        usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
-                user.setEmail(docRef.getId()); // document does not set email to User, so we set manually
-                System.out.println("Session user: " + user.getEmail() + ", " + user.getHabitList()); // TODO remove
-                Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
-                context.startActivity(intent); // if logged in, go to the main activity
-
+                user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
             }
         });
+        // TODO get habits that belong to User from Firestore and append to habitList
+        try {
+            for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Habit habit = documentSnapshot.toObject(Habit.class);
+                        habitList.add(habit);
+                    }
+                });
+            }
+        }
+        catch (NullPointerException e) {
+            System.out.println("Habit ID list is empty: " + e);
+        }
+        Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
+        context.startActivity(intent); // if logged in, go to the main activity
     }
 
     /**
@@ -94,8 +110,8 @@ public class Session {
      * Overwrites the list of habits into the User object with the given list, then overwrites the habitList on firebase with the given list.
      * @param habitList a list of habits objects to write in
      */
-    public void storeHabits(List<Habit> habitList) {
-        user.setHabitList(new ArrayList<Habit>(habitList));
+    public void storeHabits(List<String> habitList) {
+        user.setHabitIdList(new ArrayList<String>(habitList));
 //        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
 
         /* Store onto Firebase Users Collection */
@@ -114,19 +130,20 @@ public class Session {
     }
 
     /**
-     * adds a habit into the user habit list.
+     * adds a habit into the habit list.
      * @param habit a Habit object.
      */
     public void addHabit(Habit habit) {
+        /* Add to in app list */
+        habitList.add(habit);
         /* Store onto Firebase Habits Collection */
-        final String[] habitID = new String[1];
         db.collection("Habits")
                 .add(habit)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        habitID[0] = documentReference.getId();
-                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID[0]);
+                        habitID = documentReference.getId();
+                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -137,11 +154,11 @@ public class Session {
                 });
 
         /* Store onto Firebase Users Collection */
-        db.collection("Users").document(user.getEmail()).update("habitList", FieldValue.arrayUnion(habitID[0]))
+        db.collection("Users").document(user.getEmail()).update("habitList", FieldValue.arrayUnion(habitID)) //FIXME this is producing null on firestore even though it prints as intended
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + habitID);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -154,7 +171,9 @@ public class Session {
      * Deletes a habit from the user habit list.
      * @param habit a Habit object.
      */
-    public void deleteHabit(Habit habit) {user.deleteHabit(habit);}
+    public void deleteHabit(Habit habit) {
+        habitList.remove(habit);
+    }
 
     public void storeEvent(List<Event> eventList) {
         user.setEventList(new ArrayList<Event>(eventList));
@@ -180,4 +199,8 @@ public class Session {
         storeEvent(user.getEventList());
     }
     public void deleteEvent(Event event) {user.deleteEvent(event);}
+
+    public ArrayList<Habit> getHabitList() {
+        return this.habitList;
+    }
 }

@@ -46,7 +46,7 @@ public class ListHabitFragment extends Fragment {
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
                 Session session = Session.getInstance();
-                session.storeHabits(habits);
+//                session.storeHabits(habits); // TODO figure out what storeHabits does
                 System.out.println("ListHabitFragment Session: " + session);
                 System.out.println("ListHabitFragment user: " + session.getUser());
             }
