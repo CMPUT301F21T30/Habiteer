@@ -11,8 +11,8 @@
 
     <TextView
         android:id="@+id/habit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="287dp"
+        android:layout_height="34dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
@@ -66,6 +66,44 @@
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/repeats_label"
         app:layout_constraintTop_toBottomOf="@+id/habit_name" />
+
+    <ProgressBar
+        android:id="@+id/circular_progress"
+        android:layout_width="80dp"
+        android:layout_height="85dp"
+        android:indeterminateOnly="false"
+        android:progress="60"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toEndOf="@+id/habit_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"></ProgressBar>
+
+    <TextView
+        android:id="@+id/progress_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60"
+        app:layout_constraintBottom_toBottomOf="@+id/circular_progress"
+        app:layout_constraintEnd_toEndOf="@+id/circular_progress"
+        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintStart_toStartOf="@+id/circular_progress"
+        app:layout_constraintTop_toTopOf="@+id/circular_progress"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <TextView
+        android:id="@+id/percentage_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        app:layout_constraintBottom_toBottomOf="@+id/circular_progress"
+        app:layout_constraintEnd_toEndOf="@+id/circular_progress"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/progress_percentage"
+        app:layout_constraintTop_toTopOf="@+id/circular_progress">
+    </TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
