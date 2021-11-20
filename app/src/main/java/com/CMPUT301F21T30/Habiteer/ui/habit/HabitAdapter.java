@@ -5,6 +5,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +66,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         }
     }
     public void updateDataFromSession() {
+        /**
+         * This method updates the Habit List and stores it in Firestore
+         */
         Session session = Session.getInstance();
-        this.habitArrayList = session.getUser().getHabitList();
-        session.storeHabits(session.getUser().getHabitList());
+        this.habitArrayList = session.getHabitList();
         notifyDataSetChanged();
     }
 
@@ -102,7 +105,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return habitArrayList.toArray().length;
+        try {
+            return habitArrayList.toArray().length;
+        }
+        catch (NullPointerException e) {
+            System.out.println("habitAdapter is empty: " + e);
+            return 0;
+        }
     }
 
 }

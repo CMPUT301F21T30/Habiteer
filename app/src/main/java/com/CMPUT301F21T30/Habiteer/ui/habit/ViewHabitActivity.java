@@ -11,20 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.CMPUT301F21T30.Habiteer.MainActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventsFragment;
-import com.google.android.gms.common.util.ArrayUtils;
-import com.google.common.collect.Lists;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
@@ -67,7 +60,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // get current habit at that index
-        Habit currentHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
+        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
 
         // get habit info
         String habitname = currentHabit.getHabitName();
@@ -131,7 +124,6 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
                 Session.getInstance().deleteHabit(currentHabit);
-                Session.getInstance().storeHabits(Session.getInstance().getUser().getHabitList());
                 finish();
             }
         });
