@@ -31,15 +31,9 @@ public class ListHabitViewModel extends ViewModel {
 
 
     public LiveData<List<Habit>> getHabits() {
-        habitList = Session.getInstance().getUser().getHabitList();
+        habitList = Session.getInstance().getHabitList();
         mHabits.setValue(habitList);
         return mHabits;
-    }
-
-    public void addHabit(Habit habit) {
-        habitList = Session.getInstance().getUser().getHabitList();
-        habitList.add(habit);
-        getHabits();
     }
 
     public void setIndex(int index) {

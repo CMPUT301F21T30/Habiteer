@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
     private String email;
-    private ArrayList<Habit> habitList;
+    private ArrayList<String> habitIdList;
     private ArrayList<Event> eventList;
 
     private ArrayList<User> followerList;
@@ -18,7 +18,7 @@ public class User implements Serializable {
 
     public User(String email) {
         this.email = email;
-        this.habitList = new ArrayList<>();
+        this.habitIdList = new ArrayList<>();
         this.eventList = new ArrayList<>();
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
@@ -29,14 +29,14 @@ public class User implements Serializable {
         return email;
     }
 
-    public ArrayList<Habit> getHabitList() {
-        return habitList;
+    public ArrayList<String> getHabitIdList() {
+        return habitIdList;
     }
-    public void addHabit(Habit habit) {this.habitList.add(habit);}
-    public void deleteHabit(Habit habit) {this.habitList.remove(habit);}
+    public void addHabit(String habit) {this.habitIdList.add(habit);}
+    public void deleteHabit(Habit habit) {this.habitIdList.remove(habit);}
 
-    public void setHabitList(ArrayList<Habit> habitList) {
-        this.habitList = habitList;
+    public void setHabitIdList(ArrayList<String> habitIdList) {
+        this.habitIdList = habitIdList;
     }
 
     public ArrayList<User> getFollowerList() {
@@ -55,7 +55,7 @@ public class User implements Serializable {
         return eventList;
     }
     public void addEvent(Event event) {this.eventList.add(event);}
-    public void deleteEvent(Event event) {this.habitList.remove(event);}
+    public void deleteEvent(Event event) {this.habitIdList.remove(event);}
 
     public void setEventList(ArrayList<Event> eventList) {
         this.eventList = eventList;
