@@ -17,7 +17,6 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,12 +35,19 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         private TextView habitNameText;
         private TextView habitEndDate;
         private TextView habitRepeats;
+        //private TextView habitProgressPercentage;
+
+        //private ProgressBar habitProgressBar;
 
         public ViewHolder(final View view) {
             super(view);
             habitNameText = view.findViewById(R.id.habit_name);
             habitRepeats = view.findViewById(R.id.repeats);
             habitEndDate = view.findViewById(R.id.end_date);
+            //habitProgressPercentage = view.findViewById(R.id.progress_percentage);
+
+            //habitProgressBar = view.findViewById(R.id.circular_progress);
+
             view.setOnClickListener(this);
         }
 
@@ -79,8 +85,16 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         String habitName = habitArrayList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(habitArrayList.get(position).getEndDate());
+
+        //Integer habitProgressPer = habitArrayList.get(position).getProgress();
+
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
+
+        //holder.habitProgressPercentage.setText(habitProgressPer);
+
+        //holder.habitProgressBar.setProgress(habitProgressPer);
+
 //        holder.habitRepeats.setText(); //TODO set repeat
 
 

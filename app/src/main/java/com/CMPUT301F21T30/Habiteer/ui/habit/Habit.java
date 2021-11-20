@@ -11,7 +11,7 @@ public class Habit {
     private Date startDate;
     private Date endDate;
     private String reason;
-//    private Integer progress;
+    private Integer progress;
     /**
      * No-argument constructor, used only for firebase.
      */
@@ -56,6 +56,10 @@ public class Habit {
         return reason;
     }
 
+    public Integer getProgress() {
+        return progress;
+    }
+
     public void setHabitName(String habitName) {
         this.habitName = habitName;
     }
@@ -70,5 +74,9 @@ public class Habit {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 }
