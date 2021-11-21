@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -80,7 +81,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
 
         Event event = new Event(eventName, eventComment,date);
-        Session.getInstance().addEvent(event);
+
+        Session.getInstance().addEvent(event, habitIndex);
         finish();
     }
 }

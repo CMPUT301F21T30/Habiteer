@@ -78,7 +78,7 @@ public class HabitEventsFragment extends Fragment
             }
         });
         // To fetch event list from database
-        ArrayList<Event> eventList = Session.getInstance().getUser().getEventList();
+        //ArrayList<Event> eventList = Session.getInstance().getUser().getEventList();
 
         return root;
     }
