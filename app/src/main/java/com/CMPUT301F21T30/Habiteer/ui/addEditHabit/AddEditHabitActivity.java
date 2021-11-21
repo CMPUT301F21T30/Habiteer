@@ -11,6 +11,10 @@ import android.view.MenuItem;
 
 import com.CMPUT301F21T30.Habiteer.R;
 
+/**
+ * This activity handles both the add and edit habit fragments, because it has the (top) action bar with the save button on it.
+ * It determines which fragment to use based on the EditMode boolean passed in from the intent.
+ */
 public class AddEditHabitActivity extends AppCompatActivity {
 
     @Override
@@ -25,18 +29,19 @@ public class AddEditHabitActivity extends AppCompatActivity {
         assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
 
+        // get the edit mode from intent
         Bundle extras = getIntent().getExtras();
         Boolean EditMode = extras.getBoolean("EditMode");
         Fragment destFrag;
-        if (EditMode) {
+        if (EditMode) { // if editing
             destFrag = EditHabitFragment.newInstance();
             this.setTitle(R.string.title_editHabit);
         }
-        else {
-            destFrag = AddEditHabitFragment.newInstance();
+        else { // if adding
+            destFrag = AddHabitFragment.newInstance();
             this.setTitle(R.string.title_addHabit);
         }
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null) { // replace the container with chosen fragment
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, destFrag)
                     .commitNow();
@@ -46,18 +51,17 @@ public class AddEditHabitActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate options menu
         getMenuInflater().inflate(R.menu.add_habit_menu, menu);
-
-
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.button_addHabit:
+            case R.id.button_addHabit: // implemented in the fragments, so left false here
                 return false;
-            case android.R.id.home:
+            case android.R.id.home: // back button
                 finish();
                 return true;
         }

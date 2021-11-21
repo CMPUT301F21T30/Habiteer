@@ -17,6 +17,9 @@ import com.CMPUT301F21T30.Habiteer.Session;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles data sent to the HabitAdapter
+ */
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
