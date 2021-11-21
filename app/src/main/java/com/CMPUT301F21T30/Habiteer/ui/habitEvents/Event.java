@@ -2,6 +2,11 @@ package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
 import java.util.Date;
 
+
+/**
+ * To get and set new event name, event date and event comment
+ * and create a new event object
+ */
 public class Event {
     private String eventName;
     private String eventComment;

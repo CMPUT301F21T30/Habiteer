@@ -2,6 +2,7 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,6 @@ public class ListHabitFragment extends Fragment {
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
                 Session session = Session.getInstance();
-                session.storeHabits(habits);
                 System.out.println("ListHabitFragment Session: " + session);
                 System.out.println("ListHabitFragment user: " + session.getUser());
             }

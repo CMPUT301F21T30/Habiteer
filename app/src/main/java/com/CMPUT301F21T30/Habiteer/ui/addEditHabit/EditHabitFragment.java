@@ -2,7 +2,6 @@ package com.CMPUT301F21T30.Habiteer.ui.addEditHabit;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
-import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -27,11 +26,9 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
 /**
  * This fragment handles the editing of habits from the habit list. Allows the user to edit name, end date, days of the week, and habit reason.
@@ -56,7 +53,7 @@ public class EditHabitFragment extends Fragment {
 
         // get the selected habit
         int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-        Habit selectedHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
+        Habit selectedHabit = Session.getInstance().getHabitList().get(habitIndex);
 
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitEndDate);
 
@@ -141,7 +138,7 @@ public class EditHabitFragment extends Fragment {
 
                 // get selected habit from User
                 int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-                Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(habitIndex);
+                Habit currentHabit  = Session.getInstance().getHabitList().get(habitIndex);
 
                 // Set the date only if it was changed
                 if (mViewModel.getEndDate() != null) {
@@ -151,6 +148,9 @@ public class EditHabitFragment extends Fragment {
                 // set other data
                 currentHabit.setHabitName(habitName);
                 currentHabit.setReason(reason);
+
+                // call Session to update data on Firestore
+                Session.getInstance().updateHabit(currentHabit);
 
                 requireActivity().finish(); // close the activity
 

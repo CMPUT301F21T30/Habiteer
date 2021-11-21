@@ -1,4 +1,8 @@
 package com.CMPUT301F21T30.Habiteer;
+/**
+ * This is a class that shows the login page and allows the user
+ * to log into the application.
+ */
 
 import android.app.Activity;
 import android.content.Intent;
@@ -45,6 +49,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(new View.OnClickListener() { //clicking on the login button
             @Override
+            /**
+             * This checks for the email and password, and
+             * authenticates the user using Firestore
+             */
             public void onClick(View view) {
                 String email = loginEmail.getText().toString().trim();
                 String password = loginPassword.getText().toString().trim();

@@ -64,8 +64,6 @@ public class AddHabitTests {
         solo.clickOnView(solo.getView(R.id.FAB_addHabit));
         solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
         solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
-        // see if the right fragment appears
-        AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
         solo.clickOnButton(1);
         solo.clickOnButton(2);
         solo.clickOnText("Save");
@@ -80,8 +78,6 @@ public class AddHabitTests {
             solo.clickOnView(solo.getView(R.id.FAB_addHabit));
             solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
             solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
-            // see if the right fragment appears
-            AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
             solo.clickOnButton(1);
             solo.clickOnButton(2);
             solo.clickOnText("Save");

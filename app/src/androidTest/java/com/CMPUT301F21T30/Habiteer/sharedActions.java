@@ -14,10 +14,10 @@ public class sharedActions {
      */
     public static void login(Solo solo) {
         solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "as@gmail.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEmail), "tester@robotium.com");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Main Activity", MainActivity.class);
     }
     public static void addHabit(Solo solo) {
         // select date
