@@ -11,6 +11,7 @@ public class Event {
     private String eventName;
     private String eventComment;
     private String makeDate; // TODO store this as a Date object, not a string
+    private String id;
     //    private Integer progress;
     Event() {} // no-argument constructor for firebase
     Event(String eventName) {
@@ -31,13 +32,16 @@ public class Event {
 
     public String getEventComment() {return eventComment;}
 
-    public void setMakeDate(String makeDate) {
-        this.makeDate = makeDate;
-    }
+    public String getId() { return id; }
+
+    public void setMakeDate(String makeDate) {this.makeDate = makeDate; }
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
     }
 
     public void setEventComment(String comment) {this.eventComment=comment;}
+
+    public void setId(String id) { this.id = id; }
+
 }

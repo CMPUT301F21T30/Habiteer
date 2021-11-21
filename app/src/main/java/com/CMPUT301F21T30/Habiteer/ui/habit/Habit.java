@@ -1,5 +1,8 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,7 @@ public class Habit {
     private String reason;
     private String id;
     private boolean isPublic;
+    private ArrayList<String> eventIdList;
 //    private Integer progress;
     /**
      * No-argument constructor, used only for firebase.
@@ -43,6 +47,7 @@ public class Habit {
         this.reason = reason;
         isPublic = true;
 
+        eventIdList = new ArrayList<>();
     }
 
     // Getters and setter methods, self-explanatory
@@ -95,4 +100,11 @@ public class Habit {
     public void setId(String id) { this.id = id; }
 
     public void setPublic(boolean aPublic) {isPublic = aPublic;}
+    public ArrayList<String> getEventIdList() {
+        return eventIdList;
+    }
+
+    public void setEventIdList(ArrayList<String> eventIdList) {
+        this.eventIdList = eventIdList;
+    }
 }
