@@ -1,5 +1,6 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Intent.getIntent;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 
 import java.time.LocalDate;
@@ -77,8 +79,18 @@ public class HabitEventsFragment extends Fragment
                 //session.getUser().getHabitList();
             }
         });
-        // To fetch event list from database
-        //ArrayList<Event> eventList = Session.getInstance().getUser().getEventList();
+        // To fetch event list from user
+        ArrayList<Event> eventList = Session.getInstance().getEventList();
+        Log.d(TAG, String.valueOf(eventList.size()));
+        ArrayList<Event> filteredList = new ArrayList<>();
+        for (int i = 0; i < eventList.size(); i++)
+        {
+            if (eventList.get(i).getMakeDate() == date)
+            {
+                filteredList.add(eventList.get(i));
+
+            }
+        }
 
         return root;
     }

@@ -46,8 +46,7 @@ public class Habit {
         this.weekdayList = weekdayList;
         this.reason = reason;
         isPublic = true;
-
-        eventIdList = new ArrayList<>();
+        this.eventIdList = new ArrayList<>();
     }
 
     // Getters and setter methods, self-explanatory
