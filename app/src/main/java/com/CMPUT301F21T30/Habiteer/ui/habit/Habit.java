@@ -39,7 +39,7 @@ public class Habit {
         this.startDate = startDate;
         this.endDate = endDate;
         this.reason = reason;
-        eventIdList = new ArrayList<>();
+        this.eventIdList = new ArrayList<>();
     }
 
     // Getters and setter methods, self-explanatory

@@ -44,6 +44,7 @@ public class Session {
      */
     private Session(String email, Context context) {
         habitList = new ArrayList<>();
+        habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -61,6 +62,23 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitList.add(habit);
+
+                                /* Adding events to HabitEventsList */
+                                ArrayList<String> eventIDList = new ArrayList<>();
+                                for (int j = 0; j < habit.getEventIdList().size(); j++) {
+                                    eventIDList.add(habit.getEventIdList().get(j));
+                                }
+                                for (int i = 0; i < eventIDList.size(); i++) {
+                                    DocumentReference eventsDocRef = db.collection("HabitEvents").document(eventIDList.get(i));
+                                    eventsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Event event = documentSnapshot.toObject(Event.class);
+                                            habitEventsList.add(event);
+                                            Log.d(TAG, String.valueOf(habitEventsList.size()));
+                                        }
+                                    });
+                                }
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(context, MainActivity.class);
@@ -236,6 +254,7 @@ public class Session {
                         currentHabit.getEventIdList().add(eventID);
                         documentReference.update("id", eventID);
                         event.setId(eventID);
+                        habitEventsList.add(event);
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + eventID);
                         /* Store onto Firebase Users Collection */
                         db.collection("Habits").document(currentHabit.getId()).update("eventIdList", FieldValue.arrayUnion(eventID))
@@ -264,6 +283,7 @@ public class Session {
 
     public void deleteEvent(Event event, Integer habitIndex) {
         /* Delete habit in in-app list */
+        habitEventsList.remove(event);
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
         currentHabit.getEventIdList().remove(event.getId());
         /* Delete on Firebase Habits Collection */
@@ -295,6 +315,10 @@ public class Session {
                     }
                 });
 
+    }
+
+    public ArrayList<Event> getEventList() {
+        return this.habitEventsList;
     }
 
     public ArrayList<Habit> getHabitList() {
