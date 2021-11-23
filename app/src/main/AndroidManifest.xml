@@ -40,8 +40,11 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Habiteer.NoActionBar"
             android:exported="true" />
-        <activity android:name=".ui.habitEvents.AddHabitEventActivity" />
 
+        <activity
+            android:name=".ui.habitEvents.AddHabitEventActivity"></activity>
+        <activity
+            android:name=".ui.habitEvents.EditHabitEventActivity"></activity>
 
     </application>
 

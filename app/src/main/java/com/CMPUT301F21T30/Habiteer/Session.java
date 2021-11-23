@@ -62,7 +62,6 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitList.add(habit);
-
                                 /* Adding events to HabitEventsList */
                                 ArrayList<String> eventIDList = new ArrayList<>();
                                 for (int j = 0; j < habit.getEventIdList().size(); j++) {
@@ -283,6 +282,14 @@ public class Session {
 
     public void deleteEvent(Event event, Integer habitIndex) {
         /* Delete habit in in-app list */
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.remove(i);
+                break;
+            }
+        }
         habitEventsList.remove(event);
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
         currentHabit.getEventIdList().remove(event.getId());
