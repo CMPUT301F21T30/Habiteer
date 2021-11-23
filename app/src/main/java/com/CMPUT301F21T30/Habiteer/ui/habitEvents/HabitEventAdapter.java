@@ -43,10 +43,10 @@ public class HabitEventAdapter extends ArrayAdapter<Event> {
         Event event = eventsArrayList.get(position);
 
         TextView eventName = view.findViewById(R.id.event_name_text);
-        TextView eventDate = view.findViewById(R.id.event_date_text);
+        //TextView eventDate = view.findViewById(R.id.event_date_text);
 
         eventName.setText(event.getEventName());
-        eventDate.setText(event.getMakeDate());
+        //eventDate.setText(event.getMakeDate());
 
         return view;
     }
