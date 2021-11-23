@@ -5,6 +5,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.TextStyle;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
+import java.util.Locale;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * Custom adapter for habitList.
@@ -74,6 +84,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
@@ -83,11 +94,45 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         String habitDate = dateFormatter.format(habitArrayList.get(position).getEndDate());
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
-//        holder.habitRepeats.setText(); //TODO set repeat
+        List<MaterialDayPicker.Weekday> habitDays_raw = habitArrayList.get(position).getWeekdayList(); // raw list of days
+        String daysString = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
+            daysString = formatDayList(habitDays_raw);
+        }
+        else {
+            daysString = habitDays_raw.toString(); // just in case, old java versions with get this ugly string
+        }
+        holder.habitRepeats.setText(daysString);
 
 
     }
 
+    /**
+     * Converts a list of days into formatted string form
+     * @param habitDays_raw, a list of days from MaterialDatePicker
+     * @return daysString, a comma separated list of the abbreviated days in string form (e.g. "Mon, Tue, Wed"
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String formatDayList(List<MaterialDayPicker.Weekday> habitDays_raw){
+        StringBuilder daysStringBuilder = new StringBuilder();
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive() // case insensitive day string
+                .appendPattern("EEEE") // pattern for day of the week
+                .toFormatter(Locale.getDefault());
+        for (int i = 0; i < habitDays_raw.size(); i++) {
+            MaterialDayPicker.Weekday day = habitDays_raw.get(i); // loop through days
+
+            TemporalAccessor accessor = formatter.parse(day.toString()); // parse the day of week
+            DayOfWeek dayOfWeek = DayOfWeek.from(accessor);  // convert into a java.DayOfWeek object
+            // get the abbreviation and add it to the string
+            daysStringBuilder.append(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+            if (i!=habitDays_raw.size()-1) {
+                // only append comma and space if not last element
+                daysStringBuilder.append(", ");
+            }
+        }
+        return daysStringBuilder.toString(); // return the string list of days
+    }
     @Override
     public int getItemCount() {
         try {
