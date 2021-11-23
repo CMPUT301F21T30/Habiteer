@@ -100,7 +100,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             daysString = formatDayList(habitDays_raw); // format the list to a string
         }
         else {
-            daysString = habitDays_raw.toString(); // just in case, old java versions with get this ugly default string
+            daysString = habitDays_raw.toString(); // just in case, old java versions get this ugly default string
         }
         holder.habitRepeats.setText(daysString);
 
