@@ -10,14 +10,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +42,18 @@ import java.util.List;
  */
 public class HabitEventsFragment extends Fragment
 {
+    private ArrayAdapter<Event> habitEventAdapter;
+    ListView eventsList;
     private TextView monthYearText;
     private CalendarView calendar;
     private LocalDate selectedDate;
     String date = "";
     String TAG = "Sample";
     Session session = Session.getInstance();
+    Context context;
+    ArrayList<Event> filteredList;
+//    private Object HabitEventAdapter;
+
 //    DatePicker datePicker;
 
     /**
@@ -67,30 +76,37 @@ public class HabitEventsFragment extends Fragment
 //        Toast.makeText(getContext(), date, Toast.LENGTH_SHORT).show();
 
         // To set calendar view
+        context = container.getContext();
         selectedDate = LocalDate.now();
         calendar = root.findViewById(R.id.calendarView);
-
+        filteredList = new ArrayList<>();
+        ArrayList<Event> eventList = Session.getInstance().getEventList();
+        eventsList = root.findViewById(R.id.event_list);
+        habitEventAdapter = new HabitEventAdapter(context, filteredList);
+        eventsList.setAdapter(habitEventAdapter);
         // To set on date change listener on calendar view
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = dayOfMonth + "/" + month + "/" + year;
-                Log.d(TAG, date);
+                month+=1;
+                date = month + "/" + dayOfMonth + "/" + year;
+                filteredList.clear();
+                for (int i = 0; i < eventList.size(); i++)
+                {
+                    Log.d(TAG, date);
+                    Log.d(TAG, eventList.get(i).getMakeDate());
+                    if (eventList.get(i).getMakeDate().equals(date))
+                    {
+                        filteredList.add(eventList.get(i));
+
+                    }
+                }
+                Log.d(TAG, String.valueOf(filteredList.size()));
+
+                habitEventAdapter.notifyDataSetChanged();
                 //session.getUser().getHabitList();
             }
         });
-        // To fetch event list from user
-        ArrayList<Event> eventList = Session.getInstance().getEventList();
-        Log.d(TAG, String.valueOf(eventList.size()));
-        ArrayList<Event> filteredList = new ArrayList<>();
-        for (int i = 0; i < eventList.size(); i++)
-        {
-            if (eventList.get(i).getMakeDate() == date)
-            {
-                filteredList.add(eventList.get(i));
-
-            }
-        }
 
         return root;
     }
