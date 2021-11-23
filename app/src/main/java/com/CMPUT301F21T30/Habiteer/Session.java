@@ -285,6 +285,14 @@ public class Session {
 
     public void deleteEvent(Event event, Integer habitIndex) {
         /* Delete habit in in-app list */
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.remove(i);
+                break;
+            }
+        }
         habitEventsList.remove(event);
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
         currentHabit.getEventIdList().remove(event.getId());
