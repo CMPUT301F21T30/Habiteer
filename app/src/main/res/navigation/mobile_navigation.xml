@@ -36,4 +36,15 @@
         android:id="@+id/addEditHabitActivity"
         android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity"
         android:label="AddEditHabitActivity" />
+
+    <fragment
+        android:id="@+id/navigation_feed"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.feed.FeedFragment"
+        android:label="Community"
+        tools:layout="@layout/feed_fragment" />
+
+    <activity
+        android:id="@+id/feedActivity"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.feed.FeedActivity"
+        android:label="FeedActivity"/>
 </navigation>
