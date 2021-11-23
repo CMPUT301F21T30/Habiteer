@@ -14,6 +14,9 @@ public class User implements Serializable {
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
     private ArrayList<User> blockList;
+
+    private String bio;
+
     public User() { }
 
     public User(String email) {
@@ -23,6 +26,8 @@ public class User implements Serializable {
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
         this.blockList = new ArrayList<>();
+        this.bio = "";
+
     }
 
     public String getEmail() {
@@ -37,6 +42,14 @@ public class User implements Serializable {
 
     public void setHabitIdList(ArrayList<String> habitIdList) {
         this.habitIdList = habitIdList;
+    }
+
+    public void setFollowingList(ArrayList<User> followingList) {
+        this.followingList = followingList;
+    }
+
+    public void setFollowerList(ArrayList<User> followerList) {
+        this.followerList = followerList;
     }
 
     public ArrayList<User> getFollowerList() {
@@ -54,6 +67,8 @@ public class User implements Serializable {
     public ArrayList<Event> getEventList() {
         return eventList;
     }
+
+
     public void addEvent(Event event) {this.eventList.add(event);}
     public void deleteEvent(Event event) {this.habitIdList.remove(event);}
 
@@ -65,7 +80,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
-
-
+    public String getBio() {
+        return bio;
+    }
 }

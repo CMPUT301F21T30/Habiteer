@@ -2,8 +2,10 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.UserProfile;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,13 +38,23 @@ public class ListHabitFragment extends Fragment {
     private RecyclerView habitRecycler;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         // inflate the binding first
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
+
+        setHasOptionsMenu(true);
+
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
         habitList = new ArrayList<>();
         habitRecycler = root.findViewById(R.id.habit_recycler);
+
+
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
+
+
+
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
@@ -64,6 +76,9 @@ public class ListHabitFragment extends Fragment {
         });
 
         return root;
+
+
+
     }
     private void recyclerSetup() {
         habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
@@ -73,7 +88,29 @@ public class ListHabitFragment extends Fragment {
         habitRecycler.setAdapter(habitAdapter);
         DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(), ((LinearLayoutManager) layoutManager).getOrientation());
         habitRecycler.addItemDecoration(divider);
+
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.user_profile_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.user_profile_menu:
+                startActivity(new Intent(getContext(), UserProfile.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
     @Override
     public void onResume() {
         // when the fragment resumes (navigated to)
@@ -87,4 +124,6 @@ public class ListHabitFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
 }

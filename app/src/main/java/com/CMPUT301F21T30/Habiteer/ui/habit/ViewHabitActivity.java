@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
@@ -61,6 +61,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         // get current habit at that index
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+
 
         // get habit info
         String habitname = currentHabit.getHabitName();

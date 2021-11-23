@@ -5,7 +5,6 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     private int selectedIndex = RecyclerView.NO_POSITION;
 
     public HabitAdapter(List<Habit> habitArrayList) {
+
         this.habitArrayList = habitArrayList;
     }
 
