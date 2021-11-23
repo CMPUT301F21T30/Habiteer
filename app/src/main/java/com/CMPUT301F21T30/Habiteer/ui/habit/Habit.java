@@ -79,6 +79,8 @@ public class Habit {
         this.endDate = endDate;
     }
 
+    public void setWeekdayList(List<MaterialDayPicker.Weekday> weekdayList) {this.weekdayList = weekdayList;}
+
     public void setReason(String reason) {
         this.reason = reason;
     }
