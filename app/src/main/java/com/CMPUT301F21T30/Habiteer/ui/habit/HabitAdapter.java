@@ -97,10 +97,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         List<MaterialDayPicker.Weekday> habitDays_raw = habitArrayList.get(position).getWeekdayList(); // raw list of days
         String daysString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
-            daysString = formatDayList(habitDays_raw);
+            daysString = formatDayList(habitDays_raw); // format the list to a string
         }
         else {
-            daysString = habitDays_raw.toString(); // just in case, old java versions with get this ugly string
+            daysString = habitDays_raw.toString(); // just in case, old java versions with get this ugly default string
         }
         holder.habitRepeats.setText(daysString);
 
