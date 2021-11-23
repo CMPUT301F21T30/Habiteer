@@ -60,7 +60,7 @@
         android:background="@color/cardview_shadow_end_color"/>
 
     <ca.antonious.materialdaypicker.MaterialDayPicker
-        android:id="@+id/days"
+        android:id="@+id/ViewHabit_day_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/daysHeading"
@@ -72,7 +72,7 @@
         android:id="@+id/reasonHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/days"
+        android:layout_below="@+id/ViewHabit_day_picker"
         android:text="Reason"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"

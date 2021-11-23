@@ -18,6 +18,7 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
@@ -26,7 +27,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
     Switch privateSwitch;
-    MaterialDayPicker days;
+    MaterialDayPicker dayPicker;
     Calendar calendar;
     String todayDate;
     SimpleDateFormat dateFormat;
@@ -46,7 +47,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         reasonHeading = findViewById(R.id.reasonHeading);
         reason = findViewById(R.id.reason);
         progressHeading = findViewById(R.id.progressHeading);
-        days = findViewById(R.id.days);
+        dayPicker = findViewById(R.id.ViewHabit_day_picker);
         addHabitEvent = findViewById(R.id.addHabitEvent);
         delete = findViewById(R.id.delete);
         edit = findViewById(R.id.edit);
@@ -66,6 +67,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         String habitname = currentHabit.getHabitName();
         String startdate = currentHabit.getStartDate().toString();
         String enddate = currentHabit.getEndDate().toString();
+        List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
 
         // formatting the date properly
@@ -76,7 +78,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,finalStartDate,finalEndDate,reason_);
+        displayHabitInfo(habitname,finalStartDate,finalEndDate,weekdayList,reason_);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -141,9 +143,11 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
     }
-    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate,String reason_) {
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_) {
         habitName.setText(habitname);
         dates.setText(finalStartDate + " - " + finalEndDate);
+        dayPicker.setSelectedDays(weekdayList);
+        dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
     }
 
