@@ -125,7 +125,7 @@ public class EditHabitFragment extends Fragment {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextInputLayout NameBox = requireView().findViewById(R.id.textInput_habitName);
+        TextInputLayout nameBox = requireView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = requireView().findViewById(R.id.textInput_habitReason);
 
 
@@ -133,7 +133,7 @@ public class EditHabitFragment extends Fragment {
 
             case R.id.button_addHabit:
                 // edit the habit
-                String habitName = NameBox.getEditText().getText().toString();
+                String habitName = nameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
 
                 // get selected habit from User
@@ -145,9 +145,9 @@ public class EditHabitFragment extends Fragment {
                     Date endDate = mViewModel.getEndDate();
                     currentHabit.setEndDate(endDate);
                 }
-                // set other data
-                currentHabit.setHabitName(habitName);
-                currentHabit.setReason(reason);
+                // set other data, with length limit
+                currentHabit.setHabitName(habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength())));  // either the max length or string length, which one is smaller
+                currentHabit.setReason(reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength()))); // either the max length or string length, which one is smaller
 
                 // call Session to update data on Firestore
                 Session.getInstance().updateHabit(currentHabit);

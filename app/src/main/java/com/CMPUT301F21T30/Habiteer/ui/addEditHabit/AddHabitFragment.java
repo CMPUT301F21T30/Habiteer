@@ -105,7 +105,7 @@ public class AddHabitFragment extends Fragment  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // get the text fields
-        TextInputLayout NameBox = getView().findViewById(R.id.textInput_habitName);
+        TextInputLayout nameBox = getView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
 
 
@@ -115,8 +115,13 @@ public class AddHabitFragment extends Fragment  {
                 // create the new habit
 
                 // get input from text fields
-                String habitName = NameBox.getEditText().getText().toString();
+                String habitName = nameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
+
+                // apply length limit to strings
+                habitName = habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength()));  // either the max length or string length, which one is smaller
+                reason = reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength())); // either the max length or string length, which one is smaller
+
                 // get dates from viewmodel
                 Date startDate = mViewModel.getStartDate();
                 Date endDate = mViewModel.getEndDate();
