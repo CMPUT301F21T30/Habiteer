@@ -28,8 +28,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
+
 /**
  * This fragment handles the editing of habits from the habit list. Allows the user to edit name, end date, days of the week, and habit reason.
  * Known issues:
@@ -103,10 +107,13 @@ public class EditHabitFragment extends Fragment {
     private void  fillInHabitDetails(View view,TextInputLayout habitDateInput,Habit habit) {
         TextInputLayout nameInput = view.findViewById(R.id.textInput_habitName);
         TextInputLayout reasonInput = view.findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = view.findViewById(R.id.AddEdit_day_picker);
 
         // get existing data
         String oldName = habit.getHabitName();
         String oldReason = habit.getReason();
+        List<MaterialDayPicker.Weekday> weekdayList = habit.getWeekdayList();
+
 
         SimpleDateFormat simpleFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         String oldDate = simpleFormat.format(habit.getEndDate()); // date as a string using the above format
@@ -115,6 +122,7 @@ public class EditHabitFragment extends Fragment {
         nameInput.getEditText().setText(oldName);
         reasonInput.getEditText().setText(oldReason);
         habitDateInput.getEditText().setText(oldDate);
+        dayPicker.setSelectedDays(weekdayList);
 
     }
 
@@ -127,6 +135,7 @@ public class EditHabitFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         TextInputLayout nameBox = requireView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = requireView().findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
 
 
         switch (item.getItemId()) {
@@ -135,6 +144,7 @@ public class EditHabitFragment extends Fragment {
                 // edit the habit
                 String habitName = nameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
+                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
 
                 // get selected habit from User
                 int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
@@ -148,6 +158,8 @@ public class EditHabitFragment extends Fragment {
                 // set other data, with length limit
                 currentHabit.setHabitName(habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength())));  // either the max length or string length, which one is smaller
                 currentHabit.setReason(reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength()))); // either the max length or string length, which one is smaller
+                currentHabit.setWeekdayList(weekdayList);
+
 
                 // call Session to update data on Firestore
                 Session.getInstance().updateHabit(currentHabit);

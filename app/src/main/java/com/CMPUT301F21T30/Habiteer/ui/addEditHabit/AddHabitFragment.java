@@ -26,8 +26,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * This fragment handles the adding of habits to the habit list. Allows the user to enter a name, date range, days of the week, and a habit reason.
@@ -99,7 +102,12 @@ public class AddHabitFragment extends Fragment  {
 
 
 
+
         return view;
+
+    }
+    private void handleDaysOfWeek(View view) {
+
 
     }
     @Override
@@ -107,6 +115,7 @@ public class AddHabitFragment extends Fragment  {
         // get the text fields
         TextInputLayout nameBox = getView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
 
 
         switch (item.getItemId()) {
@@ -125,15 +134,15 @@ public class AddHabitFragment extends Fragment  {
                 // get dates from viewmodel
                 Date startDate = mViewModel.getStartDate();
                 Date endDate = mViewModel.getEndDate();
+                // get selected days of week
+                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
                 // make a new habit
-                Habit newHabit = new Habit(habitName,startDate,endDate,reason);
+                Habit newHabit = new Habit(habitName,startDate,endDate,weekdayList,reason);
                 // store the new habit
                 Session session = Session.getInstance();
                 session.addHabit(newHabit);
                 // close the activity
                 getActivity().finish();
-
-
                 return true;
         }
         return false;
