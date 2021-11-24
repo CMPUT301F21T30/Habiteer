@@ -8,14 +8,22 @@
 
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import static java.util.Calendar.DAY_OF_WEEK;
+import static java.util.Calendar.LONG;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * This class handles data sent to the HabitAdapter
@@ -25,15 +33,60 @@ public class ListHabitViewModel extends ViewModel {
     /* Habit list data */
     private MutableLiveData<List<Habit>> mHabits = new MutableLiveData<>();
     private ArrayList<Habit> habitList;
+    private ArrayList<Habit> todayHabitList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
 
-
+    /**
+     * This method gets all habits belonging to the signed in user
+     * @return Live data list of all habits
+     */
     public LiveData<List<Habit>> getHabits() {
         habitList = Session.getInstance().getHabitList();
         mHabits.setValue(habitList);
         return mHabits;
+    }
+
+    /**
+     * This method gets all of today's habits belonging to the signed in user
+     * @return Live data list of today's habits
+     */
+    public LiveData<List<Habit>> getTodayHabits() {
+        todayHabitList = Session.getInstance().getHabitList();
+        String today = getDayOfWk();
+        /* remove habits that do not contain today */
+        for (Habit habit : todayHabitList) {
+            if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
+                todayHabitList.remove(habit);
+            }
+        }
+        mHabits.setValue(todayHabitList);
+        return mHabits;
+    }
+
+    private String getDayOfWk() {
+        Calendar calendar = Calendar.getInstance();
+        int today = calendar.get(DAY_OF_WEEK);
+        calendar.set(DAY_OF_WEEK,today);
+        return calendar.getDisplayName(DAY_OF_WEEK, LONG, Locale.US).toUpperCase(Locale.ROOT);
+//        switch (Calendar.getInstance().get(Calendar.DAY)) {
+//            case Calendar.MONDAY:
+//                return "MONDAY";
+//            case Calendar.TUESDAY:
+//                return "TUESDAY";
+//            case Calendar.WEDNESDAY:
+//                return "WEDNESDAY";
+//            case Calendar.THURSDAY:
+//                return "THURSDAY";
+//            case Calendar.FRIDAY:
+//                return "FRIDAY";
+//            case Calendar.SATURDAY:
+//                return "SATURDAY";
+//            case Calendar.SUNDAY:
+//                return "SUNDAY";
+//        }
+//        return "ERROR";
     }
 
     public void setIndex(int index) {
