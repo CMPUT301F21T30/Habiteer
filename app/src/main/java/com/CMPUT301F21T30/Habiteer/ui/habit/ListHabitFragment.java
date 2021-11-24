@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,18 +24,27 @@ import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListHabitFragment extends Fragment {
+public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelectedListener{
 
     private ListHabitViewModel listHabitViewModel;
     private FragmentListhabitBinding binding;
     private ArrayList<Habit> habitList;
     private HabitAdapter habitAdapter;
     private RecyclerView habitRecycler;
+    private TabLayout tabLayout;
 
+    /**
+     * This method creates the list habits view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return root, which is the root View
+     */
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the binding first
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
@@ -63,6 +73,12 @@ public class ListHabitFragment extends Fragment {
             }
         });
 
+        /* Create tabs */
+        tabLayout = (TabLayout)root.findViewById(R.id.tabs);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_1_text)));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_2_text));
+        tabLayout.addOnTabSelectedListener(this);
+
         return root;
     }
     private void recyclerSetup() {
@@ -74,6 +90,10 @@ public class ListHabitFragment extends Fragment {
         DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(), ((LinearLayoutManager) layoutManager).getOrientation());
         habitRecycler.addItemDecoration(divider);
     }
+
+    /**
+     *
+     */
     @Override
     public void onResume() {
         // when the fragment resumes (navigated to)
@@ -86,5 +106,24 @@ public class ListHabitFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    /**
+     * This method changes what habits are displayed based on the tab selected
+     * @param tab
+     */
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        Toast.makeText(getContext(), "Tab selected", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
