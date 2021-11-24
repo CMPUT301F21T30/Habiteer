@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habiteer">
         <activity
-            android:name=".ui.Follow.SearchUserActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.habit.ViewHabitActivity"
             android:exported="true"
             android:label="View habit" />
