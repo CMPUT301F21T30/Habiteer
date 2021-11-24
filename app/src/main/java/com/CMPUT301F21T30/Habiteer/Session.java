@@ -283,47 +283,75 @@ public class Session {
 
     }
 
+    public void updateEvent(Event event, Integer habitIndex) {
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.set(i, event);
+                String habitEventID = habitEventsList.get(i).getId();
+                db.collection("HabitEvents")
+                        .document(habitEventID)
+                        .set(event)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitEventID);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document", e);
+                            }
+                        });
+
+            }
+
+        }
+
+    }
+
     public void deleteEvent(Event event, Integer habitIndex) {
-        /* Delete habit in in-app list */
+        /* Delete habit event */
         for (int i = 0; i < habitEventsList.size(); i++)
         {
             if (habitEventsList.get(i).getId().equals(event.getId()))
             {
                 habitEventsList.remove(i);
-                break;
-            }
-        }
-        habitEventsList.remove(event);
-        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
-        currentHabit.getEventIdList().remove(event.getId());
-        /* Delete on Firebase Habits Collection */
-        db.collection("HabitEvents").document(event.getId())
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
-                        /* Delete from Firebase Users Collection */
-                        db.collection("Habits").document(currentHabit.getId()).update("eventIdList", currentHabit.getEventIdList())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+                currentHabit.getEventIdList().remove(event.getId());
+                /* Delete on Firebase Habits Collection */
+                db.collection("HabitEvents").document(event.getId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                /* Delete from Firebase Users Collection */
+                                db.collection("Habits").document(currentHabit.getId()).update("eventIdList", currentHabit.getEventIdList())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
                                     }
-                                }).addOnFailureListener(new OnFailureListener() {
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.w(TAG, "Error deleting document", e);
                             }
                         });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+            }
+        }
 
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,10 +29,15 @@ public class EditHabitEventActivity extends AppCompatActivity {
     TextInputEditText eventCommentInput;
     String eventComment;
 
+    String newTitle;
+    String newComment;
+    String message;
+
     Button saveButton;
     Button deleteButton;
     TextView title;
-    TextView reason;
+    TextView comment;
+    TextView date;
     Integer habitIndex;
 
 
@@ -50,11 +56,44 @@ public class EditHabitEventActivity extends AppCompatActivity {
         Event event = (Event) getIntent().getSerializableExtra("event");
         title = findViewById(R.id.event_name_input);
         title.setText(event.getEventName());
-        reason = findViewById(R.id.event_comment_input);
-        reason.setText(event.getEventComment());
+        date = findViewById(R.id.habitEventDate);
+        date.setText("Event Date: " + event.getMakeDate());
+        comment = findViewById(R.id.event_comment_input);
+        comment.setText(event.getEventComment());
 
         // To connect to the save button and set an on click listener
+
         saveButton = findViewById(R.id.saveHabitEvent);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                newTitle = title.getText().toString();
+                newComment = comment.getText().toString();
+                event.setEventName(newTitle);
+                event.setEventComment(newComment);
+
+                if ( newTitle.isEmpty() || newComment.isEmpty() ) {
+
+                    message = "Required Field is empty";
+                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Session.getInstance().updateEvent(event, habitIndex);
+                }
+
+//                ArrayList<Habit> habits = Session.getInstance().getHabitList();
+//                for (int i = 0; i < habits.size(); i++)
+//                {
+//                    if (habits.get(i).getId().equals(event.getHabitId()))
+//                    {
+//                        habitIndex = i;
+//                    }
+//                }
+//                Session.getInstance().updateEvent(event, habitIndex);
+                finish();
+            }
+        });
         //saveButton.setOnClickListener();
 
         // To connect to the delete button and set an on click listener
@@ -72,8 +111,8 @@ public class EditHabitEventActivity extends AppCompatActivity {
                 }
                 Session.getInstance().deleteEvent(event, habitIndex);
                 finish();
-//                Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
-//                startActivity(intent);
+                //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
+                //startActivity(intent);
             }
         });
 
