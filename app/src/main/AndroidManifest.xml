@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.CMPUT301F21T30.Habiteer">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,9 +46,23 @@
             android:exported="true" />
 
         <activity
-            android:name=".ui.habitEvents.AddHabitEventActivity"></activity>
+            android:name=".ui.habitEvents.AddHabitEventActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".ui.habitEvents.EditHabitEventActivity"></activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.CMPUT301F21T30.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
     </application>
 
