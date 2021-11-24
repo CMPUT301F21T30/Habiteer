@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchUserFragment extends Fragment {
-    private SearchView searchView;
+    private EditText searchView;
     private RecyclerView searchRecycler;
     private List<User> searchList;
     private SearchUserAdapter searchUserAdapter;
@@ -61,19 +61,19 @@ public class SearchUserFragment extends Fragment {
         searchRecycler = root.findViewById(R.id.searchList);
         searchList.add(new User("test@tester.ca")); //TODO remove this test code
         System.out.println(searchList);
-        recyclerSetup();
+
         searchView = root.findViewById(R.id.searchView);
         searchBtn = root.findViewById(R.id.searchBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchUser = searchView.getQuery().toString().trim();
+                String searchUser = searchView.getText().toString().trim();
                 doSearch(searchUser);
                 System.out.println(searchUser);
                 System.out.println("I am here");
 
-
+                recyclerSetup();
             }
         });
 
