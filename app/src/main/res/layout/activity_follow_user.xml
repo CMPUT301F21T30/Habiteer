@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Follow.FollowUserActivity">
+
+    <ImageView
+        android:id="@+id/userImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_baseline_person_24"
+        android:background="@color/cardview_shadow_start_color"/>
+
+    <TextView
+        android:id="@+id/followers"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="50dp"
+        android:text="120"
+        android:textSize="48sp" />
+    <TextView
+        android:id="@+id/following"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="50dp"
+        android:text="120"
+        android:textSize="48sp" />
+    <TextView
+        android:id="@+id/followersHeading"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="110dp"
+        android:text="Followers"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/followingHeading"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="110dp"
+        android:text="Following"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/followBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="160dp"
+        android:text="Follow"/>
+
+</RelativeLayout>

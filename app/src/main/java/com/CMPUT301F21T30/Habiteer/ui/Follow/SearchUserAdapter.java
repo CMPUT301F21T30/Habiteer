@@ -1,5 +1,6 @@
 package com.CMPUT301F21T30.Habiteer.ui.Follow;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habit.HabitAdapter;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 ;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +41,15 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         @Override
         public void onClick(View view) {
             //Take to the user's profile
+            notifyItemChanged(selectedIndex);
+            selectedIndex = getLayoutPosition();
+            System.out.println(selectedIndex);
+            notifyItemChanged(selectedIndex);
+
+            // Create new intent to start follow user activity
+            Intent intent = new Intent(view.getContext(), FollowUserActivity.class);
+            intent.putExtra("userIndex",selectedIndex); // pass through the index of the clicked user
+            view.getContext().startActivity(intent); // start the follow user activity
         }
     }
 

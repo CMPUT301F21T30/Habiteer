@@ -4,7 +4,6 @@ package com.CMPUT301F21T30.Habiteer.ui.Follow;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -16,7 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
@@ -41,6 +42,7 @@ public class SearchUserFragment extends Fragment {
     private List<User> searchList;
     private SearchUserAdapter searchUserAdapter;
     private SearchUserViewModel mViewModel;
+    private Button searchBtn;
 
     public static SearchUserFragment newInstance() {
         return new SearchUserFragment();
@@ -61,9 +63,22 @@ public class SearchUserFragment extends Fragment {
         System.out.println(searchList);
         recyclerSetup();
         searchView = root.findViewById(R.id.searchView);
+        searchBtn = root.findViewById(R.id.searchBtn);
 
-        String searchUser = searchView.getQuery().toString().trim();
-//        doSearch(searchUser);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchUser = searchView.getQuery().toString().trim();
+                doSearch(searchUser);
+                System.out.println(searchUser);
+                System.out.println("I am here");
+
+
+            }
+        });
+
+
+
         return root;
 
 
