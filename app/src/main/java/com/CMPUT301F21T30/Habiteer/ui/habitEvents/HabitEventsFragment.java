@@ -108,6 +108,7 @@ public class HabitEventsFragment extends Fragment
                 Event item = filteredList.get(index);
                 Intent intent = new Intent(context, EditHabitEventActivity.class);
                 intent.putExtra("event", item);
+                Log.d(TAG, item.getHabitId());
                 //intent.putExtra("eventDate", todayDate);
                 startActivity(intent);
                 filteredList.clear();
