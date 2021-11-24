@@ -39,12 +39,16 @@ public class SearchUserActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_search_user);
-        recyclerSetup();
 
+        searchRecycler = findViewById(R.id.searchList);
+        searchList.add(new User("test@tester.ca")); //TODO remove this test code
+        System.out.println(searchList);
+        recyclerSetup();
         searchView = findViewById(R.id.searchView);
 
         String searchUser = searchView.getText().toString().trim();
         doSearch(searchUser);
+
 
 
 
@@ -68,8 +72,9 @@ public class SearchUserActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-
+                    System.out.println("Success");
                     for (QueryDocumentSnapshot document : task.getResult()) {
+                        System.out.println(document);
                         User user = document.toObject(User.class); // turn the search result into a user class
                         searchList.add(user); // add it to the search list
                         searchUserAdapter.notifyDataSetChanged();
