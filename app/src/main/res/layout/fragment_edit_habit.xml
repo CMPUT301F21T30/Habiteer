@@ -28,7 +28,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitName">
+            android:hint="@string/hint_HabitName"
+            app:counterEnabled="true"
+            app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -86,7 +88,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitReason">
+            android:hint="@string/hint_HabitReason"
+            app:counterEnabled="true"
+            app:counterMaxLength="30">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

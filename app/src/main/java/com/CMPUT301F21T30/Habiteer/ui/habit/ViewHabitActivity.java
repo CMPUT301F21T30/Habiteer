@@ -19,6 +19,7 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
@@ -65,20 +66,17 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         // get habit info
         String habitname = currentHabit.getHabitName();
-        String startdate = currentHabit.getStartDate().toString();
-        String enddate = currentHabit.getEndDate().toString();
+        SimpleDateFormat startEndFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
+        String startdate = startEndFormat.format(currentHabit.getStartDate());
+        String enddate = startEndFormat.format(currentHabit.getEndDate());
+
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
 
-        // formatting the date properly
-        String unwanted = "00:00:00 MDT ";
-        String replacement = "";
-        String finalStartDate = startdate.replaceAll(unwanted, replacement).substring(4);
-        String finalEndDate = enddate.replaceAll(unwanted, replacement).substring(4);
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,finalStartDate,finalEndDate,weekdayList,reason_);
+        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -145,7 +143,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     }
     private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_) {
         habitName.setText(habitname);
-        dates.setText(finalStartDate + " - " + finalEndDate);
+        dates.setText(String.format("From: %s\nTo: %s", finalStartDate, finalEndDate));
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
