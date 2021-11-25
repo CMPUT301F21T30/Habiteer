@@ -61,7 +61,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
 
-        // get current habit at that index
+        // get current habit with id
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
         // get habit info
@@ -124,6 +124,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //startActivity(new Intent(getApplicationContext(), DeleteHabit.class)); //the user goes to the DeleteHabit activity
                 Session.getInstance().deleteHabit(currentHabit);
+
                 finish();
             }
         });
