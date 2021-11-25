@@ -108,7 +108,7 @@ public class ViewHabitActivity extends AppCompatActivity {
                 todayDate = dateFormat.format(calendar.getTime());
 
                 Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
-                intent.putExtra("habitIndex", String.valueOf(habitID));
+                intent.putExtra("habitID", String.valueOf(habitID));
                 intent.putExtra("eventDate", todayDate);
                 startActivity(intent);
 //                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
