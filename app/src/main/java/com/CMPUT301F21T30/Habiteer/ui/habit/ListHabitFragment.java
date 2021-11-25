@@ -96,6 +96,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onResume() {
         // when the fragment resumes (navigated to)
         habitAdapter.updateDataFromSession();
+        todayHabitAdapter.notifyDataSetChanged();
         super.onResume();
     }
     @Override
