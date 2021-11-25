@@ -88,7 +88,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
-        holder.itemView.setSelected(selectedIndex == position);
         String habitName = habitArrayList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(habitArrayList.get(position).getEndDate());
