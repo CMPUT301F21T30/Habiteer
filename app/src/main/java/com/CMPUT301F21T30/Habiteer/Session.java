@@ -2,7 +2,6 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -376,7 +375,6 @@ public class Session {
      * @param habitIndex
      * @return returnUriLink
      */
-    @SuppressLint("LongLogTag")
 
     public Uri uploadImageToFirebase(String fileName, Uri linkUri, Integer habitIndex){
 
@@ -394,11 +392,11 @@ public class Session {
                 Uri uriTaskResult = uriTask.getResult();
                 returnUriLink =  uriTaskResult;
             } else {
-                Log.d("Upload image to firebase", "couldn't get download url");
+                Log.d("Upload", "couldn't get download url");
 
             }
         } else {
-            Log.d("Upload image to firebase", "couldn't upload url");
+            Log.d("Upload", "couldn't upload url");
         }
         return returnUriLink;
     }

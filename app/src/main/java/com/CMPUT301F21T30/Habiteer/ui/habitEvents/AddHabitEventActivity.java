@@ -41,24 +41,24 @@ import java.util.Date;
  */
 public class AddHabitEventActivity extends AppCompatActivity {
     // To initialize variables
-    String date = "";
-    int habitIndex;
-    String indexString;
-    TextView eventDateView;
-    TextInputEditText eventNameInput;
-    String eventName;
+    private String date = "";
+    private int habitIndex;
+    private String indexString;
+    private TextView eventDateView;
+    private TextInputEditText eventNameInput;
+    private String eventName;
 
-    TextInputEditText eventCommentInput;
-    String eventComment;
+    private TextInputEditText eventCommentInput;
+    private String eventComment;
 
-    Button addButton;
+    private Button addButton;
     private ImageView selectedImage;
     public static final int CAM_PERM_CODE = 101;
     public static final int CAM_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 105;
 
     private Uri uploadUri;
-    String currentPhotoPath;
+    private String currentPhotoPath;
 
     /**
      * To set habit event layout, get intent and set event date
@@ -289,6 +289,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
      */
 
     public void addEvent(View view) {
+
         eventNameInput = findViewById(R.id.event_name_input);
         eventName = eventNameInput.getText().toString();
 
