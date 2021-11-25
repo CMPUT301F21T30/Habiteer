@@ -53,7 +53,7 @@ public class Session {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
 
-                // Get habits that belong to User from Firestore and append to habitList
+                // Get habits that belong to User from Firestore and append to habitHashMap
                 if (user.getHabitIdList().size() != 0) {
                     for (int i = 0; i < user.getHabitIdList().size(); i++) {
                         DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
@@ -172,9 +172,10 @@ public class Session {
      * @param habit a Habit object.
      */
     public void deleteHabit(Habit habit) {
-        /* Delete habit in in-app list */
-        habitHashMap.remove(habit);
         String habitID = habit.getId();
+        /* Delete habit in in-app list/hashmap */
+        habitHashMap.remove(habitID);
+
         ArrayList<String> habitIdList = user.getHabitIdList();
         habitIdList.remove(habitID);
         user.setHabitIdList(habitIdList);
