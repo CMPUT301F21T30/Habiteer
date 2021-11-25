@@ -20,6 +20,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/event_image"
+            android:layout_width="147dp"
+            android:layout_height="127dp"
+            app:srcCompat="@drawable/picture"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="144dp"
+            tools:layout_editor_absoluteY="40dp"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="16dp"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInput_habitName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
