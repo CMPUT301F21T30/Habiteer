@@ -58,7 +58,6 @@ public class ListHabitViewModel extends ViewModel {
         todayHabitList = Session.getInstance().getHabitList();
         String today = getDayOfWk();
         /* remove habits that do not contain today */
-        System.out.println("DOIN THIS");
         for (int i = 0; i < todayHabitList.size(); i++) {
             Habit habit = todayHabitList.get(i);
             System.out.println(MaterialDayPicker.Weekday.valueOf(today));

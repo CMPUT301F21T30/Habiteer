@@ -54,8 +54,8 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
-                habitAdapter.notifyDataSetChanged();
                 todayHabitAdapter.notifyDataSetChanged();
+                habitAdapter.notifyDataSetChanged();
             }
         });
         recyclerSetup();
@@ -80,7 +80,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
     private void recyclerSetup() {
         habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
-        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+//        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
