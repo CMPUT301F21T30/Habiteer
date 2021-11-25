@@ -75,7 +75,7 @@ public class UserProfile extends AppCompatActivity {
             bio_edit.setText("Add a bio");
         }
         else {
-            bio_edit.setText(user.getBio());
+            bio_edit.setText(original_bio);
         }
 
 
@@ -95,7 +95,7 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 bio_edit.setText(editText_bio.getText());
                 String bio= editText_bio.getText().toString();
-                user.setBio(bio);
+                Session.getInstance().storeBio(Session.getInstance().getUser(), bio);
             }
         });
         bio_edit.setOnClickListener(new View.OnClickListener() {
