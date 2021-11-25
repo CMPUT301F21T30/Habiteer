@@ -43,8 +43,8 @@ public class UserProfile extends AppCompatActivity {
         f2.add(user3);
 
 
-        //user = Session.getInstance().getUser();
-        user = new User("bushra@ual.ca");
+        user = Session.getInstance().getUser();
+        //user = new User("bushra@ual.ca");
         user.setFollowingList(f1);
         user.setFollowerList(f2);
 
