@@ -68,6 +68,6 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return searchList.size();
     }
 }
