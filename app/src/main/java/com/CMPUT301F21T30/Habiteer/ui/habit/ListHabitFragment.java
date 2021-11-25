@@ -112,14 +112,12 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
-            System.out.println("ALl habits tab selected");
-            System.out.println(Session.getInstance().getHabitList());
+            /* Display today's habits */
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
         }
         else {
-            System.out.println("Today habits tab selected");
-            System.out.println(Session.getInstance().getHabitList());
+            /* Display all habits */
             habitRecycler.setAdapter(habitAdapter);
             habitAdapter.notifyDataSetChanged();
         }
