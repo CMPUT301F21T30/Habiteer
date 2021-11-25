@@ -5,7 +5,7 @@
     <item
         android:id="@+id/user_profile_menu"
         android:title="User pic"
-        android:icon="@drawable/profile_pic"
+        android:icon="@drawable/ic_baseline_account_circle_24"
         app:showAsAction="ifRoom"
         >
     </item>
