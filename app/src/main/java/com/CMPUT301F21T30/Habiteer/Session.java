@@ -142,6 +142,8 @@ public class Session {
                         /* Set the ID to the one generated on Firebase */
                         habit.setId(habitID);
                         habitHashMap.put(habitID, habitHashMap.remove(habit.getHabitName())); // replace the temp ID with the real ID as the key in the hashmap
+                        user.getHabitIdList().add(habitID); // add the ID to local habit ID list
+
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
                         db.collection("Users").document(user.getEmail()).update("habitIdList", FieldValue.arrayUnion(habitID))
