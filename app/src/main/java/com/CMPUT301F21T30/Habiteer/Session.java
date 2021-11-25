@@ -218,7 +218,6 @@ public class Session {
 
     public void storeEvent(List<Event> eventList) {
         user.setEventList(new ArrayList<Event>(eventList));
-//        System.out.println("Habit name: " + user.getHabitList().get(0).getHabitName());
 
         /* Store onto Firebase */
         db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())

@@ -45,6 +45,7 @@ public class ListHabitViewModel extends ViewModel {
     public LiveData<List<Habit>> getHabits() {
         habitList = Session.getInstance().getHabitList();
         mHabits.setValue(habitList);
+        System.out.println(mHabits);
         return mHabits;
     }
 
@@ -57,6 +58,7 @@ public class ListHabitViewModel extends ViewModel {
         String today = getDayOfWk();
         /* remove habits that do not contain today */
         for (Habit habit : todayHabitList) {
+            System.out.println(MaterialDayPicker.Weekday.valueOf(today));
             if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
                 todayHabitList.remove(habit);
             }
@@ -70,23 +72,6 @@ public class ListHabitViewModel extends ViewModel {
         int today = calendar.get(DAY_OF_WEEK);
         calendar.set(DAY_OF_WEEK,today);
         return calendar.getDisplayName(DAY_OF_WEEK, LONG, Locale.US).toUpperCase(Locale.ROOT);
-//        switch (Calendar.getInstance().get(Calendar.DAY)) {
-//            case Calendar.MONDAY:
-//                return "MONDAY";
-//            case Calendar.TUESDAY:
-//                return "TUESDAY";
-//            case Calendar.WEDNESDAY:
-//                return "WEDNESDAY";
-//            case Calendar.THURSDAY:
-//                return "THURSDAY";
-//            case Calendar.FRIDAY:
-//                return "FRIDAY";
-//            case Calendar.SATURDAY:
-//                return "SATURDAY";
-//            case Calendar.SUNDAY:
-//                return "SUNDAY";
-//        }
-//        return "ERROR";
     }
 
     public void setIndex(int index) {

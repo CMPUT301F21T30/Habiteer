@@ -55,9 +55,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
-                Session session = Session.getInstance();
-                System.out.println("ListHabitFragment Session: " + session);
-                System.out.println("ListHabitFragment user: " + session.getUser());
             }
         });
         recyclerSetup();
@@ -113,8 +110,9 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
      */
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "All Habits"
+        if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
             System.out.println("ALl habits tab selected");
+            System.out.println(Session.getInstance().getHabitList());
             todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
