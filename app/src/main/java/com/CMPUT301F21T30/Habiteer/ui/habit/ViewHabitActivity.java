@@ -32,7 +32,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     Calendar calendar;
     String todayDate;
     SimpleDateFormat dateFormat;
-    int habitIndex;
+    String habitID;
 
 
     @Override
@@ -57,12 +57,12 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
-        habitIndex = bundle.getInt("habitIndex");
+        habitID = bundle.getString("habitID");
 
 
 
         // get current habit at that index
-        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
         // get habit info
         String habitname = currentHabit.getHabitName();
@@ -108,7 +108,7 @@ public class ViewHabitActivity extends AppCompatActivity {
                 todayDate = dateFormat.format(calendar.getTime());
 
                 Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
-                intent.putExtra("habitIndex", String.valueOf(habitIndex));
+                intent.putExtra("habitIndex", String.valueOf(habitID));
                 intent.putExtra("eventDate", todayDate);
                 startActivity(intent);
 //                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
@@ -135,7 +135,7 @@ public class ViewHabitActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddEditHabitActivity.class);
-                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.putExtra("habitID",habitID); // include the index of the habit
                 intent.putExtra("EditMode",true); // let the activity know to use the edit fragment
                 startActivity(intent); //the user goes to the EditHabit activity
             }
