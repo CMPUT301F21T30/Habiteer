@@ -57,7 +57,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
     public static final int CAM_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 105;
 
-    private Uri uploadUri;
+    private String uploadUri;
+    private Uri UriOfImage;
     private String currentPhotoPath;
 
     /**
@@ -186,7 +187,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                uploadUri = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, habitIndex);
+                uploadUri = UriOfImage.toString(); //changes Uri to string
             }
 
         }
@@ -202,7 +204,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 selectedImage.setImageURI(contentUri);
 
                 //upload image to db
-                uploadUri = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, habitIndex);
+                uploadUri = UriOfImage.toString(); //changes the Uri to string
             }
 
         }
@@ -299,7 +302,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
 
         Event event = new Event(eventName, eventComment,date, uploadUri, currentHabit.getId());
-
 
         Session.getInstance().addEvent(event, habitIndex);
         finish();

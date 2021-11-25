@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 
 
@@ -16,19 +14,19 @@ public class Event implements Serializable {
     private String id;
     private String habitId;
 
-    private Uri image;
+    private String imageUri;
 
 
     Event() {} // no-argument constructor for firebase
     Event(String eventName) {
         this.eventName = eventName;
     }
-    public Event(String eventName,String eventComment,String eventDate, Uri image, String habitId) {
+    public Event(String eventName,String eventComment,String eventDate, String imageUri, String habitId) {
         this.eventName = eventName;
         this.eventComment = eventComment;
         this.makeDate = eventDate;
         this.habitId = habitId;
-        this.image = image;
+        this.imageUri = imageUri;
     }
     public String getEventName() {
         return eventName;
@@ -56,11 +54,11 @@ public class Event implements Serializable {
 
     public void setId(String id) { this.id = id; }
 
-    public void setImage(Uri image) {
-        this.image = image;
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 
-    public Uri getImage() {
-        return image;
+    public String getImageUri() {
+        return imageUri;
     }
 }
