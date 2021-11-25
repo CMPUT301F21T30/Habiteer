@@ -6,7 +6,6 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAccessor;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,17 +36,19 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  * Allows for updates to the list as Habits are added, edited, or deleted
  */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
-    private List<Habit> habitArrayList;
+    private HashMap<String,Habit> habitHashMap;
+    ArrayList<Habit> habitList; // For when we need the hashmap as a list
     private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public HabitAdapter(List<Habit> habitArrayList) {
-        this.habitArrayList = habitArrayList;
+    public HabitAdapter(HashMap<String,Habit> habitHashMap) {
+        this.habitHashMap = habitHashMap;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView habitNameText;
         private TextView habitEndDate;
         private TextView habitRepeats;
+
 
         public ViewHolder(final View view) {
             super(view);
@@ -62,9 +65,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
 
+            String habitID = habitList.get(selectedIndex).getId(); // g
             // Create new intent to start view habit activity
             Intent intent = new Intent(view.getContext(),ViewHabitActivity.class);
-            intent.putExtra("habitIndex",selectedIndex); // pass through the index of the clicked item
+            intent.putExtra("habitID",habitID); // pass through the index of the clicked item
             view.getContext().startActivity(intent); // start the view habit activity
         }
     }
@@ -73,7 +77,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
          * This method updates the Habit List and stores it in Firestore
          */
         Session session = Session.getInstance();
-        this.habitArrayList = session.getHabitList();
+        this.habitHashMap = session.getHabitHashMap();
         notifyDataSetChanged();
     }
 
@@ -89,12 +93,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
-        String habitName = habitArrayList.get(position).getHabitName();
+        habitList = new ArrayList<Habit>(habitHashMap.values()); // temp convert hashmap to list, in order to populate the recycler
+        String habitName = habitList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
-        String habitDate = dateFormatter.format(habitArrayList.get(position).getEndDate());
+        String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
-        List<MaterialDayPicker.Weekday> habitDays_raw = habitArrayList.get(position).getWeekdayList(); // raw list of days
+        List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
         String daysString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
             daysString = formatDayList(habitDays_raw); // format the list to a string
@@ -136,7 +141,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         try {
-            return habitArrayList.toArray().length;
+            return habitHashMap.size();
         }
         catch (NullPointerException e) {
             System.out.println("habitAdapter is empty: " + e);
