@@ -55,6 +55,7 @@ public class SearchUserFragment extends Fragment {
 //        setContentView(R.layout.activity_search_user);
         searchList = new ArrayList<User>();
         searchRecycler = root.findViewById(R.id.searchList);
+        searchRecycler.setAdapter(searchUserAdapter);
         searchList.add(new User("test@tester.ca")); //TODO remove this test code
         System.out.println(searchList);
 
@@ -129,12 +130,12 @@ public class SearchUserFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 searchList.clear();
-                //System.out.println("Working");
+                System.out.println("Working");
 
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    //System.out.println("Not working");
+                    System.out.println("Not working");
                     User user = dataSnapshot1.getValue(User.class);
-                    
+
 
                     if (user.getEmail() != null && !user.getEmail().equals(firebaseUser.getEmail())){
                         if (user.getEmail().toLowerCase().contains(s.toLowerCase(Locale.ROOT))) {
