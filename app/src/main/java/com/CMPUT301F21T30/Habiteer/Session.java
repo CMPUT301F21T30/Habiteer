@@ -2,25 +2,29 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -36,6 +40,8 @@ public class Session {
     private ArrayList<Habit> habitList;
     private ArrayList<Event> habitEventsList;
 
+    private StorageReference storageReference; //to store the image in firebase storage
+
     /**
      * Singleton Session constructor
      * Reads data from Users collection in Firestore and converts to User object
@@ -46,6 +52,9 @@ public class Session {
         habitList = new ArrayList<>();
         habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+
+        storageReference = FirebaseStorage.getInstance().getReference(); //initialize the storage reference
+
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -359,4 +368,41 @@ public class Session {
     public ArrayList<Habit> getHabitList() {
         return this.habitList;
     }
+
+    /**
+     * Upload the image to firebase
+     * @param fileName
+     * @param linkUri
+     * @param habitIndex
+     * @return returnUriLink
+     */
+    @SuppressLint("LongLogTag")
+
+    public Uri uploadImageToFirebase(String fileName, Uri linkUri, Integer habitIndex){
+
+        /* Getting habit id from Firebase */
+        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+
+        Uri returnUriLink = null;
+        StorageReference imageUpload = storageReference.child("images/" + fileName);
+        UploadTask taskUpload = imageUpload.putFile(linkUri);
+        while (!taskUpload.isComplete()) ;
+        if (taskUpload.isSuccessful()) {
+            Task<Uri> uriTask = imageUpload.getDownloadUrl();
+            while (!uriTask.isComplete()) ;
+            if (uriTask.isSuccessful()) {
+                Uri uriTaskResult = uriTask.getResult();
+                returnUriLink =  uriTaskResult;
+            } else {
+                Log.d("Upload image to firebase", "couldn't get download url");
+
+            }
+        } else {
+            Log.d("Upload image to firebase", "couldn't upload url");
+        }
+        return returnUriLink;
+    }
+
+
+
 }

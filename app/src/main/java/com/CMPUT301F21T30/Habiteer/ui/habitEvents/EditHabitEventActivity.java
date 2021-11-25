@@ -1,6 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;

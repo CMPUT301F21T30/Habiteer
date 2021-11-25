@@ -57,6 +57,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     public static final int CAM_REQUEST_CODE = 102;
     public static final int GALLERY_REQUEST_CODE = 105;
 
+    private Uri uploadUri;
     String currentPhotoPath;
 
     /**
@@ -79,6 +80,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
         // To set event date
         eventDateView.setText("Event date: " + date);
+
+
 
         // This toast confirms correct date is being passed
         Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit index: " + habitIndex, Toast.LENGTH_SHORT).show();
@@ -174,16 +177,16 @@ public class AddHabitEventActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAM_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
-                File f = new File(currentPhotoPath);
-                selectedImage.setImageURI(Uri.fromFile(f));
-                Log.d("tag", "Absolute Url of image is" + Uri.fromFile(f));
+                File picFileName = new File(currentPhotoPath);
+                selectedImage.setImageURI(Uri.fromFile(picFileName));
+                Log.d("tag", "Absolute Url of image is" + Uri.fromFile(picFileName));
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(f);
+                Uri contentUri = Uri.fromFile(picFileName);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                //upload image to db
+                uploadUri = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, habitIndex);
             }
 
         }
@@ -199,6 +202,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 selectedImage.setImageURI(contentUri);
 
                 //upload image to db
+                uploadUri = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, habitIndex);
             }
 
         }
@@ -207,7 +211,6 @@ public class AddHabitEventActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @param contentUri
      * @return the extension of the image that is selected from the gallery
      */
@@ -278,11 +281,13 @@ public class AddHabitEventActivity extends AppCompatActivity {
         startActivityForResult(gallery, GALLERY_REQUEST_CODE);
     }
 
+
     /**
      * function to get event name and event comment
      * and update the database with these new details
      * @param view
      */
+
     public void addEvent(View view) {
         eventNameInput = findViewById(R.id.event_name_input);
         eventName = eventNameInput.getText().toString();
@@ -292,7 +297,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
 
-        Event event = new Event(eventName, eventComment,date, currentHabit.getId());
+        Event event = new Event(eventName, eventComment,date, uploadUri, currentHabit.getId());
+
 
         Session.getInstance().addEvent(event, habitIndex);
         finish();
