@@ -55,7 +55,7 @@ public class ListHabitViewModel extends ViewModel {
      * @return Live data list of today's habits
      */
     public LiveData<List<Habit>> getTodayHabits() {
-        todayHabitList = Session.getInstance().getHabitList();
+        todayHabitList = (ArrayList<Habit>) Session.getInstance().getHabitList().clone();
         String today = getDayOfWk();
         /* remove habits that do not contain today */
         for (int i = 0; i < todayHabitList.size(); i++) {

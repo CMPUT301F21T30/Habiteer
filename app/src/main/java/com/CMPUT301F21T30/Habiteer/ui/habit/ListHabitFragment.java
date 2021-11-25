@@ -80,7 +80,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
     private void recyclerSetup() {
         habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
-//        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -95,8 +95,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     @Override
     public void onResume() {
         // when the fragment resumes (navigated to)
-
-//        Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
         habitAdapter.updateDataFromSession();
         super.onResume();
     }
