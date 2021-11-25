@@ -7,16 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.User;
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.CMPUT301F21T30.Habiteer.ui.habit.HabitAdapter;
-import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 ;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
@@ -24,7 +21,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     private List<User> searchList;
     private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public SearchUserAdapter(List<User> searchList) {
+    public SearchUserAdapter(FragmentActivity activity, List<User> searchList) {
         this.searchList = searchList;
     }
 
