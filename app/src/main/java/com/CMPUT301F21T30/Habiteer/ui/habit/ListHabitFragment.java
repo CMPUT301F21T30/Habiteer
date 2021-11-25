@@ -55,6 +55,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             @Override
             public void onChanged(@Nullable List<Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
+                todayHabitAdapter.notifyDataSetChanged();
             }
         });
         recyclerSetup();
@@ -79,6 +80,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
     private void recyclerSetup() {
         habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
+        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -113,7 +115,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
             System.out.println("ALl habits tab selected");
             System.out.println(Session.getInstance().getHabitList());
-            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
         }

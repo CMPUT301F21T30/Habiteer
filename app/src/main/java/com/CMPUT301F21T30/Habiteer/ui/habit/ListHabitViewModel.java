@@ -32,6 +32,7 @@ public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
     private MutableLiveData<List<Habit>> mHabits = new MutableLiveData<>();
+    private MutableLiveData<List<Habit>> mTodayHabits = new MutableLiveData<>();
     private ArrayList<Habit> habitList;
     private ArrayList<Habit> todayHabitList;
 
@@ -57,14 +58,17 @@ public class ListHabitViewModel extends ViewModel {
         todayHabitList = Session.getInstance().getHabitList();
         String today = getDayOfWk();
         /* remove habits that do not contain today */
-        for (Habit habit : todayHabitList) {
+        System.out.println("DOIN THIS");
+        for (int i = 0; i < todayHabitList.size(); i++) {
+            Habit habit = todayHabitList.get(i);
             System.out.println(MaterialDayPicker.Weekday.valueOf(today));
             if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
                 todayHabitList.remove(habit);
+                i--;
             }
         }
-        mHabits.setValue(todayHabitList);
-        return mHabits;
+        mTodayHabits.setValue(todayHabitList);
+        return mTodayHabits;
     }
 
     private String getDayOfWk() {
