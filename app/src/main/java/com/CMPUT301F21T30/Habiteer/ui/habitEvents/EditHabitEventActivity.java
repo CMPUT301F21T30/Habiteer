@@ -79,7 +79,7 @@ public class EditHabitEventActivity extends AppCompatActivity {
                     Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Session.getInstance().updateEvent(event, habitIndex);
+                    Session.getInstance().updateEvent(event);
                 }
 
 //                ArrayList<Habit> habits = Session.getInstance().getHabitList();
@@ -101,15 +101,7 @@ public class EditHabitEventActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Habit> habits = Session.getInstance().getHabitList();
-                for (int i = 0; i < habits.size(); i++)
-                {
-                    if (habits.get(i).getId().equals(event.getHabitId()))
-                    {
-                        habitIndex = i;
-                    }
-                }
-                Session.getInstance().deleteEvent(event, habitIndex);
+                Session.getInstance().deleteEvent(event);
                 finish();
                 //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
                 //startActivity(intent);
