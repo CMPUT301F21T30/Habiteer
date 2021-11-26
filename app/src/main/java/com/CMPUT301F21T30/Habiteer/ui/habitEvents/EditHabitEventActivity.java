@@ -30,6 +30,8 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -72,6 +74,8 @@ public class EditHabitEventActivity extends AppCompatActivity {
     private Uri UriOfImage;
     private String currentPhotoPath;
 
+    private StorageReference storageReference; //to store the image in firebase storage
+
 
     /**
      * To set habit event layout, get intent and set event date
@@ -98,15 +102,17 @@ public class EditHabitEventActivity extends AppCompatActivity {
         //selectedImage.setImageResource(R.drawable.ic_launcher_background);
         //get the image and display it in the ImageView
 
-        if (event.getImageUri().equals(null)){
-            Log.d("tag", "entered the if condition");
+        storageReference = FirebaseStorage.getInstance().getReference(); //initialize the storage reference
+
+
+        if (event.getImageUri() == null){
+            //Log.d("tag", "entered the if condition");
             selectedImage.setImageResource(R.drawable.picture);
         }
         else{
             uriSelectedImage = Uri.parse(event.getImageUri());
             Picasso.get().load(uriSelectedImage).into(selectedImage);
         }
-
 
 
         selectedImage.setOnClickListener(new View.OnClickListener() {
@@ -139,15 +145,6 @@ public class EditHabitEventActivity extends AppCompatActivity {
                     Session.getInstance().updateEvent(event, habitIndex);
                 }
 
-//                ArrayList<Habit> habits = Session.getInstance().getHabitList();
-//                for (int i = 0; i < habits.size(); i++)
-//                {
-//                    if (habits.get(i).getId().equals(event.getHabitId()))
-//                    {
-//                        habitIndex = i;
-//                    }
-//                }
-//                Session.getInstance().updateEvent(event, habitIndex);
                 finish();
             }
         });
@@ -168,8 +165,7 @@ public class EditHabitEventActivity extends AppCompatActivity {
                 }
                 Session.getInstance().deleteEvent(event, habitIndex);
                 finish();
-                //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
-                //startActivity(intent);
+
             }
         });
 
@@ -246,7 +242,9 @@ public class EditHabitEventActivity extends AppCompatActivity {
         if (requestCode == CAM_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
                 File picFileName = new File(currentPhotoPath);
-                selectedImage.setImageURI(Uri.fromFile(picFileName));
+
+                //selectedImage.setImageURI(Uri.fromFile(picFileName));
+
                 Log.d("tag", "Absolute Url of image is" + Uri.fromFile(picFileName));
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -254,7 +252,8 @@ public class EditHabitEventActivity extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                UriOfImage = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, storageReference);
+                Picasso.get().load(UriOfImage).into(selectedImage);
                 uploadUri = UriOfImage.toString(); //changes Uri to string
             }
 
@@ -264,15 +263,17 @@ public class EditHabitEventActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK){
 
                 Uri contentUri = data.getData();
+
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + "." + getFileExt (contentUri);
-                File f = new File(currentPhotoPath);
-                Log.d("tag 2", "onActivityResult: Gallery Image Uri" + imageFileName);
+
+
                 selectedImage.setImageURI(contentUri);
 
                 //upload image to db
-                UriOfImage = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, storageReference);
                 uploadUri = UriOfImage.toString(); //changes the Uri to string
+
             }
 
         }
@@ -349,6 +350,7 @@ public class EditHabitEventActivity extends AppCompatActivity {
     public void openGallery (){
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+
     }
 
 

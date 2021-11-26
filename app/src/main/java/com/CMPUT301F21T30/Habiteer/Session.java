@@ -19,7 +19,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -39,7 +38,6 @@ public class Session {
     private ArrayList<Habit> habitList;
     private ArrayList<Event> habitEventsList;
 
-    private StorageReference storageReference; //to store the image in firebase storage
 
     /**
      * Singleton Session constructor
@@ -52,7 +50,6 @@ public class Session {
         habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
-        storageReference = FirebaseStorage.getInstance().getReference(); //initialize the storage reference
 
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -372,27 +369,35 @@ public class Session {
      * Upload the image to firebase
      * @param fileName
      * @param linkUri
-     * @param habitIndex
+     * @param referenceStorage
      * @return returnUriLink
      */
 
-    public Uri uploadImageToFirebase(String fileName, Uri linkUri, Integer habitIndex){
+    public Uri uploadImageToFirebase(String fileName, Uri linkUri, StorageReference referenceStorage ){
 
-        /* Getting habit id from Firebase */
-        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
 
         Uri returnUriLink = null;
-        StorageReference imageUpload = storageReference.child("images/" + fileName);
+
+        StorageReference imageUpload = referenceStorage.child("images/" + fileName);
+
         UploadTask taskUpload = imageUpload.putFile(linkUri);
+
         while (!taskUpload.isComplete()) ;
         if (taskUpload.isSuccessful()) {
+
             Task<Uri> uriTask = imageUpload.getDownloadUrl();
+
             while (!uriTask.isComplete()) ;
+
             if (uriTask.isSuccessful()) {
+
                 Uri uriTaskResult = uriTask.getResult();
+
                 returnUriLink =  uriTaskResult;
+
             } else {
                 Log.d("Upload", "couldn't get download url");
+
 
             }
         } else {

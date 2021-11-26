@@ -30,6 +30,9 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +63,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
     private String uploadUri;
     private Uri UriOfImage;
     private String currentPhotoPath;
+    private StorageReference storageReference; //to store the image in firebase storage
 
     /**
      * To set habit event layout, get intent and set event date
@@ -81,6 +85,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
         // To set event date
         eventDateView.setText("Event date: " + date);
+
+
+        storageReference = FirebaseStorage.getInstance().getReference(); //initialize the storage reference
 
 
 
@@ -179,7 +186,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         if (requestCode == CAM_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
                 File picFileName = new File(currentPhotoPath);
-                selectedImage.setImageURI(Uri.fromFile(picFileName));
+                //selectedImage.setImageURI(Uri.fromFile(picFileName));
                 Log.d("tag", "Absolute Url of image is" + Uri.fromFile(picFileName));
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -187,7 +194,8 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                UriOfImage = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(picFileName.getName(), contentUri, storageReference);
+                Picasso.get().load(UriOfImage).into(selectedImage);
                 uploadUri = UriOfImage.toString(); //changes Uri to string
             }
 
@@ -199,12 +207,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
                 Uri contentUri = data.getData();
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + "." + getFileExt (contentUri);
-                File f = new File(currentPhotoPath);
                 Log.d("tag 2", "onActivityResult: Gallery Image Uri" + imageFileName);
                 selectedImage.setImageURI(contentUri);
 
                 //upload image to db
-                UriOfImage = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, habitIndex);
+                UriOfImage = Session.getInstance().uploadImageToFirebase(imageFileName, contentUri, storageReference);
                 uploadUri = UriOfImage.toString(); //changes the Uri to string
             }
 
@@ -301,9 +308,9 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
         Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
 
-        Event event = new Event(eventName, eventComment,date, uploadUri, currentHabit.getId());
-
+        Event event = new Event(eventName, eventComment, date, uploadUri, currentHabit.getId());
         Session.getInstance().addEvent(event, habitIndex);
         finish();
+
     }
 }
