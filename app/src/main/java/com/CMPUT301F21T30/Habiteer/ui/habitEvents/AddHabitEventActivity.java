@@ -21,8 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class AddHabitEventActivity extends AppCompatActivity {
     // To initialize variables
     String date = "";
-    int habitIndex;
-    String indexString;
+    String habitID;
     TextView eventDateView;
     TextInputEditText eventNameInput;
     String eventName;
@@ -43,8 +42,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         setContentView(R.layout.add_habit_event_activity);
 
         // To pass habit index
-        indexString = getIntent().getStringExtra("habitIndex");
-        habitIndex = Integer.parseInt(indexString);
+        habitID = getIntent().getStringExtra("habitID");
 
         // date of event
         date = getIntent().getStringExtra("eventDate");
@@ -54,7 +52,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
         eventDateView.setText("Event date: " + date);
 
         // This toast confirms correct date is being passed
-        Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit index: " + habitIndex, Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit id: " + habitID, Toast.LENGTH_SHORT).show();
 
         // To connect to the add button and set an on click listener
         addButton = findViewById(R.id.button_addHabitEvent);
