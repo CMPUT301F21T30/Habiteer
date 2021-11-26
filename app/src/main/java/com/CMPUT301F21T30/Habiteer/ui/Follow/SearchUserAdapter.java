@@ -59,10 +59,12 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.itemView.setSelected(selectedIndex == position);
-        String userName = searchList.get(position).getEmail();
-        holder.userNameView.setText(userName);
+        //holder.itemView.setSelected(selectedIndex == position);
+        //String userName = searchList.get(position).getEmail();
+        //holder.userNameView.setText(userName);
 
+        User user = searchList.get(position);
+        holder.userNameView.setText(user.getEmail());
 
     }
 
