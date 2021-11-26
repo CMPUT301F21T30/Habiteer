@@ -57,6 +57,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             @Override
             public void onChanged(@Nullable HashMap<String, Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
+                todayHabitAdapter.notifyDataSetChanged();
             }
         });
         recyclerSetup();
