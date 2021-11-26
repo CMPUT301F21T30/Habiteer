@@ -1,5 +1,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class Event implements Serializable {
     private String makeDate; // TODO store this as a Date object, not a string
     private String id;
     private String habitId;
+    private GeoPoint location;
     //    private Integer progress;
     Event() {} // no-argument constructor for firebase
     Event(String eventName) {
@@ -39,6 +42,8 @@ public class Event implements Serializable {
 
     public String getId() { return id; }
 
+    public GeoPoint getLocation() { return location; }
+
     public void setMakeDate(String makeDate) {this.makeDate = makeDate; }
 
     public void setEventName(String eventName) {
@@ -50,5 +55,7 @@ public class Event implements Serializable {
     public void setHabitId(String comment) {this.habitId=habitId;}
 
     public void setId(String id) { this.id = id; }
+
+    public void setLocation(GeoPoint location) {this.location = location;}
 
 }
