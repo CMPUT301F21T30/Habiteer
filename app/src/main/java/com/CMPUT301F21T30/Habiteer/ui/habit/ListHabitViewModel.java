@@ -20,11 +20,13 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class handles data sent to the HabitAdapter
@@ -45,7 +47,8 @@ public class ListHabitViewModel extends ViewModel {
      * @return Live data list of all habits
      */
     public LiveData<HashMap<String,Habit>> getHabits() {
-        habitList = Session.getInstance().getHabitList();
+        habitList = Session.getInstance().getHabitHashMap();
+        System.out.println(habitList);
         mHabits.setValue(habitList);
         System.out.println(mHabits);
         return mHabits;
@@ -55,16 +58,16 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all of today's habits belonging to the signed in user
      * @return Live data list of today's habits
      */
-    public LiveData<List<Habit>> getTodayHabits() {
-        todayHabitList = (ArrayList<Habit>) Session.getInstance().getHabitList().clone();
+    public LiveData<HashMap<String,Habit>> getTodayHabits() {
+        todayHabitList = (HashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
         String today = getDayOfWk();
         /* remove habits that do not contain today */
-        for (int i = 0; i < todayHabitList.size(); i++) {
-            Habit habit = todayHabitList.get(i);
-            System.out.println(MaterialDayPicker.Weekday.valueOf(today));
+        Iterator iterator = todayHabitList.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Habit habit = (Habit) habitPair.getValue();
             if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
-                todayHabitList.remove(habit);
-                i--;
+                iterator.remove();
             }
         }
         mTodayHabits.setValue(todayHabitList);
