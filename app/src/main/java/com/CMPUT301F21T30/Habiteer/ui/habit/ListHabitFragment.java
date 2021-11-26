@@ -25,13 +25,14 @@ import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ListHabitFragment extends Fragment {
 
     private ListHabitViewModel listHabitViewModel;
     private FragmentListhabitBinding binding;
-    private ArrayList<Habit> habitList;
+//    private ArrayList<Habit> habitList;
     private HabitAdapter habitAdapter;
     private RecyclerView habitRecycler;
 
@@ -40,11 +41,11 @@ public class ListHabitFragment extends Fragment {
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
-        habitList = new ArrayList<>();
+//        habitList = new ArrayList<>();
         habitRecycler = root.findViewById(R.id.habit_recycler);
-        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<List<Habit>>() {
+        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<HashMap<String,Habit>>() {
             @Override
-            public void onChanged(@Nullable List<Habit> habits) {
+            public void onChanged(@Nullable HashMap<String,Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
                 Session session = Session.getInstance();
                 System.out.println("ListHabitFragment Session: " + session);
