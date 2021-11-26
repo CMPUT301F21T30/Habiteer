@@ -13,7 +13,6 @@ public class Event implements Serializable {
     private String makeDate; // TODO store this as a Date object, not a string
     private String id;
     private String habitId;
-
     private String imageUri;
 
 

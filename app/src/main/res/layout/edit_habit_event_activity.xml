@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/event_image"
+            android:id="@+id/edit_event_image"
             android:layout_width="147dp"
             android:layout_height="127dp"
             app:srcCompat="@drawable/picture"
