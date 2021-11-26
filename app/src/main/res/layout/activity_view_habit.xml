@@ -108,14 +108,19 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/privateSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="Switch to private" />
+        android:text="Habit status (Public/Private):"
+        app:showText="true"
+        android:textOn="Private"
+        android:textOff="Public"
+        android:thumb="@drawable/thumb"
+        app:track="@drawable/track"/>
 
     <Button
         android:id="@+id/addHabitEvent"
