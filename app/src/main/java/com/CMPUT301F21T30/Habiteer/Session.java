@@ -248,9 +248,9 @@ public class Session {
         });
     }
 
-    public void addEvent(Event event, Integer habitIndex) {
+    public void addEvent(Event event, String habitID) {
         /* Getting habit id from Firebase */
-        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
         /* Store onto Firebase Events Collection */
         db.collection("HabitEvents")
@@ -289,7 +289,7 @@ public class Session {
 
     }
 
-    public void updateEvent(Event event, Integer habitIndex) {
+    public void updateEvent(Event event) {
         for (int i = 0; i < habitEventsList.size(); i++)
         {
             if (habitEventsList.get(i).getId().equals(event.getId()))
@@ -318,7 +318,7 @@ public class Session {
 
     }
 
-    public void deleteEvent(Event event, Integer habitIndex) {
+    public void deleteEvent(Event event) {
         /* Delete habit event */
         for (int i = 0; i < habitEventsList.size(); i++)
         {
@@ -326,7 +326,7 @@ public class Session {
             {
                 habitEventsList.remove(i);
 
-                Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+                Habit currentHabit = Session.getInstance().getHabitHashMap().get(event.getHabitId());
                 currentHabit.getEventIdList().remove(event.getId());
                 /* Delete on Firebase Habits Collection */
                 db.collection("HabitEvents").document(event.getId())

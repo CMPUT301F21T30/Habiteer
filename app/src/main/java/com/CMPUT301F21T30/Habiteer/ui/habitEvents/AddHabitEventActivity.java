@@ -77,11 +77,11 @@ public class AddHabitEventActivity extends AppCompatActivity {
         eventCommentInput = findViewById(R.id.event_comment_input);
         eventComment = eventCommentInput.getText().toString();
 
-        Habit currentHabit = Session.getInstance().getHabitList().get(habitIndex);
+        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        Event event = new Event(eventName, eventComment,date, currentHabit.getId());
+        Event event = new Event(eventName, eventComment,date, habitID);
 
-        Session.getInstance().addEvent(event, habitIndex);
+        Session.getInstance().addEvent(event, habitID);
         finish();
     }
 }
