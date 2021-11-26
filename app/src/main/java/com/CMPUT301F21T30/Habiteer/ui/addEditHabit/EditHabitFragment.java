@@ -43,7 +43,7 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
 public class EditHabitFragment extends Fragment {
 
     private com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel mViewModel;
-
+    private String habitID;
     public static EditHabitFragment newInstance() {
         return new EditHabitFragment();
     }
@@ -56,8 +56,9 @@ public class EditHabitFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel.class);
 
         // get the selected habit
-        int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-        Habit selectedHabit = Session.getInstance().getHabitList().get(habitIndex);
+        habitID = requireActivity().getIntent().getExtras().getString("habitID");
+
+        Habit selectedHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitEndDate);
 
@@ -147,8 +148,7 @@ public class EditHabitFragment extends Fragment {
                 List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
 
                 // get selected habit from User
-                int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-                Habit currentHabit  = Session.getInstance().getHabitList().get(habitIndex);
+                Habit currentHabit  = Session.getInstance().getHabitHashMap().get(habitID);
 
                 // Set the date only if it was changed
                 if (mViewModel.getEndDate() != null) {
@@ -168,7 +168,7 @@ public class EditHabitFragment extends Fragment {
 
                 // update and navigate back to view habit
                 Intent intent = new Intent(getContext(), ViewHabitActivity.class);
-                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.putExtra("habitID",habitID); // include the index of the habit
                 intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // update the existing view habit activity instead of making a new one
                 startActivity(intent);
 //

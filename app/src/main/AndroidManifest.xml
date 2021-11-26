@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.CMPUT301F21T30.Habiteer">
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name = "android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name = "android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name = "android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,8 +21,6 @@
             android:name=".ui.habit.ViewHabitActivity"
             android:label="View habit"
             android:exported="true"/>
-
-
         <activity
             android:name=".SignupActivity"
             android:exported="true">
@@ -28,8 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
@@ -37,14 +37,12 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
-
         </activity>
         <activity
             android:name=".ui.addEditHabit.AddEditHabitActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Habiteer.NoActionBar"
             android:exported="true" />
-
         <activity
             android:name=".ui.habitEvents.AddHabitEventActivity"
             android:exported="true">
@@ -64,6 +62,14 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
+            android:name=".ui.habitEvents.AddHabitEventActivity"/>
+        <activity
+            android:name=".ui.habitEvents.EditHabitEventActivity"/>
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.version"-->
+<!--            android:value="12451000"/>-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCYRwPWuoTr-8oKBdkuUXBGWMIlm-eUgP0"/>
     </application>
-
 </manifest>
