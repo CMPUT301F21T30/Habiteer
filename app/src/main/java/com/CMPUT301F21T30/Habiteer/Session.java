@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -33,7 +34,7 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private ArrayList<Habit> habitList;
+    private HashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
     /**
@@ -43,7 +44,7 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
-        habitList = new ArrayList<>();
+        habitHashMap = new HashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -52,7 +53,7 @@ public class Session {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
 
-                // Get habits that belong to User from Firestore and append to habitList
+                // Get habits that belong to User from Firestore and append to habitHashMap
                 if (user.getHabitIdList().size() != 0) {
                     for (int i = 0; i < user.getHabitIdList().size(); i++) {
                         DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
@@ -60,7 +61,7 @@ public class Session {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
-                                habitList.add(habit);
+                                habitHashMap.put(habit.getId(),habit); // add habit to hashmap, with ID as the key
 
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
@@ -119,8 +120,10 @@ public class Session {
      * @param habit a Habit object.
      */
     public void addHabit(Habit habit) {
-        /* Add to in-app list */
-        habitList.add(habit);
+        /* Add to in-app list; use title as a temp ID */
+        habit.setId(habit.getHabitName());
+        habitHashMap.put(habit.getHabitName(),habit);
+
         /* Store onto Firebase Habits Collection */
         db.collection("Habits")
                 .add(habit)
@@ -129,7 +132,11 @@ public class Session {
                     public void onSuccess(DocumentReference documentReference) {
                         String habitID = documentReference.getId();
                         documentReference.update("id", habitID);
+                        /* Set the ID to the one generated on Firebase */
                         habit.setId(habitID);
+                        habitHashMap.put(habitID, habitHashMap.remove(habit.getHabitName())); // replace the temp ID with the real ID as the key in the hashmap
+                        user.getHabitIdList().add(habitID); // add the ID to local habit ID list
+
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
                         db.collection("Users").document(user.getEmail()).update("habitIdList", FieldValue.arrayUnion(habitID))
@@ -160,9 +167,10 @@ public class Session {
      * @param habit a Habit object.
      */
     public void deleteHabit(Habit habit) {
-        /* Delete habit in in-app list */
-        habitList.remove(habit);
         String habitID = habit.getId();
+        /* Delete habit in in-app list/hashmap */
+        habitHashMap.remove(habitID);
+
         ArrayList<String> habitIdList = user.getHabitIdList();
         habitIdList.remove(habitID);
         user.setHabitIdList(habitIdList);
@@ -240,7 +248,7 @@ public class Session {
     }
     public void deleteEvent(Event event) {user.deleteEvent(event);}
 
-    public ArrayList<Habit> getHabitList() {
-        return this.habitList;
+    public HashMap<String,Habit> getHabitHashMap() {
+        return this.habitHashMap;
     }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
+import java.util.HashMap;
 
 /**
  * This class handles data sent to the HabitAdapter
@@ -31,10 +32,10 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
-    private MutableLiveData<List<Habit>> mHabits = new MutableLiveData<>();
-    private MutableLiveData<List<Habit>> mTodayHabits = new MutableLiveData<>();
-    private ArrayList<Habit> habitList;
-    private ArrayList<Habit> todayHabitList;
+    private MutableLiveData<HashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
+    private HashMap<String,Habit> todayHabitList;
+    private MutableLiveData<HashMap<String,Habit>> mHabits = new MutableLiveData<>();
+    private HashMap<String,Habit> habitList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -43,7 +44,7 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all habits belonging to the signed in user
      * @return Live data list of all habits
      */
-    public LiveData<List<Habit>> getHabits() {
+    public LiveData<HashMap<String,Habit>> getHabits() {
         habitList = Session.getInstance().getHabitList();
         mHabits.setValue(habitList);
         System.out.println(mHabits);
