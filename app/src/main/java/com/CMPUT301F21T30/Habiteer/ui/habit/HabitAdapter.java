@@ -6,9 +6,11 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +44,9 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     ArrayList<Habit> habitList; // For when we need the hashmap as a list
     private int selectedIndex = RecyclerView.NO_POSITION;
 
+    private List<MaterialDayPicker.Weekday> weekdayList;
+    private Integer progressValue;
+
     public HabitAdapter(HashMap<String,Habit> habitHashMap) {
         this.habitHashMap = habitHashMap;
     }
@@ -48,9 +55,9 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         private TextView habitNameText;
         private TextView habitEndDate;
         private TextView habitRepeats;
-        //private TextView habitProgressPercentage;
+        private TextView habitProgressPercentage;
 
-        //private ProgressBar habitProgressBar;
+        private ProgressBar habitProgressBar;
 
 
         public ViewHolder(final View view) {
@@ -58,9 +65,8 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             habitNameText = view.findViewById(R.id.habit_name);
             habitRepeats = view.findViewById(R.id.repeats);
             habitEndDate = view.findViewById(R.id.end_date);
-            //habitProgressPercentage = view.findViewById(R.id.progress_percentage);
-
-            //habitProgressBar = view.findViewById(R.id.circular_progress);
+            habitProgressPercentage = view.findViewById(R.id.progress_percentage);
+            habitProgressBar = view.findViewById(R.id.circular_progress);
 
             view.setOnClickListener(this);
         }
@@ -97,20 +103,29 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
         habitList = new ArrayList<Habit>(habitHashMap.values()); // temp convert hashmap to list, in order to populate the recycler
         String habitName = habitList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
 
-        //Integer habitProgressPer = habitArrayList.get(position).getProgress();
+        weekdayList = habitList.get(position).getWeekdayList();
 
-    
+        int countDaysOfHabit = countNumberOfDays(habitList.get(position).getStartDate(), habitList.get(position).getEndDate(), weekdayList);
+        progressValue = calculateProgress(habitList.get(position).getEventIdList(), countDaysOfHabit);
+        habitList.get(position).setProgress(progressValue);
 
-        //holder.habitProgressPercentage.setText(habitProgressPer);
 
-        //holder.habitProgressBar.setProgress(habitProgressPer);
+        Log.d("tag 2", String.valueOf(progressValue));
+
+
+        Integer habitProgressPer = habitList.get(position).getProgress();
+
+        holder.habitProgressPercentage.setText(habitProgressPer.toString());
+        holder.habitProgressBar.setProgress(habitProgressPer);
+
+
 
 //        holder.habitRepeats.setText(); //TODO set repeat
         String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
@@ -118,7 +133,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.habitEndDate.setText(habitDate);
         List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
         String daysString = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Requires Java 8
             daysString = formatDayList(habitDays_raw); // format the list to a string
         }
         else {
@@ -166,4 +181,74 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         }
     }
 
+    public int countNumberOfDays (Date startDate, Date endDate, List<MaterialDayPicker.Weekday> daysOfWeek){
+        int habitPerformingDays = 0;
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(startDate);
+
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(endDate);
+
+
+        do {
+            //excluding start date
+            startCal.add(Calendar.DAY_OF_MONTH, 1);
+            for (int i=0; i<daysOfWeek.size(); i++) {
+                String day = daysOfWeek.get(i).toString();
+                if (day == "SUNDAY"){
+                    Log.d("tag 1", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                        ++habitPerformingDays;
+                    }
+
+                }
+                if (day == "MONDAY"){
+                    Log.d("tag 2", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+                if (day == "TUESDAY"){
+                    Log.d("tag 3", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+                if (day == "WEDNESDAY"){
+                    Log.d("tag 4", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+                if (day == "THURSDAY"){
+                    Log.d("tag 5", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+                if (day == "FRIDAY"){
+                    Log.d("tag 6", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+                if (day == "SATURDAY"){
+                    Log.d("tag 7", day);
+                    if (startCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                        ++habitPerformingDays;
+                    }
+                }
+            }
+
+        } while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
+
+        return habitPerformingDays;
+    }
+
+    public int calculateProgress (ArrayList<String> eventList, Integer habitDays){
+        int progress = 0;
+        progress = (eventList.size()/habitDays)*100;
+        return progress;
+    }
 }

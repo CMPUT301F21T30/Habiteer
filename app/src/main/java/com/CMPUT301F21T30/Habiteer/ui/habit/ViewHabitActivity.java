@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
@@ -69,6 +69,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         SimpleDateFormat startEndFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         String startdate = startEndFormat.format(currentHabit.getStartDate());
         String enddate = startEndFormat.format(currentHabit.getEndDate());
+        Integer progressValue = currentHabit.getProgress();
 
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
@@ -76,7 +77,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_);
+        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progressValue);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -142,12 +143,13 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
     }
-    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_) {
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_, Integer progress_) {
         habitName.setText(habitname);
         dates.setText(String.format("From: %s\nTo: %s", finalStartDate, finalEndDate));
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
+        progress.setProgress(progress_);
     }
 
 }

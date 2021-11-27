@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +19,7 @@ public class Habit {
     private Integer progress;
     private String id;
     private ArrayList<String> eventIdList;
-//    private Integer progress;
+
     /**
      * No-argument constructor, used only for firebase.
      */
@@ -46,6 +44,7 @@ public class Habit {
         this.weekdayList = weekdayList;
         this.reason = reason;
         this.eventIdList = new ArrayList<>();
+
     }
 
     // Getters and setter methods, self-explanatory
@@ -74,6 +73,7 @@ public class Habit {
     public Integer getProgress() {
         return progress;
     }
+
     public String getId() { return id; }
 
     public void setHabitName(String habitName) {
@@ -97,6 +97,7 @@ public class Habit {
     public void setProgress(Integer progress) {
         this.progress = progress;
     }
+
     public void setId(String id) { this.id = id; }
 
     public ArrayList<String> getEventIdList() {
@@ -106,4 +107,7 @@ public class Habit {
     public void setEventIdList(ArrayList<String> eventIdList) {
         this.eventIdList = eventIdList;
     }
+
+
 }
+
