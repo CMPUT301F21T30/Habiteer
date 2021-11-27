@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.CMPUT301F21T30.Habiteer">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name = "android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name = "android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name = "android.permission.CAMERA" />
     <uses-permission android:name = "android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -44,13 +45,15 @@
             android:theme="@style/Theme.Habiteer.NoActionBar"
             android:exported="true" />
         <activity
-            android:name=".ui.habitEvents.AddHabitEventActivity"
-            android:exported="true">
-
-        </activity>
-
+            android:name=".ui.habitEvents.AddHabitEventActivity"/>
         <activity
-            android:name=".ui.habitEvents.EditHabitEventActivity"></activity>
+            android:name=".ui.habitEvents.EditHabitEventActivity"/>
+        <!--        <meta-data-->
+        <!--            android:name="com.google.android.gms.version"-->
+        <!--            android:value="12451000"/>-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCYRwPWuoTr-8oKBdkuUXBGWMIlm-eUgP0"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -62,14 +65,5 @@
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-            android:name=".ui.habitEvents.AddHabitEventActivity"/>
-        <activity
-            android:name=".ui.habitEvents.EditHabitEventActivity"/>
-<!--        <meta-data-->
-<!--            android:name="com.google.android.gms.version"-->
-<!--            android:value="12451000"/>-->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCYRwPWuoTr-8oKBdkuUXBGWMIlm-eUgP0"/>
     </application>
 </manifest>
