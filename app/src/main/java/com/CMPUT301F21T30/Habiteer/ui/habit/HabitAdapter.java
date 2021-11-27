@@ -74,7 +74,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     }
     public void updateDataFromSession() {
         /**
-         * This method updates the Habit List and stores it in Firestore
+         * This method updates the Habit List within the app
          */
         Session session = Session.getInstance();
         this.habitHashMap = session.getHabitHashMap();
