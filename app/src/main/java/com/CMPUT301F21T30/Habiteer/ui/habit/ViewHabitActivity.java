@@ -24,7 +24,7 @@ import java.util.Locale;
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class ViewHabitActivity extends AppCompatActivity {
-    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
+    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading, progressPercentage;
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
     Switch privateSwitch;
@@ -33,6 +33,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     String todayDate;
     SimpleDateFormat dateFormat;
     String habitID;
+
 
 
     @Override
@@ -54,6 +55,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit = findViewById(R.id.edit);
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
+        progressPercentage = findViewById(R.id.progress_text);
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
@@ -70,6 +72,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         String startdate = startEndFormat.format(currentHabit.getStartDate());
         String enddate = startEndFormat.format(currentHabit.getEndDate());
         Integer progressValue = currentHabit.getProgress();
+        String percentageProgress = progressValue.toString();
 
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
@@ -77,7 +80,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progressValue);
+        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progressValue, percentageProgress);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -143,13 +146,14 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
     }
-    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_, Integer progress_) {
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_, Integer progress_, String progressPer) {
         habitName.setText(habitname);
         dates.setText(String.format("From: %s\nTo: %s", finalStartDate, finalEndDate));
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
         progress.setProgress(progress_);
+        progressPercentage.setText(progressPer);
     }
 
 }
