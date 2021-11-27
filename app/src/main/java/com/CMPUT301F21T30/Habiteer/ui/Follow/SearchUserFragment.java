@@ -185,6 +185,7 @@ public class SearchUserFragment extends Fragment {
         Task<QuerySnapshot> query = users.whereEqualTo(s, true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                //System.out.println(query);
                 System.out.println(task);
                 System.out.println(task.getResult());
 
@@ -193,8 +194,14 @@ public class SearchUserFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()){
                         System.out.println("Success");
                         User user = document.toObject(User.class);
+                        searchList.add(user);
 
                     }
+                    searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
+                    searchUserAdapter.notifyDataSetChanged();
+                    searchRecycler.setAdapter(searchUserAdapter);
+                    //searchRecycler.setLayoutManager(new LinearLayoutManager(this));
+
                 }
             }
         });
