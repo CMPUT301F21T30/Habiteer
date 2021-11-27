@@ -16,4 +16,7 @@
     <string name="title_addHabit">Add habit</string>
     <string name="title_editHabit">Add habit</string>
     <string name="add">Add</string>
+    <string name="event_name">Event name</string>
+    <string name="event_date">Event date</string>
+    <string name="habit_events_on_selected_day">Habit Events On Selected Day:</string>
 </resources>
