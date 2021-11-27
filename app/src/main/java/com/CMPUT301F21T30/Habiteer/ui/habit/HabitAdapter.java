@@ -9,6 +9,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         private TextView habitNameText;
         private TextView habitEndDate;
         private TextView habitRepeats;
+        private ImageView publicImage;
 
 
         public ViewHolder(final View view) {
@@ -55,6 +57,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             habitNameText = view.findViewById(R.id.habit_name);
             habitRepeats = view.findViewById(R.id.repeats);
             habitEndDate = view.findViewById(R.id.end_date);
+            publicImage = view.findViewById(R.id.lock_image);
             view.setOnClickListener(this);
         }
 
@@ -97,9 +100,17 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         String habitName = habitList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
+        Boolean publicHabit = habitList.get(position).getPublic();
+        if (publicHabit == true){
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        }
+        else {
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_24);
+        }
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
         List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
+
         String daysString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
             daysString = formatDayList(habitDays_raw); // format the list to a string
