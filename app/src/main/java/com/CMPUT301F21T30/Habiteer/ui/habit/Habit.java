@@ -1,6 +1,9 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import java.util.Date;
+import java.util.List;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * This class stores Habit details and allows creation of new Habits.
@@ -10,6 +13,7 @@ public class Habit {
     private String habitName;
     private Date startDate;
     private Date endDate;
+    List<MaterialDayPicker.Weekday> weekdayList;
     private String reason;
     private Integer progress;
     private String id;
@@ -31,10 +35,11 @@ public class Habit {
      * @param endDate the date to the habit ends
      * @param reason the reason for doing the habit
      */
-    public Habit(String habitName,Date startDate,Date endDate,String reason) {
+    public Habit(String habitName,Date startDate,Date endDate,List<MaterialDayPicker.Weekday> weekdayList,String reason) {
         this.habitName = habitName;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.weekdayList = weekdayList;
         this.reason = reason;
     }
 
@@ -44,6 +49,9 @@ public class Habit {
         return habitName;
     }
 
+    public List<MaterialDayPicker.Weekday> getWeekdayList() {
+        return weekdayList;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -74,6 +82,8 @@ public class Habit {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public void setWeekdayList(List<MaterialDayPicker.Weekday> weekdayList) {this.weekdayList = weekdayList;}
 
     public void setReason(String reason) {
         this.reason = reason;
