@@ -32,7 +32,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
 
     private ListHabitViewModel listHabitViewModel;
     private FragmentListhabitBinding binding;
-    // private ArrayList<Habit> habitList;
     private HabitAdapter habitAdapter;
     private HabitAdapter todayHabitAdapter;
     private RecyclerView habitRecycler;
@@ -51,7 +50,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
-        // habitList = new ArrayList<>();
         habitRecycler = root.findViewById(R.id.habit_recycler);
         listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<HashMap<String, Habit>>() {
             @Override
@@ -119,6 +117,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
             /* Display today's habits */
+            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
         } else {
