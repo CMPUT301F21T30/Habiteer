@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     private HabitAdapter todayHabitAdapter;
     private RecyclerView habitRecycler;
     private TabLayout tabLayout;
+    ArrayList<Habit> habitList; // For when we need the hashmap as a list
 
     /**
      * This method creates the list habits view
@@ -58,6 +61,10 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
                 todayHabitAdapter.notifyDataSetChanged();
             }
         });
+        // long press and drag to reorder habits
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(habitRecycler);
+        // Set up recycler view
         recyclerSetup();
 
         FloatingActionButton fab = root.findViewById(R.id.FAB_addHabit);
@@ -89,6 +96,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(),
                 ((LinearLayoutManager) layoutManager).getOrientation());
         habitRecycler.addItemDecoration(divider);
+
     }
 
     /**
@@ -136,4 +144,24 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+    /* Item touch helper allows habits to be dragged and reordered */
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int initialPos = viewHolder.getAbsoluteAdapterPosition();
+            int newPos = target.getAbsoluteAdapterPosition();
+
+            habitList = new ArrayList<Habit>(Session.getInstance().getHabitHashMap().values());
+            Collections.swap(habitList, initialPos, newPos);
+            recyclerView.getAdapter().notifyItemMoved(initialPos, newPos);
+
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 }
