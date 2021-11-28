@@ -43,6 +43,7 @@ public class Habit {
         this.weekdayList = weekdayList;
         this.reason = reason;
         this.eventIdList = new ArrayList<>();
+        this.progress = 0;
     }
 
     // Getters and setter methods, self-explanatory
