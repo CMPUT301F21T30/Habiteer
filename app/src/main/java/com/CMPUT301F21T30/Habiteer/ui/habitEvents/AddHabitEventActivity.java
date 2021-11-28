@@ -44,6 +44,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
@@ -163,9 +164,9 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
      * alert dialog has options for camera, gallery and cancel
      */
     private void selectOptions() {
-        final CharSequence[] items = {"Camera", "Gallery", "Cancel"};
+        final CharSequence[] items = {"Camera", "Gallery"};
 
-        AlertDialog.Builder builder= new AlertDialog.Builder(AddHabitEventActivity.this);
+        MaterialAlertDialogBuilder builder= new MaterialAlertDialogBuilder(AddHabitEventActivity.this);
         builder.setTitle("Add an Image");
 
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -177,10 +178,13 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
                 else if (items[i].equals("Gallery")){
                     openGallery();
                 }
-                else if (items[i].equals("Cancel")){
-                    Toast.makeText(AddHabitEventActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
-                    dialogInterface.dismiss();
-                }
+            }
+        });
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(AddHabitEventActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                dialogInterface.dismiss();
             }
         });
         builder.show();
