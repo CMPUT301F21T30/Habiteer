@@ -27,6 +27,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView userNameView;
+        private int selectedIndex;
 
         public ViewHolder(final View view) {
             super(view);
@@ -39,13 +40,13 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         public void onClick(View view) {
             //Take to the user's profile
             notifyItemChanged(selectedIndex);
-            selectedIndex = getLayoutPosition();
-            System.out.println(selectedIndex);
-            notifyItemChanged(selectedIndex);
+            //selectedIndex = getLayoutPosition();
+            //System.out.println(selectedIndex);
+            //notifyItemChanged(selectedIndex);
 
             // Create new intent to start follow user activity
             Intent intent = new Intent(view.getContext(), FollowUserActivity.class);
-            intent.putExtra("userIndex",selectedIndex); // pass through the index of the clicked user
+            //intent.putExtra("userIndex",selectedIndex); // pass through the index of the clicked user
             view.getContext().startActivity(intent); // start the follow user activity
         }
     }
@@ -53,13 +54,13 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     @NonNull
     @Override
     public SearchUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_user_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_user_habit_content, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //holder.itemView.setSelected(selectedIndex == position);
+        ///holder.itemView.setSelected(selectedIndex == position);
         //String userName = searchList.get(position).getEmail();
         //holder.userNameView.setText(userName);
 

@@ -77,6 +77,8 @@ public class SearchUserFragment extends Fragment {
         searchView = root.findViewById(R.id.searchView);
         searchBtn = root.findViewById(R.id.searchBtn);
 
+
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

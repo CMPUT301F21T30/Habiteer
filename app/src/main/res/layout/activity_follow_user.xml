@@ -16,7 +16,7 @@
         android:background="@color/cardview_shadow_start_color"/>
 
     <TextView
-        android:id="@+id/followers"
+        android:id="@+id/followersCount"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginStart="150dp"
@@ -24,7 +24,7 @@
         android:text="120"
         android:textSize="48sp" />
     <TextView
-        android:id="@+id/following"
+        android:id="@+id/followingCount"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:layout_marginStart="270dp"
@@ -77,6 +77,7 @@
         android:background="@color/cardview_shadow_end_color"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/habitsRecycler"
         android:layout_marginTop="330dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
