@@ -46,7 +46,7 @@ public class FollowUserActivity extends AppCompatActivity {
         userIndex = bundle.getInt("userIndex");
 
         //TODO: Get the clicked user from firestore
-        //User followUser =
+        //User user =
 
         //this.setTitle(user.getEmail());
 
@@ -85,6 +85,6 @@ public class FollowUserActivity extends AppCompatActivity {
             habitsRecycler.setLayoutManager(new LinearLayoutManager(this));
         }
         else{
-            followBtn.setText("Following");
+            followBtn.setText("Follow");
         }
 }}
