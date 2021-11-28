@@ -70,12 +70,14 @@ public class SearchUserFragment extends Fragment {
         searchList = new ArrayList<User>();
         mViewModel = new ViewModelProvider(this).get(SearchUserViewModel.class);
         searchRecycler = root.findViewById(R.id.searchList);
+        recyclerSetup();
         searchRecycler.setAdapter(searchUserAdapter);
-        searchList.add(new User("test@tester.ca")); //TODO remove this test code
-        System.out.println(searchList);
+//        searchList.add(new User("test@tester.ca")); //TODO remove this test code
+//        System.out.println(searchList);
 
         searchView = root.findViewById(R.id.searchView);
         searchBtn = root.findViewById(R.id.searchBtn);
+        searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
 
 
 
@@ -184,7 +186,8 @@ public class SearchUserFragment extends Fragment {
         System.out.println(users);
         System.out.println(users.document());
         System.out.println(users.document().getId());
-        Task<QuerySnapshot> query = users.whereEqualTo(s, true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Query query = users.orderBy("email").startAt(s).endAt(s + '~');
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 //System.out.println(query);
@@ -193,15 +196,12 @@ public class SearchUserFragment extends Fragment {
 
                 if (task.isSuccessful()){
                     System.out.println("Task Successful");
-                    for (QueryDocumentSnapshot document : task.getResult()){
-                        System.out.println("Success");
-                        User user = document.toObject(User.class);
-                        searchList.add(user);
-
-                    }
-                    searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
+                    List<User> results =  task.getResult().toObjects(User.class);
+                    System.out.println("RAW: "+ results);
+                    searchList.clear(); // clear search results
+                    searchList.addAll(results); // add all results to results list
+                    System.out.println("AFTER: "+ searchList);
                     searchUserAdapter.notifyDataSetChanged();
-                    searchRecycler.setAdapter(searchUserAdapter);
                     //searchRecycler.setLayoutManager(new LinearLayoutManager(this));
 
                 }
