@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -34,10 +34,10 @@ import java.util.Map;
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
-    private MutableLiveData<HashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
-    private HashMap<String,Habit> todayHabitList;
-    private MutableLiveData<HashMap<String,Habit>> mHabits = new MutableLiveData<>();
-    private HashMap<String,Habit> habitList;
+    private MutableLiveData<LinkedHashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
+    private LinkedHashMap<String,Habit> todayHabitList;
+    private MutableLiveData<LinkedHashMap<String,Habit>> mHabits = new MutableLiveData<>();
+    private LinkedHashMap<String,Habit> habitList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -46,7 +46,7 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all habits belonging to the signed in user
      * @return Live data list of all habits
      */
-    public LiveData<HashMap<String,Habit>> getHabits() {
+    public LiveData<LinkedHashMap<String,Habit>> getHabits() {
         habitList = Session.getInstance().getHabitHashMap();
         System.out.println(habitList);
         mHabits.setValue(habitList);
@@ -58,8 +58,8 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all of today's habits belonging to the signed in user
      * @return Live data list of today's habits
      */
-    public LiveData<HashMap<String,Habit>> getTodayHabits() {
-        todayHabitList = (HashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
+    public LiveData<LinkedHashMap<String,Habit>> getTodayHabits() {
+        todayHabitList = (LinkedHashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
         String today = getDayOfWk();
         /* remove habits that do not contain today */
         Iterator iterator = todayHabitList.entrySet().iterator();

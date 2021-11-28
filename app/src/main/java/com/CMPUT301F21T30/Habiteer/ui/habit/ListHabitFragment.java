@@ -27,7 +27,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelectedListener {
@@ -54,9 +54,9 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
         habitRecycler = root.findViewById(R.id.habit_recycler);
-        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<HashMap<String, Habit>>() {
+        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<LinkedHashMap<String, Habit>>() {
             @Override
-            public void onChanged(@Nullable HashMap<String, Habit> habits) {
+            public void onChanged(@Nullable LinkedHashMap<String, Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
                 todayHabitAdapter.notifyDataSetChanged();
             }
