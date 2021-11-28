@@ -16,10 +16,13 @@ import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddHabitFragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -66,9 +69,28 @@ public class AddHabitTests {
     public void testInputValidation() {
         solo.clickOnView(solo.getView(R.id.FAB_addHabit));
         solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
-        solo.clickOnText("Save"); // click on the save button without entering anything
-        solo.assertCurrentActivity("Wrong Activity!",AddEditHabitActivity.class); // activity should not change, since no empty fields allowed
+        sharedActions.saveAndCheckActivityChange(solo); // test with all fields empty
+        TextInputLayout nameField = (TextInputLayout) solo.getView(R.id.textInput_habitName);
+        TextInputLayout reasonField = (TextInputLayout) solo.getView(R.id.textInput_habitReason);
+        // test with name field entered
+        solo.enterText(nameField.getEditText(),"Run");
+        sharedActions.saveAndCheckActivityChange(solo);
+        // test with name and reason entered
+        solo.enterText(reasonField.getEditText(),"Get fit");
+        sharedActions.saveAndCheckActivityChange(solo);
+        // test with name,reason,date entered (days of week not selected)
+        solo.clickOnView(solo.getView(R.id.textInput_habitStartDate));
+        solo.clickOnButton(1);
+        solo.clickOnButton(2);
+        sharedActions.saveAndCheckActivityChange(solo);
+        // test with everything entered
+        MaterialDayPicker dayPicker = (MaterialDayPicker) solo.getView(R.id.AddEdit_day_picker);
+        solo.clickOnView(dayPicker.getChildAt(0)); // click on a day
+        solo.clickOnText("Save");
+        solo.assertCurrentActivity("Habit not saved", MainActivity.class); // habit should have saved
+
     }
+
     @Test
     public void TestAddHabitDatePicker() {
         solo.clickOnView(solo.getView(R.id.FAB_addHabit));
@@ -103,5 +125,9 @@ public class AddHabitTests {
             assertTrue(solo.waitForText("Run",1,2000));
 
     }
-    // TODO: teardown using delete
+    // teardown using delete
+    @After
+    public void teardown() {
+        sharedActions.deleteHabit(solo);
+    }
 }
