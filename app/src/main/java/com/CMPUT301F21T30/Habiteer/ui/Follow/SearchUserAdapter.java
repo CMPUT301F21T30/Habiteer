@@ -39,14 +39,14 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
         @Override
         public void onClick(View view) {
             //Take to the user's profile
-            notifyItemChanged(selectedIndex);
-            //selectedIndex = getLayoutPosition();
-            //System.out.println(selectedIndex);
-            //notifyItemChanged(selectedIndex);
+//            notifyItemChanged(selectedIndex);
+            selectedIndex = getLayoutPosition();
+            User currentUser = searchList.get(selectedIndex);
+
 
             // Create new intent to start follow user activity
             Intent intent = new Intent(view.getContext(), FollowUserActivity.class);
-            //intent.putExtra("userIndex",selectedIndex); // pass through the index of the clicked user
+            intent.putExtra("UserObj",currentUser); // pass the clicked user to follow user activity
             view.getContext().startActivity(intent); // start the follow user activity
         }
     }
@@ -54,7 +54,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     @NonNull
     @Override
     public SearchUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_user_habit_content, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_user_list, parent, false);
         return new ViewHolder(view);
     }
 

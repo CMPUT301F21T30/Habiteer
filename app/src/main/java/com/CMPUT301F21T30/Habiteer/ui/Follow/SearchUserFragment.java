@@ -70,14 +70,14 @@ public class SearchUserFragment extends Fragment {
         searchList = new ArrayList<User>();
         mViewModel = new ViewModelProvider(this).get(SearchUserViewModel.class);
         searchRecycler = root.findViewById(R.id.searchList);
-        recyclerSetup();
-        searchRecycler.setAdapter(searchUserAdapter);
 //        searchList.add(new User("test@tester.ca")); //TODO remove this test code
+        recyclerSetup();
+
 //        System.out.println(searchList);
 
         searchView = root.findViewById(R.id.searchView);
         searchBtn = root.findViewById(R.id.searchBtn);
-        searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
+
 
 
 
@@ -132,11 +132,17 @@ public class SearchUserFragment extends Fragment {
 
         return root;
 
-
-
-
     }
-
+    private void recyclerSetup() {
+        // set up the recycler view
+        searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        searchRecycler.setLayoutManager(layoutManager);
+        searchRecycler.setItemAnimator(new DefaultItemAnimator());
+        searchRecycler.setAdapter(searchUserAdapter);
+        DividerItemDecoration divider = new DividerItemDecoration(searchRecycler.getContext(), layoutManager.getOrientation());
+        searchRecycler.addItemDecoration(divider);
+    }
     /*private void EventChangeListener(){
         db = FirebaseFirestore.getInstance();
         db.collection("Users").orderBy("email", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -197,12 +203,9 @@ public class SearchUserFragment extends Fragment {
                 if (task.isSuccessful()){
                     System.out.println("Task Successful");
                     List<User> results =  task.getResult().toObjects(User.class);
-                    System.out.println("RAW: "+ results);
                     searchList.clear(); // clear search results
                     searchList.addAll(results); // add all results to results list
-                    System.out.println("AFTER: "+ searchList);
                     searchUserAdapter.notifyDataSetChanged();
-                    //searchRecycler.setLayoutManager(new LinearLayoutManager(this));
 
                 }
             }
@@ -249,16 +252,7 @@ public class SearchUserFragment extends Fragment {
         });*/
     }
 
-    private void recyclerSetup() {
-        // set up the recycler view
-        searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        searchRecycler.setLayoutManager(layoutManager);
-        searchRecycler.setItemAnimator(new DefaultItemAnimator());
-        searchRecycler.setAdapter(searchUserAdapter);
-        DividerItemDecoration divider = new DividerItemDecoration(searchRecycler.getContext(), layoutManager.getOrientation());
-        searchRecycler.addItemDecoration(divider);
-    }
+
 
 
 

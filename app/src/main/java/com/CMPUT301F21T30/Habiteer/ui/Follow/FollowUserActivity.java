@@ -21,7 +21,7 @@ public class FollowUserActivity extends AppCompatActivity {
     Button followBtn;
     RecyclerView habitsRecycler;
     private ArrayList<Habit> habitsList;
-    private int userIndex;
+    private User selectedUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
 
@@ -42,9 +42,9 @@ public class FollowUserActivity extends AppCompatActivity {
 
         habitsList = new ArrayList<Habit>();
 
-        //Get the user index
+        //Get the user
         Bundle bundle = getIntent().getExtras();
-        userIndex = bundle.getInt("userIndex");
+        selectedUser = (User) bundle.getSerializable("UserObj");
 
         //TODO: Get the clicked user from firestore
         //User user =
