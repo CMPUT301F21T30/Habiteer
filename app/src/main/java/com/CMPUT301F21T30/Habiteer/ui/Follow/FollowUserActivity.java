@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
@@ -30,13 +31,13 @@ public class FollowUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_user);
-        
+
         habitsRecycler = findViewById(R.id.habitsRecycler);
         followBtn = findViewById(R.id.followBtn);
         followersCount = findViewById(R.id.followersCount);
         followingCount = findViewById(R.id.followingCount);
         bio = findViewById(R.id.bio);
-        following = Boolean.TRUE;
+
 
 
         habitsList = new ArrayList<Habit>();
@@ -49,6 +50,18 @@ public class FollowUserActivity extends AppCompatActivity {
         //User user =
 
         //this.setTitle(user.getEmail());
+
+        //Getting current user
+        User currentUser = Session.getInstance().getUser();
+
+        //Checking if current user is already following the other user
+        /*if(currentUser.getFollowingList().contains(user)){
+            following = Boolean.TRUE;
+        }
+        else{
+            following = Boolean.FALSE;
+        }*/
+
 
         //String followers_count = String.valueOf(user.getFollowerList().size());
         //String following_count = String.valueOf(user.getFollowingList().size());
