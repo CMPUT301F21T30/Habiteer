@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +18,7 @@ public class Habit {
     private String reason;
     private String id;
     private ArrayList<String> eventIdList;
-//    private Integer progress;
+    private double progress;
     /**
      * No-argument constructor, used only for firebase.
      */
@@ -72,6 +70,10 @@ public class Habit {
 
     public String getId() { return id; }
 
+    public double getProgress() {
+        return progress;
+    }
+
     public void setHabitName(String habitName) {
         this.habitName = habitName;
     }
@@ -98,5 +100,9 @@ public class Habit {
 
     public void setEventIdList(ArrayList<String> eventIdList) {
         this.eventIdList = eventIdList;
+    }
+
+    public void setProgress(double progress) {
+        this.progress = progress;
     }
 }
