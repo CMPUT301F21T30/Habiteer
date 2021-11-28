@@ -1,9 +1,11 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
@@ -16,7 +18,8 @@ public class Event implements Serializable {
     private String makeDate; // TODO store this as a Date object, not a string
     private String id;
     private String habitId;
-    private GeoPoint location;
+    private Double longitude;
+    private Double latitude;
     //    private Integer progress;
     Event() {} // no-argument constructor for firebase
     Event(String eventName) {
@@ -27,6 +30,8 @@ public class Event implements Serializable {
         this.eventComment = eventComment;
         this.makeDate = eventDate;
         this.habitId = habitId;
+        this.latitude = null;
+        this.longitude = null;
     }
     public String getEventName() {
         return eventName;
@@ -42,7 +47,9 @@ public class Event implements Serializable {
 
     public String getId() { return id; }
 
-    public GeoPoint getLocation() { return location; }
+    public Double getLongitude() {return this.longitude;}
+
+    public Double getLatitude() {return this.latitude;}
 
     public void setMakeDate(String makeDate) {this.makeDate = makeDate; }
 
@@ -52,10 +59,13 @@ public class Event implements Serializable {
 
     public void setEventComment(String comment) {this.eventComment=comment;}
 
-    public void setHabitId(String comment) {this.habitId=habitId;}
+    public void setHabitId(String habitId) {this.habitId=habitId;}
 
     public void setId(String id) { this.id = id; }
 
-    public void setLocation(GeoPoint location) {this.location = location;}
+    public void setLatitude(Double latitude) {this.latitude = latitude;}
+
+    public void setLongitude(Double longitude) {this.longitude = longitude;}
+
 
 }

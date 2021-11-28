@@ -39,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -90,7 +91,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         getPermissions();
         // This toast confirms correct date is being passed
-        Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit id: " + habitID, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit id: " + habitID, Toast.LENGTH_SHORT).show();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         location = findViewById(R.id.button_addHabitEventLocation);
@@ -102,6 +103,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
                 mapFragment.getMapAsync(AddHabitEventActivity.this);
                 layout.setVisibility(View.VISIBLE);
+                location.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -119,6 +121,11 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
+        activeMarker = map.addMarker(new MarkerOptions()
+                .position(new LatLng(defaultLocation.latitude,
+                        defaultLocation.longitude))
+                .draggable(true));
+        map.setOnMarkerDragListener(this);
         updateLocationUI();
         getDeviceLocation();
     }
@@ -187,13 +194,9 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                                 new LatLng(curLocation.getLatitude(),
                                                         curLocation.getLongitude()), DEFAULT_ZOOM));
-                                        activeMarker = map.addMarker(new MarkerOptions()
-                                                .position(new LatLng(curLocation.getLatitude(),
-                                                        curLocation.getLongitude()))
-                                                .draggable(true));
-                                        finalLocation = new GeoPoint(curLocation.getLatitude(),
-                                                curLocation.getLongitude());
-
+                                        activeMarker.setPosition(new LatLng(curLocation.getLatitude(),
+                                                curLocation.getLongitude()));
+                                        finalLocation = new GeoPoint(curLocation.getLatitude(), curLocation.getLongitude());
                                     }
                                 } else {
                                     Log.d(TAG, "Current location is null. Using defaults.");
@@ -223,10 +226,12 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        Event event = new Event(eventName, eventComment,date, habitID);
+        Event event = new Event(eventName, eventComment, date, habitID);
 
-        if (finalLocation != null)
-            event.setLocation(finalLocation);
+        if (finalLocation != null) {
+            event.setLongitude(finalLocation.getLongitude());
+            event.setLatitude(finalLocation.getLatitude());
+        }
 
         Session.getInstance().addEvent(event, habitID);
         finish();
