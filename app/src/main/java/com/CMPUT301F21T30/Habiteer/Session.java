@@ -2,8 +2,6 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +42,7 @@ public class Session {
      * 
      * @param email, which is the document name in firestore
      */
-    private Session(String email, Context context) {
+    Session(String email, Context context) {
         habitHashMap = new HashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);

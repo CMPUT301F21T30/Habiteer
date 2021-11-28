@@ -12,7 +12,7 @@ public class Event {
     private String eventComment;
     private String makeDate; // TODO store this as a Date object, not a string
     //    private Integer progress;
-    Event() {} // no-argument constructor for firebase
+    public Event() {} // no-argument constructor for firebase
     Event(String eventName) {
         this.eventName = eventName;
     }

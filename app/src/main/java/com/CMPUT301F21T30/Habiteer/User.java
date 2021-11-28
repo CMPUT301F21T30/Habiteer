@@ -54,7 +54,9 @@ public class User implements Serializable {
     public ArrayList<Event> getEventList() {
         return eventList;
     }
+
     public void addEvent(Event event) {this.eventList.add(event);}
+
     public void deleteEvent(Event event) {this.habitIdList.remove(event);}
 
     public void setEventList(ArrayList<Event> eventList) {
@@ -65,7 +67,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public void setFollowerList(ArrayList<User> followerList) {
+        this.followerList = followerList;
+    }
 
-
-
+    public void setFollowingList(ArrayList<User> followingList) {
+        this.followingList = followingList;
+    }
 }
