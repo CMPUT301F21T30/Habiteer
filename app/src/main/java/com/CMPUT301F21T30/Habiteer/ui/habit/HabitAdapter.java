@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,11 +37,11 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  * Allows for updates to the list as Habits are added, edited, or deleted
  */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
-    private HashMap<String,Habit> habitHashMap;
+    private LinkedHashMap<String,Habit> habitHashMap;
     ArrayList<Habit> habitList; // For when we need the hashmap as a list
     private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public HabitAdapter(HashMap<String,Habit> habitHashMap) {
+    public HabitAdapter(LinkedHashMap<String,Habit> habitHashMap) {
         this.habitHashMap = habitHashMap;
     }
 

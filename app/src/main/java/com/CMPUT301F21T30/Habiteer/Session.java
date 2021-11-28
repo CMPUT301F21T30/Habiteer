@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -34,7 +34,7 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private HashMap<String,Habit> habitHashMap;
+    private LinkedHashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
     /**
@@ -44,7 +44,7 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
-        habitHashMap = new HashMap<String,Habit>();
+        habitHashMap = new LinkedHashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -248,7 +248,7 @@ public class Session {
     }
     public void deleteEvent(Event event) {user.deleteEvent(event);}
 
-    public HashMap<String,Habit> getHabitHashMap() {
+    public LinkedHashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
     }
 }
