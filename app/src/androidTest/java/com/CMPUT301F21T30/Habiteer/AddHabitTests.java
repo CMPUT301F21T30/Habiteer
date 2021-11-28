@@ -59,6 +59,16 @@ public class AddHabitTests {
         assertEquals(addedit.getSupportFragmentManager().findFragmentById(R.id.container).getClass(), AddHabitFragment.class);
     }
 
+    /**
+     * Test if input validation prevents the activity from submitting empty fields
+     */
+    @Test
+    public void testInputValidation() {
+        solo.clickOnView(solo.getView(R.id.FAB_addHabit));
+        solo.assertCurrentActivity("Wrong Activity", AddEditHabitActivity.class);
+        solo.clickOnText("Save"); // click on the save button without entering anything
+        solo.assertCurrentActivity("Wrong Activity!",AddEditHabitActivity.class); // activity should not change, since no empty fields allowed
+    }
     @Test
     public void TestAddHabitDatePicker() {
         solo.clickOnView(solo.getView(R.id.FAB_addHabit));
