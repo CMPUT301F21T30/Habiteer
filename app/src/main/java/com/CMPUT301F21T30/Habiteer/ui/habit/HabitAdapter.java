@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;

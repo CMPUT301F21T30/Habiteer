@@ -24,7 +24,6 @@ import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelectedListener {
@@ -35,7 +34,6 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     private HabitAdapter todayHabitAdapter;
     private RecyclerView habitRecycler;
     private TabLayout tabLayout;
-    ArrayList<Habit> habitList; // For when we need the hashmap as a list
 
     /**
      * This method creates the list habits view
