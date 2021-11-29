@@ -111,11 +111,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
-
-                    //privateHabits.add(new Habit());//adding habit to the list of private habits
-
-                }
+                currentHabit.setPublic(!isChecked); // false if checked, true if not
+                Session.getInstance().updateHabit(currentHabit);
 
             }
         });
