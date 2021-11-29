@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

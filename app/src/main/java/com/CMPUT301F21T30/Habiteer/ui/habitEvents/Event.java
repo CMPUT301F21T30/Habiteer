@@ -1,11 +1,6 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.firebase.firestore.GeoPoint;
-
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashMap;
 
 
 /**

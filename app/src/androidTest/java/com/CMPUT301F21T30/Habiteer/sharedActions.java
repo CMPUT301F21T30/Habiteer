@@ -2,8 +2,6 @@ package com.CMPUT301F21T30.Habiteer;
 
 import android.widget.EditText;
 
-import androidx.test.platform.app.InstrumentationRegistry;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.Solo;
 

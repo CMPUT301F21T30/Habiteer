@@ -1,7 +1,6 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 
 import java.io.Serializable;
 import java.util.ArrayList;
