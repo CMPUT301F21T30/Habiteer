@@ -91,8 +91,6 @@ public class FollowUserActivity extends AppCompatActivity {
         //habitsList = selectedUser.getPublicHabits();
         //System.out.println(habitsList);
 
-
-
         displayInfo(followers_count, following_count, bio_text, habitsList);
 
         followBtn.setOnClickListener(new View.OnClickListener() {
