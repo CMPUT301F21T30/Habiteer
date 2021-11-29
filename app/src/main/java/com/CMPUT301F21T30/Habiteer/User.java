@@ -9,8 +9,6 @@ import java.util.ArrayList;
 public class User implements Serializable {
     private String email;
     private ArrayList<String> habitIdList;
-    private ArrayList<Event> eventList;
-    private ArrayList<Habit> publicHabits;
 
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
@@ -20,11 +18,9 @@ public class User implements Serializable {
     public User(String email) {
         this.email = email;
         this.habitIdList = new ArrayList<>();
-        this.eventList = new ArrayList<>();
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
         this.blockList = new ArrayList<>();
-        this.publicHabits = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -53,22 +49,8 @@ public class User implements Serializable {
         return blockList;
     }
 
-    public ArrayList<Event> getEventList() {
-        return eventList;
-    }
-    public void addEvent(Event event) {this.eventList.add(event);}
-    public void deleteEvent(Event event) {this.habitIdList.remove(event);}
-
-    public void setEventList(ArrayList<Event> eventList) {
-        this.eventList = eventList;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public ArrayList<Habit> getPublicHabits(){
-        return publicHabits;
     }
 
 

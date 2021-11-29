@@ -23,7 +23,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Habit Events On Selected Day: "
+        android:text="@string/habit_events_on_selected_day"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <View
@@ -33,9 +33,10 @@
         android:background="?android:attr/listDivider" />
 
     <ListView
+        android:id="@+id/event_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
+        android:layout_height="match_parent"
+        >
 
 
     </ListView>
