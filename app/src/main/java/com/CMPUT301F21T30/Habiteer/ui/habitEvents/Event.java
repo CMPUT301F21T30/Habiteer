@@ -1,7 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
-import java.util.Date;
-
 
 /**
  * To get and set new event name, event date and event comment
@@ -11,7 +9,9 @@ public class Event {
     private String eventName;
     private String eventComment;
     private String makeDate; // TODO store this as a Date object, not a string
-    //    private Integer progress;
+    private String id;
+    private String habitId;
+
     Event() {} // no-argument constructor for firebase
     Event(String eventName) {
         this.eventName = eventName;
@@ -31,6 +31,14 @@ public class Event {
 
     public String getEventComment() {return eventComment;}
 
+    public String getId() {
+        return id;
+    }
+
+    public String getHabitId() {
+        return habitId;
+    }
+
     public void setMakeDate(String makeDate) {
         this.makeDate = makeDate;
     }
@@ -39,5 +47,13 @@ public class Event {
         this.eventName = eventName;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setEventComment(String comment) {this.eventComment=comment;}
+
+    public void setHabitId(String habitId) {
+        this.habitId = habitId;
+    }
 }

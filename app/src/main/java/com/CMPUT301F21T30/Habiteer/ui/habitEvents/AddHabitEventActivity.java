@@ -3,7 +3,6 @@ package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * Class to add new habit event
@@ -78,7 +76,7 @@ public class AddHabitEventActivity extends AppCompatActivity {
 
 
         Event event = new Event(eventName, eventComment,date);
-        Session.getInstance().addEvent(event);
+        Session.getInstance().addEvent(event, habitID);
         finish();
     }
 }
