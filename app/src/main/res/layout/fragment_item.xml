@@ -30,28 +30,42 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="54dp"
-        android:layout_height="28dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_accept"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginStart="172dp"
-        android:text="Accept"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="A"
         android:textSize="5dp"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_baseline_check_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/user_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.523" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="54dp"
-        android:layout_height="28dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_deny"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginStart="8dp"
-        android:text="Reject"
-        android:textSize="5dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:backgroundTint="@color/design_default_color_primary"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_baseline_clear_24"
+        app:iconPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/button_accept"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.518" />
 
