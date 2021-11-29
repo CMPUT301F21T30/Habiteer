@@ -16,4 +16,5 @@
     <string name="title_addHabit">Add habit</string>
     <string name="title_editHabit">Add habit</string>
     <string name="add">Add</string>
+    <string name="text_privateSwitch">Make habit private</string>
 </resources>
