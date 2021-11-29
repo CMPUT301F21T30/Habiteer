@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Map;
 
 public class User implements Serializable {
@@ -16,6 +15,7 @@ public class User implements Serializable {
     private ArrayList<Event> eventList;
     private ArrayList<Habit> publicHabits;
 
+    private ArrayList<User> requestedList;
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
     private ArrayList<User> blockList;
@@ -29,6 +29,7 @@ public class User implements Serializable {
         this.followingList = new ArrayList<>();
         this.blockList = new ArrayList<>();
         this.publicHabits = new ArrayList<>();
+        this.requestedList = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -55,6 +56,22 @@ public class User implements Serializable {
 
     public ArrayList<User> getBlockList() {
         return blockList;
+    }
+
+    public void setFollowingList(ArrayList<User> followingList) {
+        this.followingList = followingList;
+    }
+
+    public void setFollowerList(ArrayList<User> followerList) {
+        this.followerList = followerList;
+    }
+
+    public void setRequestedList(ArrayList<User> requestedList) {
+        this.requestedList = requestedList;
+    }
+
+    public ArrayList<User> getRequestedList() {
+        return requestedList;
     }
 
     public ArrayList<Event> getEventList() {

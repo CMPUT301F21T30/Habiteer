@@ -1,27 +1,21 @@
 package com.CMPUT301F21T30.Habiteer.ui.Follow;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * This activity allows the user to follow another user after performing the search.
@@ -33,7 +27,7 @@ public class FollowUserActivity extends AppCompatActivity {
     Button followBtn;
     RecyclerView habitsRecycler;
     private ArrayList<Habit> habitsList;
-    private User selectedUser;
+    private User selectedUser, currentUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
 
@@ -55,6 +49,8 @@ public class FollowUserActivity extends AppCompatActivity {
         bio = findViewById(R.id.bio);
 
         habitsList = new ArrayList<Habit>();
+
+        currentUser = Session.getInstance().getUser();
 
 
 
@@ -116,6 +112,8 @@ public class FollowUserActivity extends AppCompatActivity {
                 if (!following){
                     //TODO: Send a follow request
                     followBtn.setText("Requested");
+                    currentUser.getRequestedList().add(selectedUser);
+                    Session.getInstance().updateRequestedList(currentUser, currentUser.getRequestedList());
                 }
                 else{
                     following = Boolean.FALSE;

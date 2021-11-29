@@ -2,8 +2,6 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -407,4 +405,60 @@ public class Session {
         return this.habitEventsList;
     }
 
+
+    public void updateFollowerList(User user, ArrayList<User>followerList){
+        user.setFollowerList(followerList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Follower List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for followers list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding follower", e);
+            }
+        });
+    }
+
+    public void updateFollowingList(User user, ArrayList<User>followingList){
+        user.setFollowerList(followingList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for following list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding following", e);
+            }
+        });
+    }
+
+    public void updateRequestedList(User user, ArrayList<User>requestList){
+        user.setFollowerList(requestList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Request List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+    }
+
+    
 }
