@@ -137,7 +137,7 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
           ImageView selectedImage = findViewById(R.id.event_image);
           if (event.getImageUri() == null){
               //Log.d("tag", "entered the if condition");
-              selectedImage.setImageResource(R.drawable.picture);
+              selectedImage.setImageResource(R.drawable.ic_image);
           }
           else{
               Uri uriSelectedImage = Uri.parse(event.getImageUri());
