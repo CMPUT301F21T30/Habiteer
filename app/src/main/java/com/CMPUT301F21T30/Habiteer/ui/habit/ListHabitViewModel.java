@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -38,6 +39,7 @@ public class ListHabitViewModel extends ViewModel {
     private LinkedHashMap<String,Habit> todayHabitList;
     private MutableLiveData<LinkedHashMap<String,Habit>> mHabits = new MutableLiveData<>();
     private LinkedHashMap<String,Habit> habitList;
+    private ArrayList<String> habitIdList = (ArrayList<String>) Session.getInstance().getUser().getHabitIdList().clone();
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -68,6 +70,7 @@ public class ListHabitViewModel extends ViewModel {
             Habit habit = (Habit) habitPair.getValue();
             if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
                 iterator.remove();
+                habitIdList.remove(habit.getId());
             }
         }
         mTodayHabits.setValue(todayHabitList);
@@ -79,6 +82,10 @@ public class ListHabitViewModel extends ViewModel {
         int today = calendar.get(DAY_OF_WEEK);
         calendar.set(DAY_OF_WEEK,today);
         return calendar.getDisplayName(DAY_OF_WEEK, LONG, Locale.US).toUpperCase(Locale.ROOT);
+    }
+
+    public ArrayList<String> getTodayHabitIdList() {
+        return this.habitIdList;
     }
 
     public void setIndex(int index) {
