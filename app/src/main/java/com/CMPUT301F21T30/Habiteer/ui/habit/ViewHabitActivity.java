@@ -17,6 +17,7 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -103,14 +104,8 @@ public class ViewHabitActivity extends AppCompatActivity {
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
-                    currentHabit.setPublic(Boolean.FALSE);
-                    Session.getInstance().updateHabit(currentHabit);
-                }
-                else {
-                    currentHabit.setPublic(Boolean.TRUE);
-                    Session.getInstance().updateHabit(currentHabit);
-                }
+                currentHabit.setPublic(!isChecked); // false if checked, true if not
+                Session.getInstance().updateHabit(currentHabit);
 
             }
         });
