@@ -20,6 +20,7 @@ public class Habit {
     private String reason;
     private String id;
     private ArrayList<String> eventIdList;
+    private boolean isPublic;
 //    private Integer progress;
     /**
      * No-argument constructor, used only for firebase.
@@ -45,6 +46,8 @@ public class Habit {
         this.weekdayList = weekdayList;
         this.reason = reason;
         this.eventIdList = new ArrayList<>();
+        isPublic = true;
+
     }
 
     // Getters and setter methods, self-explanatory
@@ -76,6 +79,10 @@ public class Habit {
         this.habitName = habitName;
     }
 
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -99,4 +106,5 @@ public class Habit {
     public void setEventIdList(ArrayList<String> eventIdList) {
         this.eventIdList = eventIdList;
     }
+    public void setPublic(boolean aPublic) {isPublic = aPublic;}
 }

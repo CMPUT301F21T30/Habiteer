@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
@@ -138,6 +139,9 @@ public class AddHabitFragment extends Fragment  {
                 List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
                 // make a new habit
                 Habit newHabit = new Habit(habitName,startDate,endDate,weekdayList,reason);
+                // set the habit privacy
+                SwitchCompat privateSwitch = getView().findViewById(R.id.privateSwitch);
+                newHabit.setPublic(!privateSwitch.isChecked()); // Private if checked, public if not.
                 // store the new habit
                 Session session = Session.getInstance();
                 session.addHabit(newHabit);
