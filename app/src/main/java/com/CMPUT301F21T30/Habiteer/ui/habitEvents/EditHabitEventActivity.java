@@ -3,22 +3,22 @@ package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 import static android.content.ContentValues.TAG;
 
 import android.Manifest;
-import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
+import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,42 +41,44 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Class to add new habit event
- */
-public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+import com.squareup.picasso.Picasso;
+
+public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
     // To initialize variables
-    
 
-
-    String date = "";
-    String habitID;
-    TextInputLayout eventDateView;
     TextInputEditText eventNameInput;
     String eventName;
     TextInputEditText eventCommentInput;
     String eventComment;
-    Button addButton;
+    String newTitle;
+    String newComment;
+    String message;
+    Button deleteButton;
+    TextView title;
+    TextView comment;
+    TextInputLayout date;
+    Integer habitIndex;
     Button location;
     private GoogleMap map;
     private LinearLayout layout;
     String manifestPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    Boolean locPermission;
-    Boolean camPermission;
+    boolean locPermission;
+    boolean camPermission;
     Location curLocation;
     private int DEFAULT_ZOOM = 15;
-    GeoPoint finalLocation;
+    private GeoPoint finalLocation;
     Marker activeMarker;
     LatLng defaultLocation = new LatLng(0.0,0.0);
+    Event event;
     private FusedLocationProviderClient fusedLocationProviderClient;
+
 
     /**
      * To set habit event layout, get intent and set event date
@@ -85,76 +88,150 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_habit_event_activity);
+        setContentView(R.layout.edit_habit_event_activity);
         // Set up the special toolbar with the save button for this activity
         Toolbar toolbar = findViewById(R.id.bar_add_habit_event);
         setSupportActionBar(toolbar);
-        this.setTitle("Add habit event");
 
-        // To pass habit index
-        habitID = getIntent().getStringExtra("habitID");
-
-        // date of event
-        date = getIntent().getStringExtra("eventDate");
-        eventDateView = findViewById(R.id.textInput_habitEventDate);
-
-        // To set event date
-        eventDateView.getEditText().setText(date);
+        this.setTitle("Edit habit event");
 
         getPermissions();
-        // This toast confirms correct date is being passed
-        //Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit id: " + habitID, Toast.LENGTH_SHORT).show();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        location = findViewById(R.id.button_addHabitEventLocation);
+
+        // date of event
+        event = (Event) getIntent().getSerializableExtra("event");
+        title = findViewById(R.id.event_name_input);
+        title.setText(event.getEventName());
+        date = findViewById(R.id.textInput_habitEventDate);
+        date.getEditText().setText(event.getMakeDate());
+        comment = findViewById(R.id.event_comment_input);
+        comment.setText(event.getEventComment());
         layout = findViewById(R.id.layoutLocation);
+        location = findViewById(R.id.button_addHabitEventLocation);
+        if (event.getLatitude() == null)
+        {
+            location.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            getPermissions();
+            location.setVisibility(View.GONE);
+            layout.setVisibility(View.VISIBLE);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(EditHabitEventActivity.this);
+        }
         location.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 getPermissions();
-                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                mapFragment.getMapAsync(AddHabitEventActivity.this);
+                location.setVisibility(View.GONE);
                 layout.setVisibility(View.VISIBLE);
-                location.setVisibility(View.INVISIBLE);
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                mapFragment.getMapAsync(EditHabitEventActivity.this);
+
             }
         });
-        handlePhotograph();
 
+          // load in the image, if available
+          ImageView selectedImage = findViewById(R.id.event_image);
+          if (event.getImageUri() == null){
+              //Log.d("tag", "entered the if condition");
+              selectedImage.setImageResource(R.drawable.ic_image);
+          }
+          else{
+              Uri uriSelectedImage = Uri.parse(event.getImageUri());
+              Picasso.get().load(uriSelectedImage).into(selectedImage);
+          }
+  
+          handlePhotograph();
 
-
-
+        // To connect to the delete button and set an on click listener
+        deleteButton = findViewById(R.id.deleteHabitEvent);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "DELETE START");
+                Session.getInstance().deleteEvent(event);
+                Log.d(TAG, "DELETE MID");
+                finish();
+                //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
+                //startActivity(intent);
+            }
+        });
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate options menu
         getMenuInflater().inflate(R.menu.add_habit_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             case R.id.button_addHabit: // save button
-                addEvent();
+                newTitle = title.getText().toString();
+                newComment = comment.getText().toString();
+                event.setEventName(newTitle);
+                event.setEventComment(newComment);
+                if (getUploadUri() != null) { // only update image if a new image was uploaded
+                    event.setImageUri(getUploadUri());
+                }
+                if (finalLocation != null) {
+                    event.setLatitude(finalLocation.getLatitude());
+                    event.setLongitude(finalLocation.getLongitude());
+                }
+
+                if (newTitle.isEmpty()) {
+                    title.setError("Please enter a title.");
+//                    message = "Required Field is empty";
+//                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Session.getInstance().updateEvent(event);
+                    finish();
+                }
                 return true;
         }
         return false;
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-        activeMarker = map.addMarker(new MarkerOptions()
-                .position(new LatLng(defaultLocation.latitude,
-                        defaultLocation.longitude))
-                .draggable(true));
-        map.setOnMarkerDragListener(this);
+        if (event.getLatitude() != null)
+        {
+            activeMarker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(event.getLatitude(), event.getLongitude()))
+                    .draggable(true));
+        }
+        else
+        {
+            activeMarker = map.addMarker(new MarkerOptions()
+                    .position(defaultLocation)
+                    .draggable(true));
+        }
         updateLocationUI();
         getDeviceLocation();
+        map.setOnMarkerDragListener(this);
+
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LatLng temp = activeMarker.getPosition();
+        finalLocation = new GeoPoint(temp.latitude, temp.longitude);
     }
 
     public void getPermissions()
@@ -218,12 +295,23 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
                                     // Set the map's camera position to the current location of the device.
                                     curLocation = task.getResult();
                                     if (curLocation != null) {
-                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                                new LatLng(curLocation.getLatitude(),
-                                                        curLocation.getLongitude()), DEFAULT_ZOOM));
-                                        activeMarker.setPosition(new LatLng(curLocation.getLatitude(),
-                                                curLocation.getLongitude()));
-                                        finalLocation = new GeoPoint(curLocation.getLatitude(), curLocation.getLongitude());
+                                        if (event.getLatitude() != null)
+                                        {
+                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                    new LatLng(event.getLatitude(),
+                                                            event.getLongitude()), DEFAULT_ZOOM));
+                                            activeMarker.setPosition(new LatLng(event.getLatitude(), event.getLongitude()));
+                                            finalLocation = new GeoPoint(event.getLatitude(), event.getLongitude());
+                                        }
+                                        else
+                                        {
+                                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                                    new LatLng(curLocation.getLatitude(),
+                                                            curLocation.getLongitude()), DEFAULT_ZOOM));
+                                            activeMarker.setPosition(new LatLng(curLocation.getLatitude(), curLocation.getLongitude()));
+                                            finalLocation = new GeoPoint(curLocation.getLatitude(), curLocation.getLongitude());
+                                        }
+
                                     }
                                 } else {
                                     Log.d(TAG, "Current location is null. Using defaults.");
@@ -239,45 +327,5 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
-    /**
-     * function to get event name and event comment
-     * and update the database with these new details
-     */
-    public void addEvent() {
-        eventNameInput = findViewById(R.id.event_name_input);
-        eventName = eventNameInput.getText().toString();
-
-        eventCommentInput = findViewById(R.id.event_comment_input);
-        eventComment = eventCommentInput.getText().toString();
-
-        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
-
-        Event event = new Event(eventName, eventComment, date,getUploadUri(), habitID);
-
-        if (finalLocation != null) {
-            event.setLongitude(finalLocation.getLongitude());
-            event.setLatitude(finalLocation.getLatitude());
-        }
-
-        Session.getInstance().addEvent(event, habitID);
-        finish();
-
-    }
-
-    @Override
-    public void onMarkerDragStart(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        LatLng temp = activeMarker.getPosition();
-        finalLocation = new GeoPoint(temp.latitude, temp.longitude);
-    }
-
 }
+

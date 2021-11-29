@@ -2,26 +2,28 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -37,6 +39,7 @@ public class Session {
     private HashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
+
     /**
      * Singleton Session constructor
      * Reads data from Users collection in Firestore and converts to User object
@@ -44,8 +47,12 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
+        habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
+        habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+
+
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -62,7 +69,22 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitHashMap.put(habit.getId(),habit); // add habit to hashmap, with ID as the key
-
+                                /* Adding events to HabitEventsList */
+                                ArrayList<String> eventIDList = new ArrayList<>();
+                                for (int j = 0; j < habit.getEventIdList().size(); j++) {
+                                    eventIDList.add(habit.getEventIdList().get(j));
+                                }
+                                for (int i = 0; i < eventIDList.size(); i++) {
+                                    DocumentReference eventsDocRef = db.collection("HabitEvents").document(eventIDList.get(i));
+                                    eventsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Event event = documentSnapshot.toObject(Event.class);
+                                            habitEventsList.add(event);
+                                            Log.d(TAG, String.valueOf(habitEventsList.size()));
+                                        }
+                                    });
+                                }
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(context, MainActivity.class);
@@ -81,6 +103,13 @@ public class Session {
                 }
             }
         });
+
+//        try {
+
+//        }
+//        catch (NullPointerException e) {
+//            System.out.println("Habit ID list is empty: " + e);
+//        }
 
     }
 
@@ -174,6 +203,30 @@ public class Session {
         ArrayList<String> habitIdList = user.getHabitIdList();
         habitIdList.remove(habitID);
         user.setHabitIdList(habitIdList);
+        /* Deleting events for habit */
+        for (int i = 0; i < habit.getEventIdList().size(); i++)
+        {
+            int finalI = i;
+            db.collection("HabitEvents").document(habit.getEventIdList().get(i))
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + habit.getEventIdList().get(finalI));
+                            /* Delete from EventsList */
+                            for (int j = 0; j < habitEventsList.size(); j++) {
+                                if (habitEventsList.get(j).getId().equals(habit.getEventIdList().get(finalI)))
+                                    habitEventsList.remove(j);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error deleting document", e);
+                        }
+                    });
+        }
         /* Delete on Firebase Habits Collection */
         db.collection("Habits").document(habitID)
                 .delete()
@@ -224,31 +277,168 @@ public class Session {
         });
     }
 
-    public void storeEvent(List<Event> eventList) {
-        user.setEventList(new ArrayList<Event>(eventList));
+    public void addEvent(Event event, String habitID) {
+        /* Getting habit id from Firebase */
+        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        /* Store onto Firebase */
-        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        /* Store onto Firebase Events Collection */
+        db.collection("HabitEvents")
+                .add(event)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    public void onSuccess(DocumentReference documentReference) {
+                        String eventID = documentReference.getId();
+                        currentHabit.getEventIdList().add(eventID);
+                        documentReference.update("id", eventID);
+                        event.setId(eventID);
+                        habitEventsList.add(event);
+                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + eventID);
+                        /* Store onto Firebase Users Collection */
+                        db.collection("Habits").document(currentHabit.getId()).update("eventIdList", FieldValue.arrayUnion(eventID))
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + eventID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error writing document", e);
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
     }
 
-    public void addEvent(Event event) {
-        user.addEvent(event);
-        storeEvent(user.getEventList());
+    public void updateEvent(Event event) {
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.remove(i);
+                habitEventsList.add(event);
+                String habitEventID = event.getId();
+                db.collection("HabitEvents")
+                        .document(habitEventID)
+                        .set(event)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitEventID);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document", e);
+                            }
+                        });
+            }
+
+        }
+
     }
-    public void deleteEvent(Event event) {user.deleteEvent(event);}
+
+    public void deleteEvent(Event event) {
+        /* Delete habit event */
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.remove(i);
+
+                Habit currentHabit = Session.getInstance().getHabitHashMap().get(event.getHabitId());
+                currentHabit.getEventIdList().remove(event.getId());
+                /* Delete on Firebase Habits Collection */
+                db.collection("HabitEvents").document(event.getId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                /* Delete from Firebase Users Collection */
+                                db.collection("Habits").document(currentHabit.getId()).update("eventIdList", currentHabit.getEventIdList())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+            }
+        }
+
+    }
+
+    public ArrayList<Event> getEventList() {
+        return this.habitEventsList;
+    }
 
     public HashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
     }
+
+    /**
+     * Upload the image to firebase
+     * @param fileName
+     * @param linkUri
+     * @param referenceStorage
+     * @return returnUriLink
+     */
+
+    public Uri uploadImageToFirebase(String fileName, Uri linkUri, StorageReference referenceStorage ){
+
+
+        Uri returnUriLink = null;
+
+        StorageReference imageUpload = referenceStorage.child("images/" + fileName);
+
+        UploadTask taskUpload = imageUpload.putFile(linkUri);
+
+        while (!taskUpload.isComplete()) ;
+        if (taskUpload.isSuccessful()) {
+
+            Task<Uri> uriTask = imageUpload.getDownloadUrl();
+
+            while (!uriTask.isComplete()) ;
+
+            if (uriTask.isSuccessful()) {
+
+                Uri uriTaskResult = uriTask.getResult();
+
+                returnUriLink =  uriTaskResult;
+
+            } else {
+                Log.d("Upload", "couldn't get download url");
+
+
+            }
+        } else {
+            Log.d("Upload", "couldn't upload url");
+        }
+        return returnUriLink;
+    }
+
+
+
 }

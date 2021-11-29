@@ -1,5 +1,8 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +19,9 @@ public class Habit {
     List<MaterialDayPicker.Weekday> weekdayList;
     private String reason;
     private String id;
+    private ArrayList<String> eventIdList;
     private boolean isPublic;
-//    private Integer progress;
+    private double progress;
     /**
      * No-argument constructor, used only for firebase.
      */
@@ -41,7 +45,9 @@ public class Habit {
         this.endDate = endDate;
         this.weekdayList = weekdayList;
         this.reason = reason;
+        this.eventIdList = new ArrayList<>();
         isPublic = true;
+        progress = 0.0;
 
     }
 
@@ -78,6 +84,10 @@ public class Habit {
         return isPublic;
     }
 
+    public double getProgress() {
+        return progress;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -94,5 +104,16 @@ public class Habit {
 
     public void setId(String id) { this.id = id; }
 
+    public ArrayList<String> getEventIdList() {
+        return eventIdList;
+    }
+
+    public void setEventIdList(ArrayList<String> eventIdList) {
+        this.eventIdList = eventIdList;
+    }
     public void setPublic(boolean aPublic) {isPublic = aPublic;}
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+    }
 }

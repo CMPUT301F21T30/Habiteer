@@ -146,6 +146,7 @@ public class AddHabitFragment extends BaseAddEditFragment  {
                     Habit newHabit = new Habit(habitName, startDate, endDate, weekdayList, reason);
                     // set the habit privacy
                     SwitchCompat privateSwitch = getView().findViewById(R.id.privateSwitch);
+                    newHabit.setPublic(!privateSwitch.isChecked()); // checked is private, unchecked is public
                     // store the new habit
                     Session session = Session.getInstance();
                     session.addHabit(newHabit);
