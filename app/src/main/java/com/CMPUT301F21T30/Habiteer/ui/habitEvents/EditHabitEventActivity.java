@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
     Button deleteButton;
     TextView title;
     TextView comment;
-    TextView date;
+    TextInputLayout date;
     Integer habitIndex;
     Button location;
     private GoogleMap map;
@@ -91,8 +92,8 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
         event = (Event) getIntent().getSerializableExtra("event");
         title = findViewById(R.id.event_name_input);
         title.setText(event.getEventName());
-        date = findViewById(R.id.habitEventDate);
-        date.setText("Event Date: " + event.getMakeDate());
+        date = findViewById(R.id.textInput_habitEventDate);
+        date.getEditText().setText(event.getMakeDate());
         comment = findViewById(R.id.event_comment_input);
         comment.setText(event.getEventComment());
         layout = findViewById(R.id.layoutLocation);
