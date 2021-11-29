@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -79,6 +83,10 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_habit_event_activity);
+        // Set up the special toolbar with the save button for this activity
+        Toolbar toolbar = findViewById(R.id.bar_add_habit_event);
+        setSupportActionBar(toolbar);
+        this.setTitle("Add habit event");
 
         // To pass habit index
         habitID = getIntent().getStringExtra("habitID");
@@ -108,16 +116,27 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
             }
         });
 
-        // To connect to the add button and set an on click listener
-        addButton = findViewById(R.id.button_addHabitEvent);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addEvent(view);
-            }
-        });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate options menu
+        getMenuInflater().inflate(R.menu.add_habit_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.button_addHabit: // save button
+                addEvent();
+                return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -216,9 +235,8 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
     /**
      * function to get event name and event comment
      * and update the database with these new details
-     * @param view
      */
-    public void addEvent(View view) {
+    public void addEvent() {
         eventNameInput = findViewById(R.id.event_name_input);
         eventName = eventNameInput.getText().toString();
 
