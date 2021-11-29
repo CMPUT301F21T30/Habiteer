@@ -4,46 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/activity_main.xml" value="0.18070652173913043" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/activity_search_user.xml" value="0.20520833333333333" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_add_habit.xml" value="0.2875905797101449" />
         <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_dashboard.xml" value="0.18070652173913043" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_edit_habit.xml" value="0.18125" />
         <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.18070652173913043" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.18" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/search_user_fragment.xml" value="0.33" />
-        <entry key="..\:/GitHub/Habiteer/app/src/main/res/layout/search_user_list.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/activity_main.xml" value="0.25317028985507245" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/layout/fragment_listhabit.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20520833333333333" />
         <entry key="..\:/GitHub/Habiteer1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_calendar_single_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_person_outline_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_image.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/drawable/list_background.xml" value="0.20555555555555555" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_follow_user.xml" value="0.2" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_following_list.xml" value="0.2269021739130435" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_search_user.xml" value="0.1" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.264" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_user_profile.xml" value="0.2269021739130435" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.264" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.12360688956433637" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.1" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/search_user_fragment.xml" value="0.176" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/search_user_list.xml" value="0.1" />
-        <entry key="..\:/Users/17807/Project/Habiteer/app/src/main/res/layout/view_other_habits_content.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/Kavit/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.25407608695652173" />
         <entry key="..\:/Users/Kavit/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.23541666666666666" />
         <entry key="..\:/Users/Kavit/Documents/GitHub/Habiteer/app/src/main/res/layout/add_habit_event_activity.xml" value="0.1" />
@@ -52,25 +20,27 @@
         <entry key="..\:/Users/Kavit/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_habit_events.xml" value="0.14375" />
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.2324074074074074" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/drawable/circle.xml" value="0.128125" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/activity_follow_user.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/activity_search_user.xml" value="0.1" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.13269927536231885" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/activity_view_other_habits.xml" value="0.13269927536231885" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/add_edit_habit_activity.xml" value="0.1" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/follow_user_habit_content.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/fragment_habit_events.xml" value="0.1068840579710145" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/fragment_list_users.xml" value="0.1" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.1068840579710145" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/search_user_fragment.xml" value="0.13333333333333333" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/search_user_list.xml" value="0.1068840579710145" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/user_item.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/layout/view_other_habits_content.xml" value="0.13269927536231885" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/menu/add_habit_menu.xml" value="0.16302083333333334" />
-        <entry key="..\:/Users/harno/Project1/Habiteer/app/src/main/res/menu/bottom_nav_menu.xml" value="0.16302083333333334" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/drawable/thumb.xml" value="0.1" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/drawable/track.xml" value="0.1" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/add_edit_habit_activity.xml" value="0.15925925925925927" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/add_habit_event_activity.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/edit_habit_event_activity.xml" value="0.1" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/layout/file_paths.xml" value="0.1" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10666666666666667" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.11354166666666667" />
+        <entry key="..\:/Users/bushr/Documents/GitHub/Habiteer/app/src/main/res/xml/file_paths.xml" value="0.1" />
         <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.2203125" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/add_edit_habit_activity.xml" value="0.1921875" />
         <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/add_habit_event_activity.xml" value="0.2203125" />
-        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_habit_events.xml" value="0.18020833333333333" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/edit_habit_event.xml" value="0.5" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/edit_habit_event_activity.xml" value="0.275" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_add_habit.xml" value="0.1921875" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_edit_habit.xml" value="0.1921875" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_habit_events.xml" value="0.11855670103092783" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.1265625" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/fragment_notifications.xml" value="0.1921875" />
+        <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/habit_event_content.xml" value="0.12447916666666667" />
       </map>
     </option>
   </component>
