@@ -44,6 +44,7 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
+        habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
@@ -62,6 +63,22 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitHashMap.put(habit.getId(),habit); // add habit to hashmap, with ID as the key
+                                /* Adding events to HabitEventsList */
+                                ArrayList<String> eventIDList = new ArrayList<>();
+                                for (int j = 0; j < habit.getEventIdList().size(); j++) {
+                                    eventIDList.add(habit.getEventIdList().get(j));
+                                }
+                                for (int i = 0; i < eventIDList.size(); i++) {
+                                    DocumentReference eventsDocRef = db.collection("HabitEvents").document(eventIDList.get(i));
+                                    eventsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Event event = documentSnapshot.toObject(Event.class);
+                                            habitEventsList.add(event);
+                                            Log.d(TAG, String.valueOf(habitEventsList.size()));
+                                        }
+                                    });
+                                }
 
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
@@ -259,12 +276,37 @@ public class Session {
         /* Getting habit id from Firebase */
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        /* Store onto Firebase */
-        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        /* Store onto Firebase Events Collection */
+        db.collection("HabitEvents")
+                .add(event)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    public void onSuccess(DocumentReference documentReference) {
+                        String eventID = documentReference.getId();
+                        currentHabit.getEventIdList().add(eventID);
+                        documentReference.update("id", eventID);
+                        event.setId(eventID);
+                        habitEventsList.add(event);
+                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + eventID);
+                        /* Store onto Firebase Users Collection */
+                        db.collection("Habits").document(currentHabit.getId()).update("eventIdList", FieldValue.arrayUnion(eventID))
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + eventID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
 
@@ -340,13 +382,12 @@ public class Session {
                         });
             }
         }
+
     }
 
-    public void addEvent(Event event) {
-        user.addEvent(event);
-        storeEvent(user.getEventList());
+    public ArrayList<Event> getEventList() {
+        return this.habitEventsList;
     }
-    public void deleteEvent(Event event) {user.deleteEvent(event);}
 
     public HashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;

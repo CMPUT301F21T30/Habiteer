@@ -19,6 +19,5 @@
     <string name="event_name">Event name</string>
     <string name="event_date">Event date</string>
     <string name="habit_events_on_selected_day">Habit Events On Selected Day:</string>
-    <string name="error_DayPicker">Please select a day.</string>
     <string name="text_privateSwitch">Make habit private</string>
 </resources>
