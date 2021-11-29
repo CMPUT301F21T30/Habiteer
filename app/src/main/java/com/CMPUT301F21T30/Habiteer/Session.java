@@ -224,29 +224,123 @@ public class Session {
         });
     }
 
-    public void storeEvent(List<Event> eventList) {
-        user.setEventList(new ArrayList<Event>(eventList));
+    public void addEvent(Event event, String habitID) {
+        /* Getting habit id from Firebase */
+        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        /* Store onto Firebase */
-        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        /* Store onto Firebase Events Collection */
+        db.collection("HabitEvents")
+                .add(event)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    public void onSuccess(DocumentReference documentReference) {
+                        String eventID = documentReference.getId();
+                        currentHabit.getEventIdList().add(eventID);
+                        documentReference.update("id", eventID);
+                        event.setId(eventID);
+                        habitEventsList.add(event);
+                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + eventID);
+                        /* Store onto Firebase Users Collection */
+                        db.collection("Habits").document(currentHabit.getId()).update("eventIdList", FieldValue.arrayUnion(eventID))
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + eventID);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error writing document", e);
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
+
     }
 
-    public void addEvent(Event event) {
-        user.addEvent(event);
-        storeEvent(user.getEventList());
+    public void updateEvent(Event event) {
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.set(i, event);
+                String habitEventID = habitEventsList.get(i).getId();
+                db.collection("HabitEvents")
+                        .document(habitEventID)
+                        .set(event)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitEventID);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document", e);
+                            }
+                        });
+
+            }
+
+        }
+
     }
-    public void deleteEvent(Event event) {user.deleteEvent(event);}
+
+    public void deleteEvent(Event event) {
+        /* Delete habit event */
+        for (int i = 0; i < habitEventsList.size(); i++)
+        {
+            if (habitEventsList.get(i).getId().equals(event.getId()))
+            {
+                habitEventsList.remove(i);
+
+                Habit currentHabit = Session.getInstance().getHabitHashMap().get(event.getHabitId());
+                currentHabit.getEventIdList().remove(event.getId());
+                /* Delete on Firebase Habits Collection */
+                db.collection("HabitEvents").document(event.getId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                /* Delete from Firebase Users Collection */
+                                db.collection("Habits").document(currentHabit.getId()).update("eventIdList", currentHabit.getEventIdList())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + event.getId());
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
+            }
+        }
+
+    }
+
+    public ArrayList<Event> getEventList() {
+        return this.habitEventsList;
+    }
+
 
     public HashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
