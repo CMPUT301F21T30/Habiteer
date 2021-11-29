@@ -1,7 +1,6 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
-import com.CMPUT301F21T30.Habiteer.Session;
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.HabitEventAdapter;
-import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

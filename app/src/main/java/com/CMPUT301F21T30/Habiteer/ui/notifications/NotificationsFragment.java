@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {

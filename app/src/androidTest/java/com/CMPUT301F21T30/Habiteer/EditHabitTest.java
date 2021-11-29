@@ -4,14 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
-import android.widget.EditText;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
-import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddHabitFragment;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.EditHabitFragment;
 import com.CMPUT301F21T30.Habiteer.ui.habit.ViewHabitActivity;
 import com.google.android.material.textfield.TextInputLayout;
