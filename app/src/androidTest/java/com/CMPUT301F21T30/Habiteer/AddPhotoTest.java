@@ -26,7 +26,7 @@ public class AddPhotoTest {
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "rat6@g.ca");
+        solo.enterText((EditText) solo.getView(R.id.loginEmail), "rat8@g.ca");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -43,7 +43,7 @@ public class AddPhotoTest {
         solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment");
         solo.clickOnView(solo.getView(R.id.event_image));
         solo.clickInList(1);
-        solo.click
+
         solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
         solo.clickOnView(solo.getView(R.id.button_addHabit));
         solo.goBack();
