@@ -56,10 +56,7 @@ public class FollowUserActivity extends AppCompatActivity {
 
         habitsList = new ArrayList<Habit>();
 
-        ActionBar ab = getSupportActionBar();
-        //enable back button
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         //Get the user
@@ -91,12 +88,23 @@ public class FollowUserActivity extends AppCompatActivity {
 
 
         //TODO: Get only public habits
-        habitsList = selectedUser.getPublicHabits();
+        if (selectedUser.getPublicHabits().isEmpty()) {
+            habitsList.clear();
+        } else {
+            habitsList = selectedUser.getPublicHabits();
+        }
         System.out.println("Public habits: " + habitsList);
 
 
 
+
+
         displayInfo(followers_count, following_count, bio_text, habitsList);
+
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
 
         followBtn.setOnClickListener(new View.OnClickListener() {
             /**
