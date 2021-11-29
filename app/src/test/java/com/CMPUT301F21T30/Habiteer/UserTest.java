@@ -9,12 +9,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+
+/**
+ * Tests getters and setters for the User class
+ */
 public class UserTest {
 
+    //mock user
     private User mockUser(){
         return new User ("human@gmail.com");
     }
 
+    //tests getters and setters for user email
     @Test
     void testGetUser(){
         User user = mockUser();
@@ -22,6 +28,7 @@ public class UserTest {
         assertTrue(user.getEmail().contains(user.getEmail()));
     }
 
+    //tests getters and setters for habitId
     @Test
     void testGetHabitId(){
         User user = mockUser();
@@ -32,6 +39,7 @@ public class UserTest {
         assertEquals(1, user.getHabitIdList().size());
     }
 
+    //tests getters and setters for event list
     @Test
     void testGetEventList(){
         User user = mockUser();
@@ -43,6 +51,7 @@ public class UserTest {
         assertEquals(1, user.getEventList().size());
     }
 
+    //tests getter and setter for the follower list
     @Test
     void testFollowerList(){
         User user = mockUser();
@@ -55,6 +64,8 @@ public class UserTest {
 
     }
 
+
+    //tests getter and setter for following list
     @Test
     void testFollowingList(){
         User user = mockUser();
@@ -76,6 +87,7 @@ public class UserTest {
 
     }
 
+    //tests setter for user email
     @Test
     void testSetUser(){
         User user = new User();
@@ -85,6 +97,7 @@ public class UserTest {
 
 
 
+    //tests setter for habitId list
     @Test
     void testSetHabitId(){
         User user = mockUser();
