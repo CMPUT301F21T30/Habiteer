@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FollowUserHabitAdapter extends RecyclerView.Adapter {
-    private HashMap<String, Habit> habitsList;
-    public FollowUserHabitAdapter(HashMap<String, Habit> habitsList) {
+    private ArrayList<Habit> habitsList;
+    public FollowUserHabitAdapter(ArrayList<Habit> habitsList) {
         this.habitsList = habitsList;
 
     }

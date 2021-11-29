@@ -32,7 +32,7 @@ public class FollowUserActivity extends AppCompatActivity {
     TextView followersCount, followingCount, bio;
     Button followBtn;
     RecyclerView habitsRecycler;
-    private HashMap<String, Habit> habitsList;
+    private ArrayList<Habit> habitsList;
     private User selectedUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
@@ -54,7 +54,7 @@ public class FollowUserActivity extends AppCompatActivity {
         followingCount = findViewById(R.id.followingCount);
         bio = findViewById(R.id.bio);
 
-        habitsList = new HashMap<String, Habit>();
+        habitsList = new ArrayList<Habit>();
 
         ActionBar ab = getSupportActionBar();
         //enable back button
@@ -85,8 +85,9 @@ public class FollowUserActivity extends AppCompatActivity {
         String followers_count = String.valueOf(selectedUser.getFollowerList().size());
         String following_count = String.valueOf(selectedUser.getFollowingList().size());
 
-        //TODO: Get bio for the user
+        //Getting the bio of the user
         //String bio_text = selectedUser.setBio();
+        String bio_text = "SAMPLE BIO";// TODO: Remove this test bio and uncomment the upper one when user profile is merged
 
 
         //TODO: Get only public habits
@@ -124,7 +125,7 @@ public class FollowUserActivity extends AppCompatActivity {
      * @param bio_text
      * @param habits_list
      */
-    private void displayInfo(String followers_count, String following_count, String bio_text, HashMap<String, Habit> habits_list){
+    private void displayInfo(String followers_count, String following_count, String bio_text, ArrayList<Habit> habits_list){
         followersCount.setText(followers_count);
         followingCount.setText(following_count);
         bio.setText(bio_text);

@@ -71,8 +71,8 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public HashMap<String, Habit> getPublicHabits(){
-        publicHabits = (HashMap<String, Habit>) habitIdList.clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
+    public ArrayList<Habit> getPublicHabits(){
+        publicHabits = habitIdList.clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
         ListIterator<String> iterator = habitIdList.listIterator();
         Iterator iterator1 = publicHabits.entrySet().iterator();
         while (iterator.hasNext()) {
