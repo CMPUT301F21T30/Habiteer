@@ -5,12 +5,16 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Map;
 
 public class User implements Serializable {
     private String email;
     private ArrayList<String> habitIdList;
     private ArrayList<Event> eventList;
-    private ArrayList<Habit> publicHabits;
+    private HashMap<String,Habit> publicHabits;
 
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
@@ -68,6 +72,16 @@ public class User implements Serializable {
     }
 
     public ArrayList<Habit> getPublicHabits(){
+        publicHabits = habitIdList.clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
+        ListIterator<String> iterator = habitIdList.listIterator();
+        Iterator iterator = publicHabits.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Habit habit = (Habit) habitPair.getValue();
+            if (habit.getPublic() == false) {
+                iterator.remove();
+            }
+        }
         return publicHabits;
     }
 
