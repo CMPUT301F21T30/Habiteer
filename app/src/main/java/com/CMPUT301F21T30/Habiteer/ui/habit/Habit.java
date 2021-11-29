@@ -74,6 +74,10 @@ public class Habit {
         this.habitName = habitName;
     }
 
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
