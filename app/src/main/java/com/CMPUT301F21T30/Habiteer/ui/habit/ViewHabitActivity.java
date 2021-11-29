@@ -3,6 +3,11 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import static android.content.ContentValues.TAG;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -119,13 +124,11 @@ public class ViewHabitActivity extends AppCompatActivity {
                 calendar = Calendar.getInstance();
                 dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 todayDate = dateFormat.format(calendar.getTime());
-
-                Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
+                Log.d(TAG, "RUNNING");
+                Intent intent = new Intent(getApplicationContext(), AddHabitEventActivity.class);
                 intent.putExtra("habitID", String.valueOf(habitID));
                 intent.putExtra("eventDate", todayDate);
-                startActivity(intent);
-//                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
-
+                startActivity(intent); //the user goes to the addHabitEvent activity
             }
         });
 
