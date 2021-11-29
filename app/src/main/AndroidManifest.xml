@@ -45,7 +45,8 @@
             android:name=".ui.habitEvents.AddHabitEventActivity"
             android:theme="@style/Theme.Habiteer.NoActionBar"/>
         <activity
-            android:name=".ui.habitEvents.EditHabitEventActivity"/>
+            android:name=".ui.habitEvents.EditHabitEventActivity"
+            android:theme="@style/Theme.Habiteer.NoActionBar"/>
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data

@@ -8,6 +8,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        layout="@layout/view_add_edit_events_toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/bar_add_habit_event">
 
         <include layout="@layout/views_add_edit_events_text_fields" />
 
@@ -40,7 +43,19 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/deleteHabitEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/design_default_color_error"
+            android:gravity="center"
+            android:text="delete" />
+
         <LinearLayout
+            android:id="@+id/layoutLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -48,7 +63,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
-            android:id="@+id/layoutLocation"
             android:visibility="gone">
 
             <fragment
@@ -57,37 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 tools:context=".AddEventActivity" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp">
-
-            <Button
-                android:id="@+id/deleteHabitEvent"
-                android:layout_width="115dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="50dp"
-                android:gravity="center"
-                android:text="delete" />
-
-            <Button
-                android:id="@+id/saveHabitEvent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="save" />
 
         </LinearLayout>
 
