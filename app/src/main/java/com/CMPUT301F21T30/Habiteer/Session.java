@@ -85,6 +85,11 @@ public class Session {
                                         }
                                     });
                                 }
+                                /* Login */
+                                Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
+                                context.startActivity(intent); // if logged in, go to the main activity
                             }
                         });
                     }
