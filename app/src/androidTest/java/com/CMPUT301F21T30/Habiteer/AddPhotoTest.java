@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class AddHabitEventTest {
+public class AddPhotoTest {
     private Solo solo;
 
     @Rule
@@ -41,6 +41,9 @@ public class AddHabitEventTest {
         solo.clickOnView(solo.getView(R.id.addHabitEvent));
         solo.enterText((EditText)solo.getView(R.id.event_name_input), "Habit name");
         solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment");
+        solo.clickOnView(solo.getView(R.id.event_image));
+        solo.clickInList(1);
+        solo.click
         solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
         solo.clickOnView(solo.getView(R.id.button_addHabit));
         solo.goBack();
@@ -50,7 +53,7 @@ public class AddHabitEventTest {
         solo.enterText((EditText)solo.getView(R.id.event_name_input), "Habit name2");
         solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment2");
         solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
-        //solo.clickOnView(solo.getView(R.id.saveHabitEvent));
+        solo.clickOnView(solo.getView(R.id.button_addHabit));
         solo.clickOnView(solo.getView(R.id.navigation_habit_event));
         solo.clickInList(0);
         solo.clickOnView(solo.getView(R.id.deleteHabitEvent));
