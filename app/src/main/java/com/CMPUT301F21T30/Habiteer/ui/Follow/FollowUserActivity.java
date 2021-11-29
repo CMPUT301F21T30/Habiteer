@@ -1,10 +1,10 @@
 package com.CMPUT301F21T30.Habiteer.ui.Follow;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,9 +55,11 @@ public class FollowUserActivity extends AppCompatActivity {
 
         habitsList = new ArrayList<Habit>();
 
-        //ActionBar ab = getActionBar();
-        //assert ab != null;
-        //ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
         //Get the user
         Bundle bundle = getIntent().getExtras();
