@@ -101,14 +101,8 @@ public class ViewHabitActivity extends AppCompatActivity {
             privateSwitch.setChecked(false);
         }
 
-
-
         // displaying the habit info
         displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progress);
-
-
-        //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
-        //days.setSelectedDays(daysSelected);
 
         /**
          * Checking if the user made the habit private and updates the database accordingly
@@ -179,7 +173,6 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         progressPer.setText(progressFormat);
-
 
     }
 

@@ -44,7 +44,7 @@ public class Session {
      * Singleton Session constructor
      * Reads data from Users collection in Firestore and converts to User object
      * 
-     * @param email, which is the document name in firestore
+     * @param email, which is the document name in Firestore
      */
     private Session(String email, Context context) {
         habitHashMap = new HashMap<String,Habit>();
@@ -102,14 +102,6 @@ public class Session {
                 }
             }
         });
-
-//        try {
-
-//        }
-//        catch (NullPointerException e) {
-//            System.out.println("Habit ID list is empty: " + e);
-//        }
-
     }
 
     /**
