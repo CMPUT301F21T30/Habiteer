@@ -15,6 +15,11 @@ import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/**
+ * Adapter for FollowUser Habits which displays the public habits of the following user
+ */
+
 public class FollowUserHabitAdapter extends RecyclerView.Adapter {
     private ArrayList<Habit> habitsList;
     public FollowUserHabitAdapter(ArrayList<Habit> habitsList) {
@@ -37,7 +42,10 @@ public class FollowUserHabitAdapter extends RecyclerView.Adapter {
 
 
     }
-
+    /**
+     * This method returns the total number of search results
+     * @return habitsList.size()
+     */
     @Override
     public int getItemCount() {
         return habitsList.size();

@@ -53,6 +53,10 @@ public class FollowUserActivity extends AppCompatActivity {
         currentUser = Session.getInstance().getUser();
 
 
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        //assert ab != null;
+        //ab.setDisplayHomeAsUpEnabled(true);
 
 
         //Get the user
@@ -78,29 +82,18 @@ public class FollowUserActivity extends AppCompatActivity {
         String followers_count = String.valueOf(selectedUser.getFollowerList().size());
         String following_count = String.valueOf(selectedUser.getFollowingList().size());
 
-        //Getting the bio of the user
-        //String bio_text = selectedUser.setBio();
-        String bio_text = "SAMPLE BIO";// TODO: Remove this test bio and uncomment the upper one when user profile is merged
+        //Getting the bio for the user
+        //String bio_text = selectedUser.getBio();
+        String bio_text = "Sample Bio";//TODO: Remove test bio and uncomment the upper one when user profile is merged to main
 
 
         //TODO: Get only public habits
-        if (selectedUser.getPublicHabits().isEmpty()) {
-            habitsList.clear();
-        } else {
-            habitsList = selectedUser.getPublicHabits();
-        }
-        System.out.println("Public habits: " + habitsList);
-
-
+        //habitsList = selectedUser.getPublicHabits();
+        //System.out.println(habitsList);
 
 
 
         displayInfo(followers_count, following_count, bio_text, habitsList);
-
-        ActionBar ab = getSupportActionBar();
-        //enable back button
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
 
         followBtn.setOnClickListener(new View.OnClickListener() {
             /**
