@@ -58,6 +58,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             habitNameText = view.findViewById(R.id.habit_name);
             habitRepeats = view.findViewById(R.id.repeats);
             habitEndDate = view.findViewById(R.id.end_date);
+            publicImage = view.findViewById(R.id.lock_image);
             view.setOnClickListener(this);
         }
 
