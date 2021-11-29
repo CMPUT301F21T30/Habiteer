@@ -125,15 +125,6 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
 
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.map = googleMap;
-        updateLocationUI();
-        getDeviceLocation();
-    }
-
-
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -261,7 +252,7 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
 
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        Event event = new Event(eventName, eventComment, date, habitID);
+        Event event = new Event(eventName, eventComment, date,getUploadUri(), habitID);
 
         if (finalLocation != null) {
             event.setLongitude(finalLocation.getLongitude());
@@ -289,19 +280,4 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         finalLocation = new GeoPoint(temp.latitude, temp.longitude);
     }
 
-    @Override
-    public void onMarkerDragStart(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDrag(Marker marker) {
-
-    }
-
-    @Override
-    public void onMarkerDragEnd(Marker marker) {
-        LatLng temp = activeMarker.getPosition();
-        finalLocation = new GeoPoint(temp.latitude, temp.longitude);
-    }
 }
