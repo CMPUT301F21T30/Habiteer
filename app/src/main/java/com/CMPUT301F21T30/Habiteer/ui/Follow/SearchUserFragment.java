@@ -44,97 +44,93 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ *This fragment shows the search page and allows the user to search for other users by typing
+ * their email in the SearchView field.
+ * It shows the list of all the users that start with the letters typed by the user.
+ */
+
 public class SearchUserFragment extends Fragment {
-    private EditText searchView;
+    private SearchView searchView;
     private RecyclerView searchRecycler;
     private List<User> searchList;
     private SearchUserAdapter searchUserAdapter;
     private SearchUserViewModel mViewModel;
-    private Button searchBtn;
     FirebaseFirestore db;
     FirebaseAuth firebaseAuth;
+
 
     public static SearchUserFragment newInstance() {
         return new SearchUserFragment();
     }
 
+    /**
+     * This method creates the SearchView to type the email,
+     * RecyclerView to display the result of te search as a list.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return root
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        //inflate
         View root = inflater.inflate(R.layout.search_user_fragment, container, false);
 
         super.onCreate(savedInstanceState);
 
 
-//        setContentView(R.layout.activity_search_user);
+
         searchList = new ArrayList<User>();
         mViewModel = new ViewModelProvider(this).get(SearchUserViewModel.class);
         searchRecycler = root.findViewById(R.id.searchList);
-//        searchList.add(new User("test@tester.ca")); //TODO remove this test code
         recyclerSetup();
-
-//        System.out.println(searchList);
-
         searchView = root.findViewById(R.id.searchView);
-        searchBtn = root.findViewById(R.id.searchBtn);
 
 
-
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            /**
+             * This method takes the string as typed by the user and passes it to the doSearch method
+             * @param query
+             * @return false
+             */
             @Override
-            public void onClick(View v) {
-                String email = searchView.getText().toString().trim();
-                doSearch(email);
+            public boolean onQueryTextSubmit(String query) {
+                if (!TextUtils.isEmpty(query.trim())){//ignore any white spaces after the string
 
-
-                /**
-                 * Checking if email is entered
-                 */
-                if (TextUtils.isEmpty(email)){
-                    searchView.setError("Email is required!");
-                    return;
+                    doSearch(query);
                 }
 
+                return false;
+            }
+
+            /**
+             * This method checks if the string has been changed and passes the resulting string
+             * to the doSearch method
+             * @param newText
+             * @return false
+             */
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText.trim())){//ignore any white spaces after the string
+                    doSearch(newText);
+                }
+
+                return false;
             }
         });
 
-        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (!TextUtils.isEmpty(query.trim())){
-                    //System.out.println("query1");
-                    //System.out.println(query);
-                    doSearch(query);
-                }
-                else{
-                    //System.out.println("query2");
-                    //System.out.println(query);
-                    //getAllUsers();
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText.trim())){
-                    doSearch(newText);
-                }
-                else{
-                    //getAllUsers();
-                }
-                return false;
-            }
-        });*/
-
-        //EventChangeListener();
 
 
         return root;
 
     }
+
+    /**
+     * This method sets up the Recycler View
+     */
     private void recyclerSetup() {
-        // set up the recycler view
         searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         searchRecycler.setLayoutManager(layoutManager);
@@ -143,67 +139,22 @@ public class SearchUserFragment extends Fragment {
         DividerItemDecoration divider = new DividerItemDecoration(searchRecycler.getContext(), layoutManager.getOrientation());
         searchRecycler.addItemDecoration(divider);
     }
-    /*private void EventChangeListener(){
-        db = FirebaseFirestore.getInstance();
-        db.collection("Users").orderBy("email", Query.Direction.ASCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null){
-                    Log.e("Firestore Error", error.getMessage());
-                }
-                for (DocumentChange dc : value.getDocumentChanges()){
-                    if (dc.getType() == DocumentChange.Type.ADDED){
-                        searchList.add(dc.getDocument().toObject(User.class));
-                    }
-                    searchUserAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }*/
 
-    /*private void getAllUsers() {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                searchList.clear();
-                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    User user = dataSnapshot1.getValue(User.class);
-                    if(user.getEmail() != null && !user.getEmail().equals(firebaseUser.getEmail())){
-                        searchList.add(user);
-                    }
-                    searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
-                    //searchUserAdapter.notifyDataSetChanged();
-                    searchRecycler.setAdapter(searchUserAdapter);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }*/
+    /**
+     *This method performs the search for the string typed by the user.
+     * @param s
+     */
     private void doSearch(final String s){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("Users");
-        System.out.println("users");
-        System.out.println(users);
-        System.out.println(users.document());
-        System.out.println(users.document().getId());
         Query query = users.orderBy("email").startAt(s).endAt(s + '~');
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                //System.out.println(query);
-                System.out.println(task);
-                System.out.println(task.getResult());
 
                 if (task.isSuccessful()){
-                    System.out.println("Task Successful");
                     List<User> results =  task.getResult().toObjects(User.class);
-                    searchList.clear(); // clear search results
+                    searchList.clear(); // clear the search results
                     searchList.addAll(results); // add all results to results list
                     searchUserAdapter.notifyDataSetChanged();
 
@@ -211,51 +162,8 @@ public class SearchUserFragment extends Fragment {
             }
         });
 
-        /*FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        //Query query = firebaseDatabase.ref("Users");
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        System.out.println(reference);
-        System.out.println("I am here");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                searchList.clear();
-                System.out.println("Working");
-                System.out.println(dataSnapshot.getChildrenCount());
-                //User user = dataSnapshot.getChildrenCount().getValue(User.class);
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    System.out.println("Not working");
-
-                    User user = dataSnapshot1.getValue(User.class);
-
-
-                    if (user.getEmail() != null && !user.getEmail().equals(firebaseUser.getEmail())){
-                        if (user.getEmail().toLowerCase().contains(s.toLowerCase(Locale.ROOT))) {
-                            searchList.add(user);
-
-                        }
-                    }
-                    searchUserAdapter = new SearchUserAdapter(getActivity(), searchList);
-                    searchUserAdapter.notifyDataSetChanged();
-                    searchRecycler.setAdapter(searchUserAdapter);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
     }
-
-
-
-
-
 
 
     }

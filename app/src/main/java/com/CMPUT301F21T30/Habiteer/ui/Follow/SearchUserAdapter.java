@@ -16,6 +16,10 @@ import com.CMPUT301F21T30.Habiteer.User;
 
 import java.util.List;
 
+/**
+ * Adapter for searchList which displays the result of the performed search
+ */
+
 public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.ViewHolder> {
 
     private List<User> searchList;
@@ -36,6 +40,10 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             view.setOnClickListener(this);
         }
 
+        /**
+         * This method starts the FollowUser Activity when a search result is clicked
+         * @param view
+         */
         @Override
         public void onClick(View view) {
             //Take to the user's profile
@@ -54,6 +62,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     @NonNull
     @Override
     public SearchUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //inflate view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_user_list, parent, false);
         return new ViewHolder(view);
     }
@@ -69,6 +78,10 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     }
 
+    /**
+     * This method returns the total number of search results
+     * @return searchList.size()
+     */
     @Override
     public int getItemCount() {
         return searchList.size();
