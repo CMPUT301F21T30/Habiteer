@@ -29,9 +29,6 @@ android {
     buildFeatures {
         viewBinding true
     }
-    dataBinding{
-        enabled=true;
-    }
 }
 
 dependencies {
@@ -52,9 +49,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    implementation 'com.firebase:geofire-android-common:3.1.0'
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
-    implementation 'com.google.android.gms:play-services-maps:16.1.0'
 
     // external libraries
     implementation 'ca.antonious:materialdaypicker:0.7.4'
