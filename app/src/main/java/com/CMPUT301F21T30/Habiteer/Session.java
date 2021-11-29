@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,13 +13,10 @@ import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +35,6 @@ public class Session {
     private HashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
-
     /**
      * Singleton Session constructor
      * Reads data from Users collection in Firestore and converts to User object
@@ -47,12 +42,9 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
-        habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
         habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
-
-
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -69,6 +61,8 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitHashMap.put(habit.getId(),habit); // add habit to hashmap, with ID as the key
+
+
                                 /* Adding events to HabitEventsList */
                                 ArrayList<String> eventIDList = new ArrayList<>();
                                 for (int j = 0; j < habit.getEventIdList().size(); j++) {
@@ -103,13 +97,6 @@ public class Session {
                 }
             }
         });
-
-//        try {
-
-//        }
-//        catch (NullPointerException e) {
-//            System.out.println("Habit ID list is empty: " + e);
-//        }
 
     }
 
@@ -390,55 +377,88 @@ public class Session {
 
     }
 
+    /**
+     * Given a User, this method gets the User's habits from Firebase. This is used to view habits of users that are not the current logged in user. Used in Follow classes.
+     * @param user
+     * @return
+     */
+    public HashMap<String,Habit> getOthersHabits(User user) {
+        HashMap<String,Habit> userHabits = new HashMap<>();
+        if (user.getHabitIdList().size() != 0) {
+            for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Habit habit = documentSnapshot.toObject(Habit.class);
+                        userHabits.put(habit.getId(), habit); // add habit to hashmap, with ID as the key
+                    }
+                });
+            }
+        }
+        return userHabits;
+    }
+    public HashMap<String,Habit> getHabitHashMap() {
+        return this.habitHashMap;
+    }
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
 
-    public HashMap<String,Habit> getHabitHashMap() {
-        return this.habitHashMap;
-    }
 
-    /**
-     * Upload the image to firebase
-     * @param fileName
-     * @param linkUri
-     * @param referenceStorage
-     * @return returnUriLink
-     */
+    public void updateFollowerList(User user, ArrayList<User>followerList){
+        user.setFollowerList(followerList);
 
-    public Uri uploadImageToFirebase(String fileName, Uri linkUri, StorageReference referenceStorage ){
-
-
-        Uri returnUriLink = null;
-
-        StorageReference imageUpload = referenceStorage.child("images/" + fileName);
-
-        UploadTask taskUpload = imageUpload.putFile(linkUri);
-
-        while (!taskUpload.isComplete()) ;
-        if (taskUpload.isSuccessful()) {
-
-            Task<Uri> uriTask = imageUpload.getDownloadUrl();
-
-            while (!uriTask.isComplete()) ;
-
-            if (uriTask.isSuccessful()) {
-
-                Uri uriTaskResult = uriTask.getResult();
-
-                returnUriLink =  uriTaskResult;
-
-            } else {
-                Log.d("Upload", "couldn't get download url");
-
-
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Follower List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for followers list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding follower", e);
             }
-        } else {
-            Log.d("Upload", "couldn't upload url");
-        }
-        return returnUriLink;
+        });
     }
 
+    public void updateFollowingList(User user, ArrayList<User>followingList){
+        user.setFollowingList(followingList);
 
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for following list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding following", e);
+            }
+        });
+    }
 
+    public void updateRequestedList(User user, ArrayList<User>requestList){
+        user.setRequestedList(requestList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Request List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+    }
+
+    
 }
