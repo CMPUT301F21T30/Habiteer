@@ -63,8 +63,8 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
     private LinearLayout layout;
     String manifestPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    Boolean locPermission;
-    Boolean camPermission;
+    boolean locPermission;
+    boolean camPermission;
     Location curLocation;
     private int DEFAULT_ZOOM = 15;
     private GeoPoint finalLocation;
@@ -138,14 +138,15 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
                 }
 
                 if (newTitle.isEmpty()) {
-
-                    message = "Required Field is empty";
-                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                    title.setError("Please enter a title.");
+//                    message = "Required Field is empty";
+//                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Session.getInstance().updateEvent(event);
+                    finish();
                 }
-                finish();
+
             }
         });
 
