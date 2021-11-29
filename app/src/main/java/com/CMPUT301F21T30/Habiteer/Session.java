@@ -21,7 +21,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 
 /**
@@ -250,5 +254,18 @@ public class Session {
 
     public HashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
+    }
+
+    public HashMap<String,Habit> getPublicHabits() {
+        HashMap<String,Habit> publicHabits = (HashMap<String, Habit>) this.habitHashMap.clone();
+        Iterator iterator = publicHabits.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Habit habit = (Habit) habitPair.getValue();
+            if (habit.getPublic() == false) {
+                iterator.remove();
+            }
+        }
+        return  publicHabits;
     }
 }
