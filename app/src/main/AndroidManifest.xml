@@ -45,16 +45,16 @@
             android:theme="@style/Theme.Habiteer.NoActionBar"
             android:exported="true" />
         <activity
-            android:name=".ui.habitEvents.AddHabitEventActivity"/>
+            android:name=".ui.habitEvents.AddHabitEventActivity"
+            android:theme="@style/Theme.Habiteer.NoActionBar"/>
         <activity
-            android:name=".ui.habitEvents.EditHabitEventActivity"/>
-        <!--        <meta-data-->
-        <!--            android:name="com.google.android.gms.version"-->
-        <!--            android:value="12451000"/>-->
+            android:name=".ui.habitEvents.EditHabitEventActivity"
+            android:theme="@style/Theme.Habiteer.NoActionBar"/>
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCYRwPWuoTr-8oKBdkuUXBGWMIlm-eUgP0"/>
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.CMPUT301F21T30.android.fileprovider"
@@ -64,6 +64,5 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
-
     </application>
 </manifest>

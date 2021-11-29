@@ -50,6 +50,7 @@ public class Session {
     private Session(String email, Context context) {
         habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
+        habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
 
@@ -104,13 +105,6 @@ public class Session {
                 }
             }
         });
-
-//        try {
-
-//        }
-//        catch (NullPointerException e) {
-//            System.out.println("Habit ID list is empty: " + e);
-//        }
 
     }
 
@@ -204,6 +198,30 @@ public class Session {
         ArrayList<String> habitIdList = user.getHabitIdList();
         habitIdList.remove(habitID);
         user.setHabitIdList(habitIdList);
+        /* Deleting events for habit */
+        for (int i = 0; i < habit.getEventIdList().size(); i++)
+        {
+            int finalI = i;
+            db.collection("HabitEvents").document(habit.getEventIdList().get(i))
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + habit.getEventIdList().get(finalI));
+                            /* Delete from EventsList */
+                            for (int j = 0; j < habitEventsList.size(); j++) {
+                                if (habitEventsList.get(j).getId().equals(habit.getEventIdList().get(finalI)))
+                                    habitEventsList.remove(j);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error deleting document", e);
+                        }
+                    });
+        }
         /* Delete on Firebase Habits Collection */
         db.collection("Habits").document(habitID)
                 .delete()
@@ -300,8 +318,9 @@ public class Session {
         {
             if (habitEventsList.get(i).getId().equals(event.getId()))
             {
-                habitEventsList.set(i, event);
-                String habitEventID = habitEventsList.get(i).getId();
+                habitEventsList.remove(i);
+                habitEventsList.add(event);
+                String habitEventID = event.getId();
                 db.collection("HabitEvents")
                         .document(habitEventID)
                         .set(event)
@@ -317,7 +336,6 @@ public class Session {
                                 Log.w(TAG, "Error updating document", e);
                             }
                         });
-
             }
 
         }

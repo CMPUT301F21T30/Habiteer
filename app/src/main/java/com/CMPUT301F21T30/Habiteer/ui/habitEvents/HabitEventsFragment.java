@@ -1,5 +1,9 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -8,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
@@ -73,7 +78,22 @@ public class HabitEventsFragment extends Fragment
         eventsList = root.findViewById(R.id.event_list);
         habitEventAdapter = new HabitEventAdapter(context, filteredList);
         eventsList.setAdapter(habitEventAdapter);
+        date = selectedDate.getMonthValue() + "/"
+                + selectedDate.getDayOfMonth() + "/" + selectedDate.getYear();
+        eventList = Session.getInstance().getEventList();
+        filteredList.clear();
+        for (int i = 0; i < eventList.size(); i++)
+        {
+            Log.d(TAG, eventList.get(i).getMakeDate());
+            Log.d(TAG, date);
 
+            if (eventList.get(i).getMakeDate().equals(date))
+            {
+                filteredList.add(eventList.get(i));
+
+            }
+        }
+        habitEventAdapter.notifyDataSetChanged();
 
         // To set on date change listener on calendar view
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -108,6 +128,35 @@ public class HabitEventsFragment extends Fragment
                 Event item = filteredList.get(index);
                 Intent intent = new Intent(context, EditHabitEventActivity.class);
                 intent.putExtra("event", item);
+        //                Log.d(TAG, item.getHabitId());
+                //intent.putExtra("eventDate", todayDate);
+                startActivity(intent);
+                filteredList.clear();
+                habitEventAdapter.notifyDataSetChanged();
+            }
+        });
+
+        return root;
+    }}
+
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
+    private void setMonthView()
+    {
+        monthYearText.setText(monthYearFromDate(selectedDate));
+        ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
+
+        //HabitEventAdapter HabitEventAdapter = new HabitEventAdapter(daysInMonth, this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
+        calendarRecyclerView.setLayoutManager(layoutManager);
+        //calendarRecyclerView.setAdapter(HabitEventAdapter);
+    }
+
+        eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Event item = filteredList.get(index);
+                Intent intent = new Intent(context, EditHabitEventActivity.class);
+                intent.putExtra("event", item);
                 //Log.d(TAG, item.getHabitId());
                 //intent.putExtra("eventDate", todayDate);
                 startActivity(intent);
@@ -119,4 +168,4 @@ public class HabitEventsFragment extends Fragment
         return root;
     }
 
-}
+}*/

@@ -1,20 +1,28 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import static android.content.ContentValues.TAG;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +35,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
-    Switch privateSwitch;
+    SwitchCompat privateSwitch;
     MaterialDayPicker dayPicker;
     Calendar calendar;
     String todayDate;
@@ -59,6 +67,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         habitID = bundle.getString("habitID");
 
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         // get current habit with id
@@ -73,6 +86,14 @@ public class ViewHabitActivity extends AppCompatActivity {
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
 
+        //checks currentHabit is public or private and sets the switch accordingly
+        if (currentHabit.getPublic().equals(false)){
+            privateSwitch.setChecked(true);
+        }
+        else{
+            privateSwitch.setChecked(false);
+        }
+
 
 
         // displaying the habit info
@@ -83,16 +104,13 @@ public class ViewHabitActivity extends AppCompatActivity {
         //days.setSelectedDays(daysSelected);
 
         /**
-         * Checking if the user made the habit private
+         * Checking if the user made the habit private and updates the database accordingly
          */
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
-
-                    //privateHabits.add(new Habit());//adding habit to the list of private habits
-
-                }
+                currentHabit.setPublic(!isChecked); // false if checked, true if not
+                Session.getInstance().updateHabit(currentHabit);
 
             }
         });
@@ -106,13 +124,11 @@ public class ViewHabitActivity extends AppCompatActivity {
                 calendar = Calendar.getInstance();
                 dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 todayDate = dateFormat.format(calendar.getTime());
-
-                Intent intent = new Intent(ViewHabitActivity.this, AddHabitEventActivity.class);
+                Log.d(TAG, "RUNNING");
+                Intent intent = new Intent(getApplicationContext(), AddHabitEventActivity.class);
                 intent.putExtra("habitID", String.valueOf(habitID));
                 intent.putExtra("eventDate", todayDate);
-                startActivity(intent);
-//                startActivity(new Intent(getApplicationContext(), AddHabitEvent.class)); //the user goes to the addHabitEvent activity
-
+                startActivity(intent); //the user goes to the addHabitEvent activity
             }
         });
 
@@ -148,6 +164,19 @@ public class ViewHabitActivity extends AppCompatActivity {
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: // back button
+                finish();
+                return true;
+        }
+        return false;
     }
 
 }
