@@ -9,8 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.CMPUT301F21T30.Habiteer.R;
@@ -19,6 +19,7 @@ import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Locale;
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class ViewHabitActivity extends AppCompatActivity {
-    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
+    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading, progressValue;
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
     SwitchCompat privateSwitch;
@@ -36,6 +37,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     String todayDate;
     SimpleDateFormat dateFormat;
     String habitID;
+
 
 
     @Override
@@ -57,6 +59,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         edit = findViewById(R.id.edit);
         progress = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
+        progressValue = findViewById(R.id.progress_text);
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
@@ -81,6 +84,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
 
+        Double progressPer = currentHabit.getProgress();
         //checks currentHabit is public or private and sets the switch accordingly
         if (currentHabit.getPublic().equals(false)){
             privateSwitch.setChecked(true);
@@ -92,7 +96,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_);
+        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progressPer);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -155,13 +159,19 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
     }
-    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_) {
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_, double progressNum) {
         habitName.setText(habitname);
         dates.setText(String.format("From: %s\nTo: %s", finalStartDate, finalEndDate));
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
 
+
+        DecimalFormat df = new DecimalFormat("###.##");
+        String progressFormat = df.format(progressNum);
+
+        progress.setProgress((int) progressNum);
+        progressValue.setText(progressFormat);
 
     }
 
