@@ -379,6 +379,27 @@ public class Session {
 
     }
 
+    /**
+     * Given a User, this method gets the User's habits from Firebase. This is used to view habits of users that are not the current logged in user. Used in Follow classes.
+     * @param user
+     * @return
+     */
+    public HashMap<String,Habit> getOthersHabits(User user) {
+        HashMap<String,Habit> userHabits = new HashMap<>();
+        if (user.getHabitIdList().size() != 0) {
+            for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Habit habit = documentSnapshot.toObject(Habit.class);
+                        userHabits.put(habit.getId(), habit); // add habit to hashmap, with ID as the key
+                    }
+                });
+            }
+        }
+        return userHabits;
+    }
     public HashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
     }
