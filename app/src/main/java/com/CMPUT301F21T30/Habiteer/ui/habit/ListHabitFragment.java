@@ -2,7 +2,6 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
-import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelectedListener {
 
