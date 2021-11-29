@@ -32,10 +32,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/habitName"
-        android:text="Start date / End date"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/cardview_shadow_end_color"/>
+        android:layout_marginTop="15dp"
+        android:background="@color/cardview_shadow_end_color"
+        android:text="Start date / End date" />
 
     <TextView
         android:id="@+id/dates"
@@ -156,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/privateSwitch"
         android:layout_marginLeft="75dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:layout_marginRight="75dp"
         android:gravity="center"
         android:text="Add Habit Event" />
@@ -167,10 +167,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/addHabitEvent"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="250dp"
-        android:layout_marginTop="40dp"
         android:backgroundTint="#F44336"
-        android:text="Delete"/>
+        android:text="Delete" />
 
     <Button
         android:id="@+id/edit"
@@ -178,7 +178,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/addHabitEvent"
         android:layout_marginLeft="250dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
         android:text="Edit" />
 
