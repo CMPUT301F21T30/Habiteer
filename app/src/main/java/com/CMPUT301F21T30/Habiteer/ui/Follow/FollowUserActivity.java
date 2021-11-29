@@ -86,7 +86,7 @@ public class FollowUserActivity extends AppCompatActivity {
         String following_count = String.valueOf(selectedUser.getFollowingList().size());
 
         //TODO: Get bio for the user
-        String bio_text = "Sample Bio";
+        //String bio_text = selectedUser.setBio();
 
 
         //TODO: Get only public habits
