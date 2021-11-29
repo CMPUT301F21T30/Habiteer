@@ -5,18 +5,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 
 import com.CMPUT301F21T30.Habiteer.R;
@@ -31,7 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
@@ -42,7 +38,7 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  *  See Github #44, date picker can sometimes be one day off due to timezone issues
  *  TODO: Days of the week picker yet to be implemented
  */
-public class AddHabitFragment extends BaseAddEditFragment  {
+public class AddHabitFragment extends Fragment  {
 
     private AddEditHabitModel mViewModel;
 
@@ -110,53 +106,44 @@ public class AddHabitFragment extends BaseAddEditFragment  {
         return view;
 
     }
+    private void handleDaysOfWeek(View view) {
 
 
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // get the text fields
         TextInputLayout nameBox = getView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
-        TextInputLayout dateBox = getView().findViewById(R.id.textInput_habitStartDate);
         MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
-        TextInputLayout[] boxes = {nameBox,reasonBox,dateBox};
 
 
         switch (item.getItemId()) {
 
             case R.id.button_addHabit: // when the save button is pressed
-                // Only submit info if there are no empty fields
-                if (!hasEmptyFields(boxes,dayPicker)) {
-                    // create the new habit
-                    // get input from text fields
-                    String habitName = nameBox.getEditText().getText().toString();
-                    String reason = reasonBox.getEditText().getText().toString();
+                // create the new habit
 
+                // get input from text fields
+                String habitName = nameBox.getEditText().getText().toString();
+                String reason = reasonBox.getEditText().getText().toString();
 
-                    // apply length limit to strings
-                    habitName = habitName.substring(0, Math.min(habitName.length(), nameBox.getCounterMaxLength()));  // either the max length or string length, which one is smaller
-                    reason = reason.substring(0, Math.min(reason.length(), reasonBox.getCounterMaxLength())); // either the max length or string length, which one is smaller
+                // apply length limit to strings
+                habitName = habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength()));  // either the max length or string length, which one is smaller
+                reason = reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength())); // either the max length or string length, which one is smaller
 
-                    // get dates from viewmodel
-                    Date startDate = mViewModel.getStartDate();
-                    Date endDate = mViewModel.getEndDate();
-                    // get selected days of week
-                    List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
-                    // make a new habit
-                    Habit newHabit = new Habit(habitName, startDate, endDate, weekdayList, reason);
-                    // set the habit privacy
-                    SwitchCompat privateSwitch = getView().findViewById(R.id.privateSwitch);
-                    // store the new habit
-                    Session session = Session.getInstance();
-                    session.addHabit(newHabit);
-                    // close the activity
-                    getActivity().finish();
-                    return true;
-                }
-                else {
-                    return false;
-                }
-
+                // get dates from viewmodel
+                Date startDate = mViewModel.getStartDate();
+                Date endDate = mViewModel.getEndDate();
+                // get selected days of week
+                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
+                // make a new habit
+                Habit newHabit = new Habit(habitName,startDate,endDate,weekdayList,reason);
+                // store the new habit
+                Session session = Session.getInstance();
+                session.addHabit(newHabit);
+                // close the activity
+                getActivity().finish();
+                return true;
         }
         return false;
     }
