@@ -13,10 +13,11 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FollowUserHabitAdapter extends RecyclerView.Adapter {
-    private ArrayList<Habit> habitsList;
-    public FollowUserHabitAdapter(ArrayList<Habit> habitsList) {
+    private HashMap<String, Habit> habitsList;
+    public FollowUserHabitAdapter(HashMap<String, Habit> habitsList) {
         this.habitsList = habitsList;
 
     }

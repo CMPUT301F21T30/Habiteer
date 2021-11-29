@@ -28,7 +28,7 @@ public class User implements Serializable {
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
         this.blockList = new ArrayList<>();
-        this.publicHabits = new ArrayList<>();
+        this.publicHabits = new HashMap<String, Habit>();
     }
 
     public String getEmail() {
@@ -71,12 +71,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public ArrayList<Habit> getPublicHabits(){
-        publicHabits = habitIdList.clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
+    public HashMap<String, Habit> getPublicHabits(){
+        publicHabits = (HashMap<String, Habit>) habitIdList.clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
         ListIterator<String> iterator = habitIdList.listIterator();
-        Iterator iterator = publicHabits.entrySet().iterator();
+        Iterator iterator1 = publicHabits.entrySet().iterator();
         while (iterator.hasNext()) {
-            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Map.Entry habitPair = (Map.Entry)iterator1.next();
             Habit habit = (Habit) habitPair.getValue();
             if (habit.getPublic() == false) {
                 iterator.remove();

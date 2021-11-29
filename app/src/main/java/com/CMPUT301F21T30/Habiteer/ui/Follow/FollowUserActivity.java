@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This activity allows the user to follow another user after performing the search.
@@ -31,7 +32,7 @@ public class FollowUserActivity extends AppCompatActivity {
     TextView followersCount, followingCount, bio;
     Button followBtn;
     RecyclerView habitsRecycler;
-    private ArrayList<Habit> habitsList;
+    private HashMap<String, Habit> habitsList;
     private User selectedUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
@@ -53,7 +54,7 @@ public class FollowUserActivity extends AppCompatActivity {
         followingCount = findViewById(R.id.followingCount);
         bio = findViewById(R.id.bio);
 
-        habitsList = new ArrayList<Habit>();
+        habitsList = new HashMap<String, Habit>();
 
         ActionBar ab = getSupportActionBar();
         //enable back button
@@ -123,7 +124,7 @@ public class FollowUserActivity extends AppCompatActivity {
      * @param bio_text
      * @param habits_list
      */
-    private void displayInfo(String followers_count, String following_count, String bio_text, ArrayList habits_list){
+    private void displayInfo(String followers_count, String following_count, String bio_text, HashMap<String, Habit> habits_list){
         followersCount.setText(followers_count);
         followingCount.setText(following_count);
         bio.setText(bio_text);
