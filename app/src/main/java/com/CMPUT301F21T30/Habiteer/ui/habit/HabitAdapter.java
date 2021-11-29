@@ -38,7 +38,6 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
     private LinkedHashMap<String,Habit> habitHashMap;
-    ArrayList<Habit> habitList; // For when we need the hashmap as a list
     private int selectedIndex = RecyclerView.NO_POSITION;
 
     public HabitAdapter(LinkedHashMap<String,Habit> habitHashMap) {
@@ -66,7 +65,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
 
-            String habitID = habitList.get(selectedIndex).getId(); // g
+            String habitID = Session.getInstance().getUser().getHabitIdList().get(selectedIndex); // g
             // Create new intent to start view habit activity
             Intent intent = new Intent(view.getContext(),ViewHabitActivity.class);
             intent.putExtra("habitID",habitID); // pass through the index of the clicked item
@@ -94,13 +93,13 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
-        habitList = new ArrayList<Habit>(habitHashMap.values()); // temp convert hashmap to list, in order to populate the recycler
-        String habitName = habitList.get(position).getHabitName();
+        String currentHabitID = Session.getInstance().getUser().getHabitIdList().get(position);
+        Habit currentHabit = habitHashMap.get(currentHabitID);
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
-        String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
-        holder.habitNameText.setText(habitName);
+        String habitDate = dateFormatter.format(currentHabit.getEndDate());
+        holder.habitNameText.setText(currentHabit.getHabitName());
         holder.habitEndDate.setText(habitDate);
-        List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
+        List<MaterialDayPicker.Weekday> habitDays_raw = habitHashMap.get(currentHabitID).getWeekdayList(); // raw list of days
         String daysString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
             daysString = formatDayList(habitDays_raw); // format the list to a string

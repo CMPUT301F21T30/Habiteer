@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -152,8 +153,8 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             int initialPos = viewHolder.getAbsoluteAdapterPosition();
             int newPos = target.getAbsoluteAdapterPosition();
 
-            habitList = new ArrayList<Habit>(Session.getInstance().getHabitHashMap().values());
-            Collections.swap(habitList, initialPos, newPos);
+            Session.getInstance().swapHabitOrder(initialPos,newPos);
+
             recyclerView.getAdapter().notifyItemMoved(initialPos, newPos);
 
             return false;
