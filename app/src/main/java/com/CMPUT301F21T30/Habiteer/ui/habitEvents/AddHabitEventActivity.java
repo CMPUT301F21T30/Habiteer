@@ -50,8 +50,11 @@ import java.util.List;
 /**
  * Class to add new habit event
  */
-public class AddHabitEventActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
     // To initialize variables
+    
+
+
     String date = "";
     String habitID;
     TextInputLayout eventDateView;
@@ -115,9 +118,13 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
                 location.setVisibility(View.INVISIBLE);
             }
         });
+        handlePhotograph();
+
+
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -245,7 +252,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        Event event = new Event(eventName, eventComment, date, habitID);
+        Event event = new Event(eventName, eventComment, date,getUploadUri(), habitID);
 
         if (finalLocation != null) {
             event.setLongitude(finalLocation.getLongitude());
@@ -254,6 +261,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         Session.getInstance().addEvent(event, habitID);
         finish();
+
     }
 
     @Override
@@ -271,4 +279,5 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         LatLng temp = activeMarker.getPosition();
         finalLocation = new GeoPoint(temp.latitude, temp.longitude);
     }
+
 }

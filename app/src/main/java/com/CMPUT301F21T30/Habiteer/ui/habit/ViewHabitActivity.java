@@ -1,7 +1,10 @@
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import static android.content.ContentValues.TAG;
 
@@ -22,8 +25,8 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -36,9 +39,9 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  * to other activity where they can add habit event and edit habit details
  */
 public class ViewHabitActivity extends AppCompatActivity {
-    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading;
+    TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading, progressPer;
     Button addHabitEvent, delete, edit;
-    ProgressBar progress;
+    ProgressBar progressBar;
     SwitchCompat privateSwitch;
     MaterialDayPicker dayPicker;
     Calendar calendar;
@@ -50,6 +53,7 @@ public class ViewHabitActivity extends AppCompatActivity {
      * This method creates ViewHabit Activity which displays all the details
      * @param savedInstanceState
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +71,9 @@ public class ViewHabitActivity extends AppCompatActivity {
         addHabitEvent = findViewById(R.id.addHabitEvent);
         delete = findViewById(R.id.delete);
         edit = findViewById(R.id.edit);
-        progress = findViewById(R.id.progress);
+        progressBar = findViewById(R.id.progress);
         privateSwitch = findViewById(R.id.privateSwitch);
+        progressPer = findViewById(R.id.progress_text);
 
         // get the habit index from the intent
         Bundle bundle = getIntent().getExtras();
@@ -92,6 +97,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
+        double progress = currentHabit.getProgress();
 
         //checks currentHabit is public or private and sets the switch accordingly
         if (currentHabit.getPublic().equals(false)){
@@ -104,7 +110,7 @@ public class ViewHabitActivity extends AppCompatActivity {
 
 
         // displaying the habit info
-        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_);
+        displayHabitInfo(habitname,startdate,enddate,weekdayList,reason_, progress);
 
 
         //List<MaterialDayPicker.Weekday> daysSelected = Lists.newArrayList(MaterialDayPicker.Weekday.TUESDAY, MaterialDayPicker.Weekday.FRIDAY);
@@ -165,12 +171,20 @@ public class ViewHabitActivity extends AppCompatActivity {
             }
         });
     }
-    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_) {
+    private void displayHabitInfo(String habitname,String finalStartDate,String finalEndDate, List<MaterialDayPicker.Weekday> weekdayList,String reason_, double progressValue) {
         habitName.setText(habitname);
         dates.setText(String.format("From: %s\nTo: %s", finalStartDate, finalEndDate));
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
+        progressBar.setProgress((int) progressValue);
+
+        //progress format to two decimal places
+        DecimalFormat df = new DecimalFormat("####0.00");
+        String progressFormat = df.format(progressValue);
+
+
+        progressPer.setText(progressFormat);
 
 
     }
