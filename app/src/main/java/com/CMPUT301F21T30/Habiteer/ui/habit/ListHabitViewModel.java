@@ -16,18 +16,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.CMPUT301F21T30.Habiteer.Session;
-import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * This class handles data sent to the HabitAdapter
