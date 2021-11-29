@@ -29,12 +29,12 @@
             android:id="@+id/event_image"
             android:layout_width="147dp"
             android:layout_height="127dp"
-            app:srcCompat="@drawable/picture"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_image"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="40dp"
-            android:layout_marginLeft="115dp"
-            android:layout_marginTop="16dp"/>
+            tools:layout_editor_absoluteY="40dp" />
         
 
         <include layout="@layout/views_add_edit_events_text_fields" />
