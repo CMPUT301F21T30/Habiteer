@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Habiteer</string>
     <string name="title_ListHabit">My Habits</string>
-    <string name="tab_1_text">Today</string>
-    <string name="tab_2_text">All Habits</string>
+    <string name="tab_1_text">All Habits</string>
+    <string name="tab_2_text">Today</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="habit_events">Habit Events</string>
@@ -19,4 +19,5 @@
     <string name="event_name">Event name</string>
     <string name="event_date">Event date</string>
     <string name="habit_events_on_selected_day">Habit Events On Selected Day:</string>
+    <string name="text_privateSwitch">Make habit private</string>
 </resources>

@@ -99,13 +99,6 @@ public class Session {
             }
         });
 
-//        try {
-
-//        }
-//        catch (NullPointerException e) {
-//            System.out.println("Habit ID list is empty: " + e);
-//        }
-
     }
 
     /**
