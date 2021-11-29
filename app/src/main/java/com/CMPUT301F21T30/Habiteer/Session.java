@@ -425,7 +425,7 @@ public class Session {
     }
 
     public void updateFollowingList(User user, ArrayList<User>followingList){
-        user.setFollowerList(followingList);
+        user.setFollowingList(followingList);
 
         //stores into firebase
         db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowerList())
@@ -443,7 +443,7 @@ public class Session {
     }
 
     public void updateRequestedList(User user, ArrayList<User>requestList){
-        user.setFollowerList(requestList);
+        user.setRequestedList(requestList);
 
         //stores into firebase
         db.collection("Users").document(user.getEmail()).update("Request List", user.getFollowerList())

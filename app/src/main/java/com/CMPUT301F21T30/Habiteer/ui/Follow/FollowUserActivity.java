@@ -27,6 +27,7 @@ public class FollowUserActivity extends AppCompatActivity {
     Button followBtn;
     RecyclerView habitsRecycler;
     private ArrayList<Habit> habitsList;
+    private ArrayList<User> requestedList;
     private User selectedUser, currentUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
@@ -49,6 +50,7 @@ public class FollowUserActivity extends AppCompatActivity {
         bio = findViewById(R.id.bio);
 
         habitsList = new ArrayList<Habit>();
+        requestedList = new ArrayList<User>();
 
         currentUser = Session.getInstance().getUser();
 
@@ -103,8 +105,9 @@ public class FollowUserActivity extends AppCompatActivity {
                 if (!following){
                     //TODO: Send a follow request
                     followBtn.setText("Requested");
-                    currentUser.getRequestedList().add(selectedUser);
-                    Session.getInstance().updateRequestedList(currentUser, currentUser.getRequestedList());
+                    requestedList.add(currentUser);
+                    selectedUser.setRequestedList(requestedList);
+                    Session.getInstance().updateRequestedList(selectedUser, requestedList);
                 }
                 else{
                     following = Boolean.FALSE;
