@@ -25,6 +25,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bar_add_habit_event">
 
+        <ImageView
+            android:id="@+id/event_image"
+            android:layout_width="147dp"
+            android:layout_height="127dp"
+            android:layout_marginLeft="115dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/ic_image"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="144dp"
+            tools:layout_editor_absoluteY="40dp" />
+        
+
         <include layout="@layout/views_add_edit_events_text_fields" />
 
 
@@ -51,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:orientation="vertical"
@@ -76,6 +88,9 @@
             android:orientation="vertical"/>
 
     </LinearLayout>
+
+
+
 
 
 

@@ -2,22 +2,25 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +40,7 @@ public class Session {
     private HashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
+
     /**
      * Singleton Session constructor
      * Reads data from Users collection in Firestore and converts to User object
@@ -44,9 +48,12 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
+        habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
         habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+
+
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -63,8 +70,6 @@ public class Session {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 Habit habit = documentSnapshot.toObject(Habit.class);
                                 habitHashMap.put(habit.getId(),habit); // add habit to hashmap, with ID as the key
-
-
                                 /* Adding events to HabitEventsList */
                                 ArrayList<String> eventIDList = new ArrayList<>();
                                 for (int j = 0; j < habit.getEventIdList().size(); j++) {
@@ -81,6 +86,7 @@ public class Session {
                                         }
                                     });
                                 }
+
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(context, MainActivity.class);
@@ -379,11 +385,55 @@ public class Session {
 
     }
 
-    public HashMap<String,Habit> getHabitHashMap() {
-        return this.habitHashMap;
-    }
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
+
+    public HashMap<String,Habit> getHabitHashMap() {
+        return this.habitHashMap;
+    }
+
+    /**
+     * Upload the image to firebase
+     * @param fileName
+     * @param linkUri
+     * @param referenceStorage
+     * @return returnUriLink
+     */
+
+    public Uri uploadImageToFirebase(String fileName, Uri linkUri, StorageReference referenceStorage ){
+
+
+        Uri returnUriLink = null;
+
+        StorageReference imageUpload = referenceStorage.child("images/" + fileName);
+
+        UploadTask taskUpload = imageUpload.putFile(linkUri);
+
+        while (!taskUpload.isComplete()) ;
+        if (taskUpload.isSuccessful()) {
+
+            Task<Uri> uriTask = imageUpload.getDownloadUrl();
+
+            while (!uriTask.isComplete()) ;
+
+            if (uriTask.isSuccessful()) {
+
+                Uri uriTaskResult = uriTask.getResult();
+
+                returnUriLink =  uriTaskResult;
+
+            } else {
+                Log.d("Upload", "couldn't get download url");
+
+
+            }
+        } else {
+            Log.d("Upload", "couldn't upload url");
+        }
+        return returnUriLink;
+    }
+
+
 
 }
