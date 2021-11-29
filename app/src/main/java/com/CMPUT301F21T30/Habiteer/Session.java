@@ -300,41 +300,15 @@ public class Session {
 
     }
 
-    public void addEvent(Event event, String habitID) {
-        /* Getting habit id from Firebase */
-        Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
+    public void storeEvent(List<Event> eventList) {
+        user.setEventList(new ArrayList<Event>(eventList));
 
-        /* Store onto Firebase Events Collection */
-        db.collection("HabitEvents")
-                .add(event)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        /* Store onto Firebase */
+        db.collection("Users").document(user.getEmail()).update("eventList", user.getEventList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        String eventID = documentReference.getId();
-                        currentHabit.getEventIdList().add(eventID);
-                        documentReference.update("id", eventID);
-                        event.setId(eventID);
-                        habitEventsList.add(event);
-                        Log.d(TAG, "DocumentSnapshot successfully written! ID: " + eventID);
-                        /* Store onto Firebase Users Collection */
-                        db.collection("Habits").document(currentHabit.getId()).update("eventIdList", FieldValue.arrayUnion(eventID))
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated! ID: " + eventID);
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error writing document", e);
-                            }
-                        });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
                     }
                 });
 
@@ -409,13 +383,14 @@ public class Session {
                             }
                         });
             }
-        }
-
+        });
     }
 
-    public ArrayList<Event> getEventList() {
-        return this.habitEventsList;
+    public void addEvent(Event event) {
+        user.addEvent(event);
+        storeEvent(user.getEventList());
     }
+    public void deleteEvent(Event event) {user.deleteEvent(event);}
 
     public LinkedHashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;

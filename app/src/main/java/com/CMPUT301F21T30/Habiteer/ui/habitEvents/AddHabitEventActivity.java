@@ -1,11 +1,5 @@
 package com.CMPUT301F21T30.Habiteer.ui.habitEvents;
 
-import static android.content.ContentValues.TAG;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,31 +7,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.CMPUT301F21T30.Habiteer.R;
-import com.CMPUT301F21T30.Habiteer.Session;
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,22 +37,11 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
     TextInputLayout eventDateView;
     TextInputEditText eventNameInput;
     String eventName;
+
     TextInputEditText eventCommentInput;
     String eventComment;
+
     Button addButton;
-    Button location;
-    private GoogleMap map;
-    private LinearLayout layout;
-    String manifestPermission = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
-    Boolean locPermission;
-    Boolean camPermission;
-    Location curLocation;
-    private int DEFAULT_ZOOM = 15;
-    GeoPoint finalLocation;
-    Marker activeMarker;
-    LatLng defaultLocation = new LatLng(0.0,0.0);
-    private FusedLocationProviderClient fusedLocationProviderClient;
 
     /**
      * To set habit event layout, get intent and set event date
@@ -101,7 +67,6 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         // To set event date
         eventDateView.getEditText().setText(date);
 
-        getPermissions();
         // This toast confirms correct date is being passed
         //Toast.makeText(AddHabitEventActivity.this, "Date passed: " + date + ", Habit id: " + habitID, Toast.LENGTH_SHORT).show();
 
