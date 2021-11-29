@@ -44,6 +44,7 @@ public class Session {
     private Session(String email, Context context) {
         habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
+        habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -77,12 +78,6 @@ public class Session {
                                         }
                                     });
                                 }
-
-                                /* Login */
-                                Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(context, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // remove login activity and start main activity
-                                context.startActivity(intent); // if logged in, go to the main activity
                             }
                         });
                     }
@@ -208,7 +203,7 @@ public class Session {
                             Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + habit.getEventIdList().get(finalI));
                             /* Delete from EventsList */
                             for (int j = 0; j < habitEventsList.size(); j++) {
-                                if (habitEventsList.get(j).getId() == habit.getEventIdList().get(finalI))
+                                if (habitEventsList.get(j).getId().equals(habit.getEventIdList().get(finalI)))
                                     habitEventsList.remove(j);
                             }
                         }
@@ -383,11 +378,11 @@ public class Session {
 
     }
 
+    public HashMap<String,Habit> getHabitHashMap() {
+        return this.habitHashMap;
+    }
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
 
-    public HashMap<String,Habit> getHabitHashMap() {
-        return this.habitHashMap;
-    }
 }
