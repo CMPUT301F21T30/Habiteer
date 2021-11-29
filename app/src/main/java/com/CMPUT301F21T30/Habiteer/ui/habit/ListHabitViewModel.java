@@ -36,7 +36,7 @@ public class ListHabitViewModel extends ViewModel {
     private LinkedHashMap<String,Habit> todayHabitList;
     private MutableLiveData<LinkedHashMap<String,Habit>> mHabits = new MutableLiveData<>();
     private LinkedHashMap<String,Habit> habitList;
-    private ArrayList<String> habitIdList = (ArrayList<String>) Session.getInstance().getUser().getHabitIdList().clone();
+    private ArrayList<String> habitIdList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -58,7 +58,8 @@ public class ListHabitViewModel extends ViewModel {
      * @return Live data list of today's habits
      */
     public LiveData<LinkedHashMap<String,Habit>> getTodayHabits() {
-        todayHabitList = (LinkedHashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
+        todayHabitList = (LinkedHashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone(); // List of Habit hashmaps
+        habitIdList = (ArrayList<String>) Session.getInstance().getUser().getHabitIdList().clone(); // List of habit IDs
         String today = getDayOfWk();
         /* remove habits that do not contain today */
         Iterator iterator = todayHabitList.entrySet().iterator();

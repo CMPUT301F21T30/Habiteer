@@ -151,7 +151,9 @@ public class Session {
      */
     public void addHabit(Habit habit) {
         /* Add to in-app list; use title as a temp ID */
-        habit.setId(habit.getHabitName());
+        String tempID = habit.getHabitName();
+        habit.setId(tempID);
+        user.getHabitIdList().add(tempID); // add the ID to local habit ID list
         habitHashMap.put(habit.getHabitName(),habit);
 
         /* Store onto Firebase Habits Collection */
@@ -165,7 +167,9 @@ public class Session {
                         /* Set the ID to the one generated on Firebase */
                         habit.setId(habitID);
                         habitHashMap.put(habitID, habitHashMap.remove(habit.getHabitName())); // replace the temp ID with the real ID as the key in the hashmap
-                        user.getHabitIdList().add(habitID); // add the ID to local habit ID list
+                        // replace ID in local habit ID list
+                        user.getHabitIdList().remove(tempID);
+                        user.getHabitIdList().add(habitID);
 
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
