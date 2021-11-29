@@ -6,6 +6,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -174,7 +175,9 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
                 newComment = comment.getText().toString();
                 event.setEventName(newTitle);
                 event.setEventComment(newComment);
-                event.setImageUri(getUploadUri());
+                if (getUploadUri() != null) { // only update image if a new image was uploaded
+                    event.setImageUri(getUploadUri());
+                }
                 if (finalLocation != null) {
                     event.setLatitude(finalLocation.getLatitude());
                     event.setLongitude(finalLocation.getLongitude());
