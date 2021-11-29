@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -52,7 +55,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
     String newTitle;
     String newComment;
     String message;
-    Button saveButton;
     Button deleteButton;
     TextView title;
     TextView comment;
@@ -83,6 +85,11 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_habit_event_activity);
+        // Set up the special toolbar with the save button for this activity
+        Toolbar toolbar = findViewById(R.id.bar_add_habit_event);
+        setSupportActionBar(toolbar);
+
+        this.setTitle("Edit habit event");
 
         getPermissions();
 
@@ -121,13 +128,32 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
 
             }
         });
-        // To connect to the save button and set an on click listener
 
-        saveButton = findViewById(R.id.saveHabitEvent);
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        // To connect to the delete button and set an on click listener
+        deleteButton = findViewById(R.id.deleteHabitEvent);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+                Log.d(TAG, "DELETE START");
+                Session.getInstance().deleteEvent(event);
+                Log.d(TAG, "DELETE MID");
+                finish();
+                //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
+                //startActivity(intent);
+            }
+        });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate options menu
+        getMenuInflater().inflate(R.menu.add_habit_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
+            case R.id.button_addHabit: // save button
                 newTitle = title.getText().toString();
                 newComment = comment.getText().toString();
                 event.setEventName(newTitle);
@@ -146,23 +172,9 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
                     Session.getInstance().updateEvent(event);
                     finish();
                 }
-
-            }
-        });
-
-        // To connect to the delete button and set an on click listener
-        deleteButton = findViewById(R.id.deleteHabitEvent);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "DELETE START");
-                Session.getInstance().deleteEvent(event);
-                Log.d(TAG, "DELETE MID");
-                finish();
-                //Intent intent = new Intent(EditHabitEventActivity.this, ViewHabitActivity.class);
-                //startActivity(intent);
-            }
-        });
+                return true;
+        }
+        return false;
     }
 
     @Override
