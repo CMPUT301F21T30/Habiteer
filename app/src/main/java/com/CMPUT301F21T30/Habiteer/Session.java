@@ -272,6 +272,11 @@ public class Session {
         });
     }
 
+    /**
+     * To store a habit event on the database
+     * @param event
+     * @param habitID
+     */
     public void addEvent(Event event, String habitID) {
         /* Getting habit id from Firebase */
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
@@ -313,6 +318,10 @@ public class Session {
 
     }
 
+    /**
+     * To update an event on the database
+     * @param event
+     */
     public void updateEvent(Event event) {
         for (int i = 0; i < habitEventsList.size(); i++)
         {
@@ -342,6 +351,10 @@ public class Session {
 
     }
 
+    /**
+     * To delete an event from the database
+     * @param event
+     */
     public void deleteEvent(Event event) {
         /* Delete habit event */
         for (int i = 0; i < habitEventsList.size(); i++)

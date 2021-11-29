@@ -33,18 +33,14 @@ public class HabitEventsFragment extends Fragment
 {
     private ArrayAdapter<Event> habitEventAdapter;
     ListView eventsList;
-    private TextView monthYearText;
     private CalendarView calendar;
     private LocalDate selectedDate;
     String date = "";
     String TAG = "Sample";
-    Session session = Session.getInstance();
     Context context;
     ArrayList<Event> filteredList;
     ArrayList<Event> eventList;
-//    private Object HabitEventAdapter;
 
-//    DatePicker datePicker;
 
     /**
      * To set view for habit event denoting layout
@@ -74,8 +70,7 @@ public class HabitEventsFragment extends Fragment
         eventsList = root.findViewById(R.id.event_list);
         habitEventAdapter = new HabitEventAdapter(context, filteredList);
         eventsList.setAdapter(habitEventAdapter);
-        date = selectedDate.getMonthValue() + "/"
-                + selectedDate.getDayOfMonth() + "/" + selectedDate.getYear();
+        date = selectedDate.getMonthValue() + "/" + selectedDate.getDayOfMonth() + "/" + selectedDate.getYear();
         eventList = Session.getInstance().getEventList();
         filteredList.clear();
         for (int i = 0; i < eventList.size(); i++)
@@ -118,6 +113,9 @@ public class HabitEventsFragment extends Fragment
             }
         });
 
+        /**
+         * To start the edit habit event activity when the user clicks on an event on the list
+         */
         eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
