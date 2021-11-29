@@ -2,19 +2,22 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -28,7 +31,7 @@ public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading, progressValue;
     Button addHabitEvent, delete, edit;
     ProgressBar progress;
-    Switch privateSwitch;
+    SwitchCompat privateSwitch;
     MaterialDayPicker dayPicker;
     Calendar calendar;
     String todayDate;
@@ -62,6 +65,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         habitID = bundle.getString("habitID");
 
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         // get current habit with id
@@ -77,6 +85,13 @@ public class ViewHabitActivity extends AppCompatActivity {
         String reason_ = currentHabit.getReason();
 
         Double progressPer = currentHabit.getProgress();
+        //checks currentHabit is public or private and sets the switch accordingly
+        if (currentHabit.getPublic().equals(false)){
+            privateSwitch.setChecked(true);
+        }
+        else{
+            privateSwitch.setChecked(false);
+        }
 
 
 
@@ -88,16 +103,13 @@ public class ViewHabitActivity extends AppCompatActivity {
         //days.setSelectedDays(daysSelected);
 
         /**
-         * Checking if the user made the habit private
+         * Checking if the user made the habit private and updates the database accordingly
          */
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked){
-
-                    //privateHabits.add(new Habit());//adding habit to the list of private habits
-
-                }
+                currentHabit.setPublic(!isChecked); // false if checked, true if not
+                Session.getInstance().updateHabit(currentHabit);
 
             }
         });
@@ -161,6 +173,17 @@ public class ViewHabitActivity extends AppCompatActivity {
         progress.setProgress((int) progressNum);
         progressValue.setText(progressFormat);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: // back button
+                finish();
+                return true;
+        }
+        return false;
     }
 
 }

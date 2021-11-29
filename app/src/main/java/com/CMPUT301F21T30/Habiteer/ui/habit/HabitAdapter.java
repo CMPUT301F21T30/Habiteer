@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         private TextView habitRepeats;
         private TextView progressValue;
         private ProgressBar circularProgressBar;
+        private ImageView publicImage;
 
 
         public ViewHolder(final View view) {
@@ -63,6 +65,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             habitEndDate = view.findViewById(R.id.end_date);
             progressValue = view.findViewById(R.id.progress_percentage);
             circularProgressBar = view.findViewById(R.id.circular_progress);
+            publicImage = view.findViewById(R.id.lock_image);
             view.setOnClickListener(this);
         }
 
@@ -105,8 +108,20 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         String habitName = habitList.get(position).getHabitName();
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
+
+        // Public/Private indicator
+        Boolean publicHabit = habitList.get(position).getPublic();
+        if (publicHabit){
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24); // open lock icon
+        }
+        else {
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_24); // closed lock icon
+        }
+        // name and date
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
+
+        // days of the week
         List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
         String daysString = null;
 
