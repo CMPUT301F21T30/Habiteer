@@ -28,7 +28,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitName">
+            android:hint="@string/hint_HabitName"
+            app:counterEnabled="true"
+            app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -58,25 +60,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_DayOfTheWeek" />
-
-            <ca.antonious.materialdaypicker.MaterialDayPicker
-                android:id="@+id/day_picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <include layout="@layout/view_daypicker" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInput_habitReason"
@@ -86,7 +70,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitReason">
+            android:hint="@string/hint_HabitReason"
+            app:counterEnabled="true"
+            app:counterMaxLength="30">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
