@@ -106,7 +106,8 @@
             android:theme="@style/ColouredSwitch"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:textColor="#757575"/>
+            android:textColor="@color/textView_grey"
+            />
 
     </LinearLayout>
 
