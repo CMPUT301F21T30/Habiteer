@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -49,7 +50,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
     // To initialize variables
     String date = "";
     String habitID;
-    TextView eventDateView;
+    TextInputLayout eventDateView;
     TextInputEditText eventNameInput;
     String eventName;
     TextInputEditText eventCommentInput;
@@ -87,7 +88,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         eventDateView = findViewById(R.id.textInput_habitEventDate);
 
         // To set event date
-        eventDateView.setText("Event date: " + date);
+        eventDateView.getEditText().setText(date);
 
         getPermissions();
         // This toast confirms correct date is being passed
