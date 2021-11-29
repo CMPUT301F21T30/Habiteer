@@ -204,7 +204,7 @@ public class Session {
                             Log.d(TAG, "DocumentSnapshot successfully deleted! ID: " + habit.getEventIdList().get(finalI));
                             /* Delete from EventsList */
                             for (int j = 0; j < habitEventsList.size(); j++) {
-                                if (habitEventsList.get(j).getId() == habit.getEventIdList().get(finalI))
+                                if (habitEventsList.get(j).getId().equals(habit.getEventIdList().get(finalI)))
                                     habitEventsList.remove(j);
                             }
                         }
