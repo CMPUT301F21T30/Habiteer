@@ -103,6 +103,14 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         Habit currentHabit = habitHashMap.get(currentHabitID);
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(currentHabit.getEndDate());
+        // Public/Private indicator
+        Boolean publicHabit = currentHabit.getPublic();
+        if (publicHabit){
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24); // open lock icon
+        }
+        else {
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_24); // closed lock icon
+        }
         holder.habitNameText.setText(currentHabit.getHabitName());
         holder.habitEndDate.setText(habitDate);
         List<MaterialDayPicker.Weekday> habitDays_raw = habitHashMap.get(currentHabitID).getWeekdayList(); // raw list of days
