@@ -77,7 +77,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
 
-            String habitID = habitList.get(selectedIndex).getId(); // g
+            String habitID = habitList.get(selectedIndex).getId();
             // Create new intent to start view habit activity
             Intent intent = new Intent(view.getContext(),ViewHabitActivity.class);
             intent.putExtra("habitID",habitID); // pass through the index of the clicked item

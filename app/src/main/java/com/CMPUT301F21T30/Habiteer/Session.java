@@ -47,7 +47,6 @@ public class Session {
      * @param email, which is the document name in firestore
      */
     private Session(String email, Context context) {
-        habitEventsList = new ArrayList<>();
         habitHashMap = new HashMap<String,Habit>();
         habitEventsList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
@@ -145,7 +144,7 @@ public class Session {
     }
 
     /**
-     * adds a habit into Firestore.
+     * This method adds a habit for the logged in user
      * @param habit a Habit object.
      */
     public void addHabit(Habit habit) {
@@ -192,7 +191,7 @@ public class Session {
 
     }
     /**
-     * Deletes a habit from the user habit list.
+     * This method deletes a habit for the logged in user
      * @param habit a Habit object.
      */
     public void deleteHabit(Habit habit) {
@@ -258,6 +257,10 @@ public class Session {
 
     }
 
+    /**
+     * This method updates a habit for the logged in user
+     * @param habit
+     */
     public void updateHabit(Habit habit) {
         String habitID = habit.getId();
         db.collection("Habits")
@@ -277,6 +280,11 @@ public class Session {
         });
     }
 
+    /**
+     * This method adds a habit event for a habit of the logged in user
+     * @param event
+     * @param habitID
+     */
     public void addEvent(Event event, String habitID) {
         /* Getting habit id from Firebase */
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
@@ -318,6 +326,10 @@ public class Session {
 
     }
 
+    /**
+     * This method updates a habit event from a habit for the logged in user
+     * @param event
+     */
     public void updateEvent(Event event) {
         for (int i = 0; i < habitEventsList.size(); i++)
         {
@@ -347,6 +359,10 @@ public class Session {
 
     }
 
+    /**
+     * This method deletes a habit event from a habit for the logged in user
+     * @param event
+     */
     public void deleteEvent(Event event) {
         /* Delete habit event */
         for (int i = 0; i < habitEventsList.size(); i++)
@@ -390,6 +406,10 @@ public class Session {
 
     }
 
+    /**
+     * This method returns the list of habit events for the logged in user
+     * @return ArrayList<Event> habitEventsList
+     */
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
@@ -403,35 +423,21 @@ public class Session {
      * @param fileName
      * @param linkUri
      * @param referenceStorage
-     * @return returnUriLink
+     * @return Uri returnUriLink
      */
-
     public Uri uploadImageToFirebase(String fileName, Uri linkUri, StorageReference referenceStorage ){
-
-
         Uri returnUriLink = null;
-
         StorageReference imageUpload = referenceStorage.child("images/" + fileName);
-
         UploadTask taskUpload = imageUpload.putFile(linkUri);
-
         while (!taskUpload.isComplete()) ;
         if (taskUpload.isSuccessful()) {
-
             Task<Uri> uriTask = imageUpload.getDownloadUrl();
-
             while (!uriTask.isComplete()) ;
-
             if (uriTask.isSuccessful()) {
-
                 Uri uriTaskResult = uriTask.getResult();
-
                 returnUriLink =  uriTaskResult;
-
             } else {
                 Log.d("Upload", "couldn't get download url");
-
-
             }
         } else {
             Log.d("Upload", "couldn't upload url");
