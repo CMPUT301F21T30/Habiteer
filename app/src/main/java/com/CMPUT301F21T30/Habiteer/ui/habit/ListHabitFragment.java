@@ -95,7 +95,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
 
     /**
-     * Updates hashmaps and notifies adapters of change when "My Habits" page is navigated to
+     *
      */
     @Override
     public void onResume() {
@@ -123,7 +123,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue(), listHabitViewModel.getTodayHabitIdList());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
-        } else { // tab is "All Habits"
+        } else {
             /* Display all habits */
             habitRecycler.setAdapter(habitAdapter);
             habitAdapter.notifyDataSetChanged();
