@@ -28,7 +28,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitName">
+            android:hint="@string/hint_HabitName"
+            app:counterEnabled="true"
+            app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -73,7 +75,7 @@
                 android:text="@string/hint_DayOfTheWeek" />
 
             <ca.antonious.materialdaypicker.MaterialDayPicker
-                android:id="@+id/day_picker"
+                android:id="@+id/AddEdit_day_picker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -86,13 +88,26 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:hint="@string/hint_HabitReason">
+            android:hint="@string/hint_HabitReason"
+            app:counterEnabled="true"
+            app:counterMaxLength="30">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="start|top" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/privateSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_privateSwitch"
+            android:theme="@style/ColouredSwitch"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/textView_grey"
+            />
 
     </LinearLayout>
 

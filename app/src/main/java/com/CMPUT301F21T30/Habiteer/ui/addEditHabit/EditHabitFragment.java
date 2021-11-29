@@ -2,7 +2,6 @@ package com.CMPUT301F21T30.Habiteer.ui.addEditHabit;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
-import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -27,12 +26,14 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
+
 /**
  * This fragment handles the editing of habits from the habit list. Allows the user to edit name, end date, days of the week, and habit reason.
  * Known issues:
@@ -42,7 +43,7 @@ import java.util.TimeZone;
 public class EditHabitFragment extends Fragment {
 
     private com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel mViewModel;
-
+    private String habitID;
     public static EditHabitFragment newInstance() {
         return new EditHabitFragment();
     }
@@ -55,8 +56,9 @@ public class EditHabitFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel.class);
 
         // get the selected habit
-        int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-        Habit selectedHabit = Session.getInstance().getUser().getHabitList().get(habitIndex);
+        habitID = requireActivity().getIntent().getExtras().getString("habitID");
+
+        Habit selectedHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
         TextInputLayout habitDateInput = view.findViewById(R.id.textInput_habitEndDate);
 
@@ -106,10 +108,13 @@ public class EditHabitFragment extends Fragment {
     private void  fillInHabitDetails(View view,TextInputLayout habitDateInput,Habit habit) {
         TextInputLayout nameInput = view.findViewById(R.id.textInput_habitName);
         TextInputLayout reasonInput = view.findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = view.findViewById(R.id.AddEdit_day_picker);
 
         // get existing data
         String oldName = habit.getHabitName();
         String oldReason = habit.getReason();
+        List<MaterialDayPicker.Weekday> weekdayList = habit.getWeekdayList();
+
 
         SimpleDateFormat simpleFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.US);
         String oldDate = simpleFormat.format(habit.getEndDate()); // date as a string using the above format
@@ -118,6 +123,7 @@ public class EditHabitFragment extends Fragment {
         nameInput.getEditText().setText(oldName);
         reasonInput.getEditText().setText(oldReason);
         habitDateInput.getEditText().setText(oldDate);
+        dayPicker.setSelectedDays(weekdayList);
 
     }
 
@@ -128,35 +134,41 @@ public class EditHabitFragment extends Fragment {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextInputLayout NameBox = requireView().findViewById(R.id.textInput_habitName);
+        TextInputLayout nameBox = requireView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = requireView().findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
 
 
         switch (item.getItemId()) {
 
             case R.id.button_addHabit:
                 // edit the habit
-                String habitName = NameBox.getEditText().getText().toString();
+                String habitName = nameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
+                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
 
                 // get selected habit from User
-                int habitIndex = requireActivity().getIntent().getExtras().getInt("habitIndex");
-                Habit currentHabit  = Session.getInstance().getUser().getHabitList().get(habitIndex);
+                Habit currentHabit  = Session.getInstance().getHabitHashMap().get(habitID);
 
                 // Set the date only if it was changed
                 if (mViewModel.getEndDate() != null) {
                     Date endDate = mViewModel.getEndDate();
                     currentHabit.setEndDate(endDate);
                 }
-                // set other data
-                currentHabit.setHabitName(habitName);
-                currentHabit.setReason(reason);
+                // set other data, with length limit
+                currentHabit.setHabitName(habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength())));  // either the max length or string length, which one is smaller
+                currentHabit.setReason(reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength()))); // either the max length or string length, which one is smaller
+                currentHabit.setWeekdayList(weekdayList);
+
+
+                // call Session to update data on Firestore
+                Session.getInstance().updateHabit(currentHabit);
 
                 requireActivity().finish(); // close the activity
 
                 // update and navigate back to view habit
                 Intent intent = new Intent(getContext(), ViewHabitActivity.class);
-                intent.putExtra("habitIndex",habitIndex); // include the index of the habit
+                intent.putExtra("habitID",habitID); // include the index of the habit
                 intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // update the existing view habit activity instead of making a new one
                 startActivity(intent);
 //

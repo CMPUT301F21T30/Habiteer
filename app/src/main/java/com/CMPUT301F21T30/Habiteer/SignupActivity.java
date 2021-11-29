@@ -1,4 +1,8 @@
 package com.CMPUT301F21T30.Habiteer;
+/**
+ * This is a class that shows the signup page and allows the user
+ * to register them for the application.
+ */
 
 import static android.content.ContentValues.TAG;
 
@@ -51,11 +55,12 @@ public class SignupActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
 
-
-
-
         signupBtn.setOnClickListener(new View.OnClickListener()  { //clicking the signup button
             @Override
+            /**
+             * This checks for the email, password and confirmed password and
+             * registers the user to firebase
+             */
             public void onClick(View view) {
                 String email = signupEmail.getText().toString().trim();
                 String password = signupPassword.getText().toString().trim();
@@ -112,7 +117,7 @@ public class SignupActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.d(TAG, "Data has been added successfully!");
-                                    Session session = Session.getInstance(email,getApplicationContext()); //if registered, start session and go goes to the main activity
+                                    Session session = Session.getInstance(email,getApplicationContext()); //if registered, start session and goes to the main activity
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override

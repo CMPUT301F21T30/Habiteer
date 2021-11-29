@@ -8,14 +8,25 @@
 
 package com.CMPUT301F21T30.Habiteer.ui.habit;
 
+import static java.util.Calendar.DAY_OF_WEEK;
+import static java.util.Calendar.LONG;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class handles data sent to the HabitAdapter
@@ -23,23 +34,51 @@ import java.util.List;
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
-    private MutableLiveData<List<Habit>> mHabits = new MutableLiveData<>();
-    private ArrayList<Habit> habitList;
+    private MutableLiveData<HashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
+    private HashMap<String,Habit> todayHabitList;
+    private MutableLiveData<HashMap<String,Habit>> mHabits = new MutableLiveData<>();
+    private HashMap<String,Habit> habitList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
 
-
-    public LiveData<List<Habit>> getHabits() {
-        habitList = Session.getInstance().getUser().getHabitList();
+    /**
+     * This method gets all habits belonging to the signed in user
+     * @return Live data list of all habits
+     */
+    public LiveData<HashMap<String,Habit>> getHabits() {
+        habitList = Session.getInstance().getHabitHashMap();
+        System.out.println(habitList);
         mHabits.setValue(habitList);
+        System.out.println(mHabits);
         return mHabits;
     }
 
-    public void addHabit(Habit habit) {
-        habitList = Session.getInstance().getUser().getHabitList();
-        habitList.add(habit);
-        getHabits();
+    /**
+     * This method gets all of today's habits belonging to the signed in user
+     * @return Live data list of today's habits
+     */
+    public LiveData<HashMap<String,Habit>> getTodayHabits() {
+        todayHabitList = (HashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
+        String today = getDayOfWk();
+        /* remove habits that do not contain today */
+        Iterator iterator = todayHabitList.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Habit habit = (Habit) habitPair.getValue();
+            if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
+                iterator.remove();
+            }
+        }
+        mTodayHabits.setValue(todayHabitList);
+        return mTodayHabits;
+    }
+
+    private String getDayOfWk() {
+        Calendar calendar = Calendar.getInstance();
+        int today = calendar.get(DAY_OF_WEEK);
+        calendar.set(DAY_OF_WEEK,today);
+        return calendar.getDisplayName(DAY_OF_WEEK, LONG, Locale.US).toUpperCase(Locale.ROOT);
     }
 
     public void setIndex(int index) {

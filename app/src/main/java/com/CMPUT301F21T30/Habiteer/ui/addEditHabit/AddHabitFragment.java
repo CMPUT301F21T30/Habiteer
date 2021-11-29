@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,8 +27,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 /**
  * This fragment handles the adding of habits to the habit list. Allows the user to enter a name, date range, days of the week, and a habit reason.
@@ -99,14 +103,20 @@ public class AddHabitFragment extends Fragment  {
 
 
 
+
         return view;
+
+    }
+    private void handleDaysOfWeek(View view) {
+
 
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // get the text fields
-        TextInputLayout NameBox = getView().findViewById(R.id.textInput_habitName);
+        TextInputLayout nameBox = getView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
+        MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
 
 
         switch (item.getItemId()) {
@@ -115,20 +125,28 @@ public class AddHabitFragment extends Fragment  {
                 // create the new habit
 
                 // get input from text fields
-                String habitName = NameBox.getEditText().getText().toString();
+                String habitName = nameBox.getEditText().getText().toString();
                 String reason = reasonBox.getEditText().getText().toString();
+
+                // apply length limit to strings
+                habitName = habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength()));  // either the max length or string length, which one is smaller
+                reason = reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength())); // either the max length or string length, which one is smaller
+
                 // get dates from viewmodel
                 Date startDate = mViewModel.getStartDate();
                 Date endDate = mViewModel.getEndDate();
+                // get selected days of week
+                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
                 // make a new habit
-                Habit newHabit = new Habit(habitName,startDate,endDate,reason);
+                Habit newHabit = new Habit(habitName,startDate,endDate,weekdayList,reason);
+                // set the habit privacy
+                SwitchCompat privateSwitch = getView().findViewById(R.id.privateSwitch);
+                newHabit.setPublic(!privateSwitch.isChecked()); // Private if checked, public if not.
                 // store the new habit
                 Session session = Session.getInstance();
                 session.addHabit(newHabit);
                 // close the activity
                 getActivity().finish();
-
-
                 return true;
         }
         return false;
