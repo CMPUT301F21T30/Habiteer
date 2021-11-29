@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String email;
     private ArrayList<String> habitIdList;
     private ArrayList<Event> eventList;
+    private ArrayList<Habit> publicHabits;
 
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
@@ -23,6 +24,7 @@ public class User implements Serializable {
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
         this.blockList = new ArrayList<>();
+        this.publicHabits = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -63,6 +65,10 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<Habit> getPublicHabits(){
+        return publicHabits;
     }
 
 

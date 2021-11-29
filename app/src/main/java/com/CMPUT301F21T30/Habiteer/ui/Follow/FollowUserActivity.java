@@ -89,7 +89,8 @@ public class FollowUserActivity extends AppCompatActivity {
 
 
         //TODO: Get only public habits
-        //habitsList = Session.getInstance().get;
+        habitsList = selectedUser.getPublicHabits();
+        System.out.println(habitsList);
 
 
 
