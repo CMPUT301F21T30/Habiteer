@@ -24,7 +24,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
@@ -86,7 +85,6 @@ public class Session {
                                         }
                                     });
                                 }
-
                                 /* Login */
                                 Toast.makeText(context, "You have been logged in", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(context, MainActivity.class);
@@ -105,6 +103,13 @@ public class Session {
                 }
             }
         });
+
+//        try {
+
+//        }
+//        catch (NullPointerException e) {
+//            System.out.println("Habit ID list is empty: " + e);
+//        }
 
     }
 
