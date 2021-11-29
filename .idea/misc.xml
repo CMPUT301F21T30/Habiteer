@@ -22,7 +22,8 @@
         <entry key="..\:/Users/Lenovo/project1/Habiteer/app/src/main/res/layout/activity_signup.xml" value="0.2324074074074074" />
         <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/activity_view_habit.xml" value="0.2203125" />
         <entry key="..\:/Users/shyam/Documents/GitHub/Habiteer/app/src/main/res/layout/add_habit_event_activity.xml" value="0.2203125" />
-        <entry key="..\:/Warren/Programs/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.20520833333333333" />
+        <entry key="..\:/Warren/Programs/Habiteer/app/src/main/res/layout/fragment_listhabit.xml" value="0.36666666666666664" />
+        <entry key="..\:/Warren/Programs/Habiteer/app/src/main/res/layout/habit_list.xml" value="0.5" />
       </map>
     </option>
   </component>
