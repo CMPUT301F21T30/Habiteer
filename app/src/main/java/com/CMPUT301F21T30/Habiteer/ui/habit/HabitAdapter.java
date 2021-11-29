@@ -203,7 +203,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         do {
             //excluding start date
             startCal.add(Calendar.DAY_OF_MONTH, 1);
-            for (int i=0; i<daysOfWeek.size(); i++) {
+            for (int i=0; i< daysOfWeek.size(); i++) {
                 String day = daysOfWeek.get(i).toString();
                 if (day == "SUNDAY"){
                     Log.d("tag 1", day);
@@ -250,7 +250,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
                 }
             }
 
-        } while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
+        } while (startCal.getTimeInMillis() <= endCal.getTimeInMillis()); //excluding end date
 
         return habitPerformingDays;
     }
