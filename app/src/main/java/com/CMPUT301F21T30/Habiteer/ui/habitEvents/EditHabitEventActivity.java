@@ -6,16 +6,21 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -42,7 +47,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class EditHabitEventActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
+import com.squareup.picasso.Picasso;
+
+public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
     // To initialize variables
 
     String newTitle;
@@ -78,6 +85,11 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_habit_event_activity);
+        // Set up the special toolbar with the save button for this activity
+        Toolbar toolbar = findViewById(R.id.bar_add_habit_event);
+        setSupportActionBar(toolbar);
+
+        this.setTitle("Edit habit event");
 
         getPermissions();
 
@@ -116,34 +128,19 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
 
             }
         });
-        // To connect to the save button and set an on click listener
 
-        saveButton = findViewById(R.id.saveHabitEvent);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                newTitle = title.getText().toString();
-                newComment = comment.getText().toString();
-                event.setEventName(newTitle);
-                event.setEventComment(newComment);
-                if (finalLocation != null) {
-                    event.setLatitude(finalLocation.getLatitude());
-                    event.setLongitude(finalLocation.getLongitude());
-                }
-
-                if (newTitle.isEmpty()) {
-                    title.setError("Please enter a title.");
-//                    message = "Required Field is empty";
-//                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Session.getInstance().updateEvent(event);
-                    finish();
-                }
-
-            }
-        });
+          // load in the image, if available
+          ImageView selectedImage = findViewById(R.id.event_image);
+          if (event.getImageUri() == null){
+              //Log.d("tag", "entered the if condition");
+              selectedImage.setImageResource(R.drawable.ic_image);
+          }
+          else{
+              Uri uriSelectedImage = Uri.parse(event.getImageUri());
+              Picasso.get().load(uriSelectedImage).into(selectedImage);
+          }
+  
+          handlePhotograph();
 
         // To connect to the delete button and set an on click listener
         deleteButton = findViewById(R.id.deleteHabitEvent);
@@ -158,6 +155,42 @@ public class EditHabitEventActivity extends AppCompatActivity implements OnMapRe
                 //startActivity(intent);
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // inflate options menu
+        getMenuInflater().inflate(R.menu.add_habit_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.button_addHabit: // save button
+                newTitle = title.getText().toString();
+                newComment = comment.getText().toString();
+                event.setEventName(newTitle);
+                event.setEventComment(newComment);
+                if (getUploadUri() != null) { // only update image if a new image was uploaded
+                    event.setImageUri(getUploadUri());
+                }
+                if (finalLocation != null) {
+                    event.setLatitude(finalLocation.getLatitude());
+                    event.setLongitude(finalLocation.getLongitude());
+                }
+
+                if (newTitle.isEmpty()) {
+                    title.setError("Please enter a title.");
+//                    message = "Required Field is empty";
+//                    Toast.makeText(EditHabitEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Session.getInstance().updateEvent(event);
+                    finish();
+                }
+                return true;
+        }
+        return false;
     }
 
     /**

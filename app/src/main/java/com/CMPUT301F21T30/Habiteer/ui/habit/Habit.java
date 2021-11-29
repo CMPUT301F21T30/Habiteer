@@ -21,7 +21,7 @@ public class Habit {
     private String id;
     private ArrayList<String> eventIdList;
     private boolean isPublic;
-//    private Integer progress;
+    private double progress;
     /**
      * No-argument constructor, used only for firebase.
      */
@@ -47,6 +47,7 @@ public class Habit {
         this.reason = reason;
         this.eventIdList = new ArrayList<>();
         isPublic = true;
+        progress = 0.0;
 
     }
 
@@ -83,6 +84,10 @@ public class Habit {
         return isPublic;
     }
 
+    public double getProgress() {
+        return progress;
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
@@ -107,4 +112,8 @@ public class Habit {
         this.eventIdList = eventIdList;
     }
     public void setPublic(boolean aPublic) {isPublic = aPublic;}
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+    }
 }
