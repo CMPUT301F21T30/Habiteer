@@ -101,11 +101,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
         Boolean publicHabit = habitList.get(position).getPublic();
-        if (publicHabit == true){
-            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24);
+        if (publicHabit){
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24); // open lock icon
         }
         else {
-            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_24);
+            holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_24); // closed lock icon
         }
         holder.habitNameText.setText(habitName);
         holder.habitEndDate.setText(habitDate);
