@@ -32,7 +32,7 @@ public class FollowUserActivity extends AppCompatActivity {
     TextView followersCount, followingCount, bio;
     Button followBtn;
     RecyclerView habitsRecycler;
-    private HashMap<String, Habit> habitsList;
+    private ArrayList<Habit> habitsList;
     private User selectedUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
     private Boolean following;
@@ -54,12 +54,12 @@ public class FollowUserActivity extends AppCompatActivity {
         followingCount = findViewById(R.id.followingCount);
         bio = findViewById(R.id.bio);
 
-        habitsList = new HashMap<String, Habit>();
+        habitsList = new ArrayList<Habit>();
 
         ActionBar ab = getSupportActionBar();
         //enable back button
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
+        //assert ab != null;
+        //ab.setDisplayHomeAsUpEnabled(true);
 
 
         //Get the user
@@ -85,13 +85,14 @@ public class FollowUserActivity extends AppCompatActivity {
         String followers_count = String.valueOf(selectedUser.getFollowerList().size());
         String following_count = String.valueOf(selectedUser.getFollowingList().size());
 
-        //TODO: Get bio for the user
-        String bio_text = "Sample Bio";
+        //Getting the bio for the user
+        //String bio_text = selectedUser.getBio();
+        String bio_text = "Sample Bio";//TODO: Remove test bio and uncomment the upper one when user profile is merged to main
 
 
         //TODO: Get only public habits
-        habitsList = selectedUser.getPublicHabits();
-        System.out.println(habitsList);
+        //habitsList = selectedUser.getPublicHabits();
+        //System.out.println(habitsList);
 
 
 
@@ -124,7 +125,7 @@ public class FollowUserActivity extends AppCompatActivity {
      * @param bio_text
      * @param habits_list
      */
-    private void displayInfo(String followers_count, String following_count, String bio_text, HashMap<String, Habit> habits_list){
+    private void displayInfo(String followers_count, String following_count, String bio_text, ArrayList<Habit> habits_list){
         followersCount.setText(followers_count);
         followingCount.setText(following_count);
         bio.setText(bio_text);
