@@ -21,6 +21,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import ca.antonious.materialdaypicker.MaterialDayPicker;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -55,6 +57,45 @@ public class EditHabitTest {
         // see if the right fragment appears
         AddEditHabitActivity addedit = (AddEditHabitActivity)  solo.getCurrentActivity();
         assertEquals(addedit.getSupportFragmentManager().findFragmentById(R.id.container).getClass(), EditHabitFragment.class);
+    }
+    /**
+     * Test if input validation prevents the activity from submitting empty fields
+     */
+    @Test
+    public void testInputValidation() {
+        solo.clickOnView(solo.getView(R.id.habit_recycler));
+        solo.clickOnView(solo.getView(R.id.edit));
+
+        solo.assertCurrentActivity("Wrong Activity!",AddEditHabitActivity.class); // activity should not change, since no empty fields allowed
+
+        TextInputLayout nameField = (TextInputLayout) solo.getView(R.id.textInput_habitName);
+        clearFieldAndTest(nameField);
+
+        TextInputLayout reasonField = (TextInputLayout) solo.getView(R.id.textInput_habitReason);
+        clearFieldAndTest(reasonField);
+
+        TextInputLayout dateField = (TextInputLayout) solo.getView(R.id.textInput_habitEndDate);
+        clearFieldAndTest(dateField);
+
+        // remove day selection and check if that is allowed
+        MaterialDayPicker dayPicker = (MaterialDayPicker) solo.getView(R.id.AddEdit_day_picker);
+        dayPicker.clearSelection();
+        sharedActions.saveAndCheckActivityChange(solo);
+        solo.clickOnView(dayPicker.getChildAt(0)); // click on a day
+        solo.clickOnText("Save");
+        solo.assertCurrentActivity("Habit not saved", ViewHabitActivity.class); // habit should have saved if everything is filled in !
+    }
+
+    /**
+     * Clears a field and attempts to save the habit to test input validation.
+     * Adds text back afterwards, so each text field can be tested individually..
+     * @param textBox a text box to test
+     */
+    private void clearFieldAndTest(TextInputLayout textBox) {
+        solo.clearEditText(textBox.getEditText()); // clear the name field
+        sharedActions.saveAndCheckActivityChange(solo);
+        solo.enterText(textBox.getEditText(),"Test"); // add something back
+
     }
     @Test
     public void testEditView() {

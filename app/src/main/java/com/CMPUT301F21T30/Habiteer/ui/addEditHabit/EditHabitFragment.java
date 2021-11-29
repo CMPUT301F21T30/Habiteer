@@ -38,7 +38,7 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  *  See Github #44, date picker can sometimes be one day off due to timezone issues
  *  TODO: Days of the week picker yet to be implemented
  */
-public class EditHabitFragment extends Fragment {
+public class EditHabitFragment extends BaseAddEditFragment {
 
     private com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitModel mViewModel;
     private String habitID;
@@ -134,44 +134,52 @@ public class EditHabitFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         TextInputLayout nameBox = requireView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = requireView().findViewById(R.id.textInput_habitReason);
+        TextInputLayout dateBox = getView().findViewById(R.id.textInput_habitEndDate);
         MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
+        TextInputLayout[] boxes = {nameBox,reasonBox,dateBox}; // array of all text boxes
 
 
         switch (item.getItemId()) {
 
             case R.id.button_addHabit:
                 // edit the habit
-                String habitName = nameBox.getEditText().getText().toString();
-                String reason = reasonBox.getEditText().getText().toString();
-                List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
+                // Only submit info if there are no empty fields
+                if (!hasEmptyFields(boxes,dayPicker)) {
+                    String habitName = nameBox.getEditText().getText().toString();
+                    String reason = reasonBox.getEditText().getText().toString();
+                    List<MaterialDayPicker.Weekday> weekdayList = dayPicker.getSelectedDays();
 
-                // get selected habit from User
-                Habit currentHabit  = Session.getInstance().getHabitHashMap().get(habitID);
+                    // get selected habit from User
+                    Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-                // Set the date only if it was changed
-                if (mViewModel.getEndDate() != null) {
-                    Date endDate = mViewModel.getEndDate();
-                    currentHabit.setEndDate(endDate);
-                }
-                // set other data, with length limit
-                currentHabit.setHabitName(habitName.substring(0,Math.min(habitName.length(),nameBox.getCounterMaxLength())));  // either the max length or string length, which one is smaller
-                currentHabit.setReason(reason.substring(0,Math.min(reason.length(),reasonBox.getCounterMaxLength()))); // either the max length or string length, which one is smaller
-                currentHabit.setWeekdayList(weekdayList);
+                    // Set the date only if it was changed
+                    if (mViewModel.getEndDate() != null) {
+                        Date endDate = mViewModel.getEndDate();
+                        currentHabit.setEndDate(endDate);
+                    }
+                    // set other data, with length limit
+                    currentHabit.setHabitName(habitName.substring(0, Math.min(habitName.length(), nameBox.getCounterMaxLength())));  // either the max length or string length, which one is smaller
+                    currentHabit.setReason(reason.substring(0, Math.min(reason.length(), reasonBox.getCounterMaxLength()))); // either the max length or string length, which one is smaller
+                    currentHabit.setWeekdayList(weekdayList);
 
 
-                // call Session to update data on Firestore
-                Session.getInstance().updateHabit(currentHabit);
+                    // call Session to update data on Firestore
+                    Session.getInstance().updateHabit(currentHabit);
 
-                requireActivity().finish(); // close the activity
+                    requireActivity().finish(); // close the activity
 
-                // update and navigate back to view habit
-                Intent intent = new Intent(getContext(), ViewHabitActivity.class);
-                intent.putExtra("habitID",habitID); // include the index of the habit
-                intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // update the existing view habit activity instead of making a new one
-                startActivity(intent);
+                    // update and navigate back to view habit
+                    Intent intent = new Intent(getContext(), ViewHabitActivity.class);
+                    intent.putExtra("habitID", habitID); // include the index of the habit
+                    intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP); // update the existing view habit activity instead of making a new one
+                    startActivity(intent);
 //
 
-                return true;
+                    return true;
+                }
+                else {
+                    return false;
+                }
         }
         return false;
     }

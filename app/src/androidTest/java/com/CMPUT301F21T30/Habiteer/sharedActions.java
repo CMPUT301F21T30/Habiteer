@@ -2,8 +2,13 @@ package com.CMPUT301F21T30.Habiteer;
 
 import android.widget.EditText;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.robotium.solo.Solo;
+
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class sharedActions {
     /**
@@ -30,6 +35,9 @@ public class sharedActions {
         TextInputLayout reasonField = (TextInputLayout) solo.getView(R.id.textInput_habitReason);
         solo.enterText(nameField.getEditText(),"Run");
         solo.enterText(reasonField.getEditText(),"Get fit");
+        // fill in day of week
+        MaterialDayPicker dayPicker = (MaterialDayPicker) solo.getView(R.id.AddEdit_day_picker);
+        solo.clickOnView(dayPicker.getChildAt(0)); // click on a day
         //save
         solo.clickOnText("Save");
     }
@@ -37,5 +45,15 @@ public class sharedActions {
         solo.clickOnView(solo.getView(R.id.habit_recycler));
         solo.clickOnView(solo.getView(R.id.delete));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
+
+    /**
+     * Clicks "save", and make sure the current activity does not change.
+     * Used for testing input validation in Add and Edit habit screens
+     * @param solo
+     */
+    public static void saveAndCheckActivityChange(Solo solo) {
+        solo.clickOnText("Save"); // click on the save button without entering anything
+        solo.assertCurrentActivity("Wrong Activity!", AddEditHabitActivity.class); // activity should not change, since no empty fields allowed
     }
 }
