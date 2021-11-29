@@ -53,7 +53,6 @@ public class ViewOtherHabitsAdapter extends RecyclerView.Adapter<ViewOtherHabits
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             habitTitle = itemView.findViewById(R.id.habit_title_text);
             progressIndicator = itemView.findViewById(R.id.circular_progress);
             progressPercentage = itemView.findViewById(R.id.progress_percentage);

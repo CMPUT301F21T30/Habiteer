@@ -1,8 +1,10 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -26,6 +28,11 @@ public class ViewOtherHabits extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_other_habits);
+
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
 
         habitRecyclerView = findViewById(R.id.list_habits_others);
 
@@ -91,5 +98,16 @@ public class ViewOtherHabits extends AppCompatActivity {
         habitRecyclerView.addItemDecoration(divider);
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: // back button
+                finish();
+                return true;
+        }
+        return false;
     }
 }

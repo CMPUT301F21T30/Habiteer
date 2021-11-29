@@ -23,7 +23,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_habits_others"
+            android:id="@+id/list_habits"
             android:layout_width="410dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="250dp"

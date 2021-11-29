@@ -1,6 +1,7 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
@@ -13,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /**
- * Displays the current user's (user who is logged in) following list in the recycler view
+ * Current user's follower list and when clicked
+ * displays the users in the follower list in recycler view
  */
-public class FollowingList extends AppCompatActivity  {
+public class FollowersList extends AppCompatActivity {
 
-    private RecyclerView followingRecycler;
 
-    private ArrayList<User> followingList;
+    private RecyclerView followerRecycler;
+
+    private ArrayList<User> followerList;
 
     private User currentUser;
 
@@ -33,27 +36,31 @@ public class FollowingList extends AppCompatActivity  {
         assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
 
-        this.setTitle("Following");
-        followingRecycler = findViewById(R.id.following_recyclerView);
+        this.setTitle("Followers");
+        followerRecycler = findViewById(R.id.follower_recyclerView);
         currentUser = Session.getInstance().getUser();
-        followingList = currentUser.getFollowingList();
+        followerList = currentUser.getFollowingList();
+
+        Log.d("TAG 566", String.valueOf(followerList.size()));
 
         recyclerSetUp();
 
     }
 
     /**
-     * Displays the list of following users in the recycler view
+     * Displays the list of follower of current users in the recycler view
      */
     public void recyclerSetUp(){
-        FollowingListAdapter followingAdapter = new FollowingListAdapter(followingList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        followingRecycler.setAdapter(followingAdapter);
-        followingRecycler.setLayoutManager(layoutManager);
 
-        followingRecycler.setItemAnimator(new DefaultItemAnimator());
-        DividerItemDecoration divider = new DividerItemDecoration(followingRecycler.getContext(), layoutManager.getOrientation());
-        followingRecycler.addItemDecoration(divider);
+        FollowerAdapter followerAdapter = new FollowerAdapter(followerList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        followerRecycler.setAdapter(followerAdapter);
+        followerRecycler.setLayoutManager(layoutManager);
+
+
+        followerRecycler.setItemAnimator(new DefaultItemAnimator());
+        DividerItemDecoration divider = new DividerItemDecoration(followerRecycler.getContext(), layoutManager.getOrientation());
+        followerRecycler.addItemDecoration(divider);
     }
 
     @Override
