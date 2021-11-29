@@ -12,8 +12,7 @@
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_baseline_person_24"
-        android:background="@color/cardview_shadow_start_color"/>
+        android:src="@drawable/profile_pic" />
 
     <TextView
         android:id="@+id/followersCount"
