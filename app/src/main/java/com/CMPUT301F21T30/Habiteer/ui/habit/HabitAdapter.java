@@ -9,6 +9,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         private TextView habitNameText;
         private TextView habitEndDate;
         private TextView habitRepeats;
+        private ImageView publicImage;
 
 
         public ViewHolder(final View view) {

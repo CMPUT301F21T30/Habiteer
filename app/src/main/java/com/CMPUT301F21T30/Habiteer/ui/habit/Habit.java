@@ -16,6 +16,7 @@ public class Habit {
     List<MaterialDayPicker.Weekday> weekdayList;
     private String reason;
     private String id;
+    private boolean isPublic;
 //    private Integer progress;
     /**
      * No-argument constructor, used only for firebase.
@@ -40,6 +41,8 @@ public class Habit {
         this.endDate = endDate;
         this.weekdayList = weekdayList;
         this.reason = reason;
+        isPublic = true;
+        
     }
 
     // Getters and setter methods, self-explanatory
@@ -86,4 +89,6 @@ public class Habit {
     }
 
     public void setId(String id) { this.id = id; }
+
+    public void setPublic(boolean aPublic) {isPublic = aPublic;}
 }

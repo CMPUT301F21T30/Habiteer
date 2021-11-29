@@ -11,6 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
@@ -72,6 +76,14 @@ public class ViewHabitActivity extends AppCompatActivity {
 
         List<MaterialDayPicker.Weekday> weekdayList = currentHabit.getWeekdayList();
         String reason_ = currentHabit.getReason();
+
+        //checks currentHabit is public or private and sets the switch accordingly
+        if (currentHabit.getPublic().equals(false)){
+            privateSwitch.setChecked(true);
+        }
+        else{
+            privateSwitch.setChecked(false);
+        }
 
 
 
@@ -148,6 +160,19 @@ public class ViewHabitActivity extends AppCompatActivity {
         dayPicker.setSelectedDays(weekdayList);
         dayPicker.disableAllDays(); // make the buttons not clickable, just for viewing purposes
         reason.setText(reason_);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: // back button
+                finish();
+                return true;
+        }
+        return false;
     }
 
 }
