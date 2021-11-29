@@ -24,6 +24,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -275,6 +276,24 @@ public class Session {
                 Log.w(TAG, "Error updating document", e);
             }
         });
+    }
+    public void swapHabitOrder(int initialPos, int newPos) {
+        ArrayList<String> habitIdList = user.getHabitIdList();
+        Collections.swap(habitIdList,initialPos,newPos);
+        user.setHabitIdList(habitIdList);
+        db.collection("Users").document(user.getEmail()).update("habitIdList", habitIdList)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Index " + initialPos + " and " + newPos + " swapped!") ;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error deleting document", e);
+            }
+        });
+
     }
 
     public void addEvent(Event event, String habitID) {
