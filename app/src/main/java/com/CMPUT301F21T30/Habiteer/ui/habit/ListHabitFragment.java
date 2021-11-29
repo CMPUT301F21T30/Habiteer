@@ -84,8 +84,8 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
 
     private void recyclerSetup() {
-        habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
-        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+        habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue(), Session.getInstance().getUser().getHabitIdList());
+        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue(), listHabitViewModel.getTodayHabitIdList());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -122,7 +122,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
             /* Display today's habits */
-            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue(), listHabitViewModel.getTodayHabitIdList());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
         } else {

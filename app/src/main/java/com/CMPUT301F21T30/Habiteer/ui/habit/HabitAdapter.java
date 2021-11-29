@@ -18,12 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAccessor;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -36,10 +38,12 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
     private LinkedHashMap<String,Habit> habitHashMap;
+    private ArrayList<String> habitIdList;
     private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public HabitAdapter(LinkedHashMap<String,Habit> habitHashMap) {
+    public HabitAdapter(LinkedHashMap<String,Habit> habitHashMap, ArrayList<String> habitIdList) {
         this.habitHashMap = habitHashMap;
+        this.habitIdList = habitIdList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -91,7 +95,10 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
-        String currentHabitID = Session.getInstance().getUser().getHabitIdList().get(position);
+        System.out.println("ID LIst: " + habitIdList);
+        String currentHabitID = habitIdList.get(position);
+        System.out.println("Pos: " + position);
+        System.out.println("Look in Habits: " + habitHashMap + " for " + currentHabitID);
         Habit currentHabit = habitHashMap.get(currentHabitID);
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(currentHabit.getEndDate());
