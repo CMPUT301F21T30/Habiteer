@@ -2,8 +2,6 @@ package com.CMPUT301F21T30.Habiteer;
 
 import static android.content.ContentValues.TAG;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -11,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,7 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
