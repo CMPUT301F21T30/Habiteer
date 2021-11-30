@@ -1,6 +1,7 @@
 package com.CMPUT301F21T30.Habiteer.ui.Follow;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,14 +58,16 @@ public class FollowUserActivity extends AppCompatActivity {
 
 
         ActionBar ab = getSupportActionBar();
-        //enable back button
-        //assert ab != null;
-        //ab.setDisplayHomeAsUpEnabled(true);
+//        enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         //Get the user
         Bundle bundle = getIntent().getExtras();
         selectedUser = (User) bundle.getSerializable("UserObj");
+        this.setTitle(selectedUser.getEmail()); // set title to selected user email
 
         //Set title of the page
         this.setTitle(selectedUser.getEmail());
@@ -144,4 +147,22 @@ public class FollowUserActivity extends AppCompatActivity {
         else{
             followBtn.setText("Follow");
         }
-}}
+}
+
+    /**
+     * Handles the action bar items for this activity.
+     * @param item: the item pressed by the user
+     * @return boolean Return false to allow normal menu processing to proceed, true to consume it here.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: // back button
+                finish();
+                return true;
+        }
+        return false;
+    }
+
+}
