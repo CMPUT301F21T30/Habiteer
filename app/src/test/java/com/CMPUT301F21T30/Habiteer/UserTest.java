@@ -55,10 +55,10 @@ public class UserTest {
     @Test
     void testFollowerList(){
         User user = mockUser();
-        ArrayList<User> followerList = new ArrayList<>();
+        ArrayList<String> followerList = new ArrayList<>();
 
-        User user2 = new User("new@gmail.com");
-        followerList.add(user2);
+        String user2Email = "new@gmail.com";
+        followerList.add(user2Email);
         user.setFollowerList(followerList);
         assertEquals(1, user.getFollowerList().size());
 
@@ -69,10 +69,10 @@ public class UserTest {
     @Test
     void testFollowingList(){
         User user = mockUser();
-        ArrayList<User> followingList = new ArrayList<>();
+        ArrayList<String> followingList = new ArrayList<>();
 
-        User user2 = new User("new@gmail.com");
-        followingList.add(user2);
+        String user2Email = "new@gmail.com";
+        followingList.add(user2Email);
         user.setFollowingList(followingList);
         assertEquals(1, user.getFollowingList().size());
 
