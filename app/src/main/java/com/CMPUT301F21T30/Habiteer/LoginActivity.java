@@ -40,7 +40,7 @@ public class  LoginActivity extends AppCompatActivity {
         noAccount = findViewById(R.id.noAccount);
         loginEmail = findViewById(R.id.loginEmail);
         loginPassword = findViewById(R.id.loginPassword);
-        rememberMe = findViewById(R.id.rememberMe);
+//        rememberMe = findViewById(R.id.rememberMe);
         loginBtn = findViewById(R.id.loginBtn);
         goToSignupBtn = findViewById(R.id.goToSignupBtn);
 
