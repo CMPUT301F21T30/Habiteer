@@ -1,35 +1,45 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.CMPUT301F21T30.Habiteer.databinding.FragmentUserNotificationBinding;
+
 import java.util.ArrayList;
 
-public class UserNotification extends AppCompatActivity {
+public class UserNotification extends Fragment {
 
-    private RecyclerView requestRecycler;
     private ArrayList<String> requestList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_notification);
-        requestRecycler = findViewById(R.id.notification_recycler);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // inflate the binding first
+        View view = FragmentUserNotificationBinding.inflate(inflater, container, false).getRoot();
+        RecyclerView requestRecycler = view.findViewById(R.id.notification_recycler);
         User currentUser = Session.getInstance().getUser();
         requestList = currentUser.getFollowRequestsList();
 //        requestList.add("another person");
-        recyclerSetup();
-
+        recyclerSetup(requestRecycler);
+        getActivity().setTitle("Notifications");
+        return view;
     }
 
-    private void recyclerSetup() {
+    private void recyclerSetup(RecyclerView requestRecycler) {
         NotificationAdapter notificationAdapter = new NotificationAdapter(requestList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         requestRecycler.setAdapter(notificationAdapter);
         requestRecycler.setLayoutManager(layoutManager);
 
@@ -38,5 +48,6 @@ public class UserNotification extends AppCompatActivity {
         requestRecycler.addItemDecoration(divider);
 
     }
+
 
 }

@@ -34,5 +34,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
     }
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        Navigation.findNavController(this, R.id.nav_host_fragment_activity_main).navigateUp();
+        return super.onSupportNavigateUp();
+    }
 }
