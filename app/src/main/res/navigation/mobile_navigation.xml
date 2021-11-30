@@ -38,15 +38,15 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.CMPUT301F21T30.Habiteer.ui.Follow.SearchUserFragment"
-        android:label="Search"
-        tools:layout="@layout/search_user_fragment"/>
+        android:label="Search users"
+        tools:layout="@layout/search_user_fragment" />
     <activity
         android:id="@+id/addEditHabitActivity"
         android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity"
         android:label="AddEditHabitActivity" />
     <fragment
         android:id="@+id/userNotification"
-        android:name="com.CMPUT301F21T30.Habiteer.UserNotification"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.UserNotifications.UserNotificationFragment"
         android:label="Follow requests"
         tools:layout="@layout/fragment_user_notification">
         <action

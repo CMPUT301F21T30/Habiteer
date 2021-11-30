@@ -1,27 +1,26 @@
-package com.CMPUT301F21T30.Habiteer;
+package com.CMPUT301F21T30.Habiteer.ui.UserNotifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.CMPUT301F21T30.Habiteer.R;
+import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.User;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentUserNotificationBinding;
 
 import java.util.ArrayList;
 
-public class UserNotification extends Fragment {
+public class UserNotificationFragment extends Fragment {
 
     private ArrayList<String> requestList;
 

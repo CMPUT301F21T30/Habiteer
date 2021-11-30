@@ -48,8 +48,7 @@
         <activity
             android:name=".ui.habitEvents.EditHabitEventActivity"
             android:theme="@style/Theme.Habiteer.NoActionBar"/>
-        <activity android:name=".ui.Follow.FollowUserActivity"
-            android:theme="@style/Theme.Habiteer.NoActionBar"/>
+        <activity android:name=".ui.Follow.FollowUserActivity"/>
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
