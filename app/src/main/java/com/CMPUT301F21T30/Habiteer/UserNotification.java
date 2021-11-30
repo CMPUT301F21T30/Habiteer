@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -31,9 +32,15 @@ public class UserNotification extends Fragment {
         RecyclerView requestRecycler = view.findViewById(R.id.notification_recycler);
         User currentUser = Session.getInstance().getUser();
         requestList = currentUser.getFollowRequestsList();
+        TextView emptyMessage =  view.findViewById(R.id.no_notifications_message);
+        if (requestList.isEmpty()) {
+            emptyMessage.setVisibility(View.VISIBLE);
+        }
+        else {
 //        requestList.add("another person");
-        recyclerSetup(requestRecycler);
-        getActivity().setTitle("Notifications");
+            emptyMessage.setVisibility(View.GONE);
+            recyclerSetup(requestRecycler);
+        }
         return view;
     }
 
