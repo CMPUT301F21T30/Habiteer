@@ -28,12 +28,6 @@
         tools:layout="@layout/fragment_habit_events" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.CMPUT301F21T30.Habiteer.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
         android:id="@+id/navigation_search"
         android:name="com.CMPUT301F21T30.Habiteer.ui.Follow.SearchUserFragment"
         android:label="Search"
