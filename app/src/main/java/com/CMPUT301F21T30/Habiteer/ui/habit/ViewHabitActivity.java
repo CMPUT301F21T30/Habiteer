@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -27,6 +26,7 @@ import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.CMPUT301F21T30.Habiteer.ui.habitEvents.AddHabitEventActivity;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -73,6 +73,11 @@ public class ViewHabitActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         habitID = bundle.getString("habitID");
 
+        ActionBar ab = getSupportActionBar();
+        //enable back button
+        assert ab != null;
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         // get current habit with id
@@ -106,7 +111,7 @@ public class ViewHabitActivity extends AppCompatActivity {
         //days.setSelectedDays(daysSelected);
 
         /**
-         * Checking if the user made the habit private
+         * Checking if the user made the habit private and updates the database accordingly
          */
         privateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

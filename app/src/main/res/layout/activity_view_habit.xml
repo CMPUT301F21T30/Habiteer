@@ -83,12 +83,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/reasonHeading"
-        android:text="I want to work on this because...."
-        android:textSize="20dp"
-        android:textColor="@color/black"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/cardview_shadow_end_color"/>
+        android:background="@color/cardview_shadow_end_color"
+        android:text="I want to work on this because...."
+        android:textColor="@color/black"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/progressHeading"
@@ -125,9 +125,10 @@
 
     <ProgressBar
         android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/progressHeading"
+        android:layout_below="@+id/progress_text"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
@@ -137,14 +138,17 @@
         android:progressDrawable="@drawable/horizontal_progress"
         android:visibility="visible" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/privateSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="Switch to private" />
+        android:text="@string/text_privateSwitch"
+        android:theme="@style/ColouredSwitch"
+        android:textColor="@color/textView_grey"
+ />
 
     <Button
         android:id="@+id/addHabitEvent"

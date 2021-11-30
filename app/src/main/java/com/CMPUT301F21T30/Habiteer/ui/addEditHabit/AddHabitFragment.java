@@ -5,15 +5,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 
 import com.CMPUT301F21T30.Habiteer.R;
@@ -28,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
@@ -38,7 +42,7 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  *  See Github #44, date picker can sometimes be one day off due to timezone issues
  *  TODO: Days of the week picker yet to be implemented
  */
-public class AddHabitFragment extends Fragment  {
+public class AddHabitFragment extends BaseAddEditFragment  {
 
     private AddEditHabitModel mViewModel;
 
@@ -106,16 +110,16 @@ public class AddHabitFragment extends Fragment  {
         return view;
 
     }
-    private void handleDaysOfWeek(View view) {
 
 
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // get the text fields
         TextInputLayout nameBox = getView().findViewById(R.id.textInput_habitName);
         TextInputLayout reasonBox = getView().findViewById(R.id.textInput_habitReason);
+        TextInputLayout dateBox = getView().findViewById(R.id.textInput_habitStartDate);
         MaterialDayPicker dayPicker = getView().findViewById(R.id.AddEdit_day_picker);
+        TextInputLayout[] boxes = {nameBox,reasonBox,dateBox};
 
 
         switch (item.getItemId()) {
