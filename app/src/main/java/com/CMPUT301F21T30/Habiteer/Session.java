@@ -143,6 +143,9 @@ public class Session {
     public User getUser() {
         return this.user;
     }
+    public void destroy() {
+        Session.instance = null;
+    }
 
     /**
      * adds a habit into Firestore.
