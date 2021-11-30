@@ -109,11 +109,10 @@ public class FollowUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!following||!requested){
-                    //TODO: Send a follow request
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
                     //selectedUser.setRequestedList(requestedList);
-                    Session.getInstance().followOtherUser(selectedUser);
+                    Session.getInstance().addSentRequest(selectedUser.getEmail());
                 }
                 else {
                     following = false;

@@ -15,6 +15,7 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -496,27 +497,67 @@ public class Session {
         return returnUriLink;
     }
 
-
-
-    public void updateFollowerList(User user, ArrayList<User>followerList){
-        user.setFollowerList(followerList);
-
-        //stores into firebase
-        db.collection("Users").document(user.getEmail()).update("Follower List", user.getFollowerList())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "Document successfully written for followers list");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG ,"Error while adding follower", e);
-            }
-        });
+    /**
+     * Wrapper function for updateFollowerList(), adds an email to the current user's follower list, and on firebase
+     * @param email - target user's email, to add to the list
+     */
+    public void addFollower(String email) {
+        updateFollowerList(email,true);
+    }
+    /**
+     * Wrapper function for updateFollowerList(), removes an email from the current user's follower list, and on firebase
+     * @param email- target user's email, to remove from the list
+     */
+    public void removeFollower(String email) {
+        updateFollowerList(email,false);
     }
 
-    public void updateFollowingList(User user, ArrayList<User>followingList){
+    /**
+     * Updates following lists for current user and target user.
+     * @param thatEmail - target user email.
+     * @param add - Whether to add or remove a follower.
+     */
+    private void updateFollowerList(String thatEmail,boolean add){
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> followerList = this.user.getFollowerList();
+        if(add) {
+            followerList.add(thatEmail);
+        }
+        else {
+            followerList.remove(thatEmail);
+        }
+        // update local follower list
+        this.user.setFollowerList(followerList);
+
+        CollectionReference collection = db.collection("Users");
+        //update the this user's firebase
+        collection.document(thisEmail).update("followerList", followerList)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG, "Document successfully written for followers list");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error while updating follower", e);
+                }
+            });
+
+        // update the other user's following list
+        DocumentReference doc = collection.document(thatEmail);
+        if (add) {
+            doc.update("followingList",FieldValue.arrayUnion(thisEmail));
+        }
+        else {
+            doc.update("followingList",FieldValue.arrayRemove(thisEmail));
+        }
+
+
+        }
+
+
+    public void updateFollowingList(User user, ArrayList<String>followingList){
         user.setFollowingList(followingList);
 
         //stores into firebase
@@ -534,11 +575,24 @@ public class Session {
         });
     }
 
-    public void followOtherUser(User user){
-        this.user.addToSentRequests(user);
 
-        //stores into the other user's firebase
-        db.collection("Users").document(user.getEmail()).update("followRequestsList", FieldValue.arrayUnion(this.user.getEmail()))
+    public void addSentRequest(String email){updateSentRequestsList(email,true);}
+    public void removeSentRequest(String email){updateSentRequestsList(email,false);}
+    public void updateSentRequestsList(String targetEmail,boolean add){
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> sentRequests = this.user.getSentRequestsList();
+
+        if (add){
+            sentRequests.add(targetEmail);
+        }
+        else {
+            sentRequests.remove(targetEmail);
+        }
+        this.user.setSentRequestsList(sentRequests);
+
+        CollectionReference collection = db.collection("Users");
+        // updates the logged in user's sent requests on firebase
+        collection.document(thisEmail).update("sentRequestsList", sentRequests)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -550,8 +604,18 @@ public class Session {
                 Log.w(TAG ,"Error while adding user request", e);
             }
         });
-        // stores into the logged in user's sent requests on firebase
-        db.collection("Users").document(this.user.getEmail()).update("sentRequestsList", FieldValue.arrayUnion(user.getEmail()))
+        DocumentReference targetDoc = collection.document(targetEmail);
+        FieldValue fieldValue;
+
+        if (add){
+            fieldValue =  FieldValue.arrayUnion(thisEmail);
+        }
+        else {
+            fieldValue = FieldValue.arrayRemove(thisEmail);
+        }
+
+        //update the other user's firebase
+        targetDoc.update("followRequestsList",fieldValue)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -563,6 +627,19 @@ public class Session {
                 Log.w(TAG ,"Error while adding user request", e);
             }
         });
+
     }
+    public void removeFollowRequest(String targetEmail) {
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> followRequests = this.user.getFollowRequestsList();
+        followRequests.remove(targetEmail);
+        this.user.setFollowRequestsList(followRequests); // update local list
 
+        CollectionReference collection = db.collection("Users");
+        // updates the logged in user's follow requests on firebase
+        collection.document(thisEmail).update("followRequestsList",followRequests);
+        // update the target users sent requests on firebase
+        collection.document(targetEmail).update("sentRequestsList",FieldValue.arrayRemove(thisEmail));
+
+    }
 }

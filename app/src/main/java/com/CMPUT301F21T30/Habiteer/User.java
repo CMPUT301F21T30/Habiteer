@@ -14,9 +14,9 @@ public class User implements Serializable {
 
     private ArrayList<String> sentRequestsList;
     private ArrayList<String> followRequestsList;
-    private ArrayList<User> followerList;
-    private ArrayList<User> followingList;
-    private ArrayList<User> blockList;
+    private ArrayList<String> followerList;
+    private ArrayList<String> followingList;
+//    private ArrayList<User> blockList;
 
     public User() { }
 
@@ -26,7 +26,7 @@ public class User implements Serializable {
         this.eventList = new ArrayList<>();
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
-        this.blockList = new ArrayList<>();
+//        this.blockList = new ArrayList<>();
         this.publicHabits = new ArrayList<>();
         this.sentRequestsList = new ArrayList<>();
         this.followRequestsList = new ArrayList<>();
@@ -47,32 +47,32 @@ public class User implements Serializable {
         this.habitIdList = habitIdList;
     }
 
-    public ArrayList<User> getFollowerList() {
+    public ArrayList<String> getFollowerList() {
         return followerList;
     }
 
-    public ArrayList<User> getFollowingList() {
+    public ArrayList<String> getFollowingList() {
         return followingList;
     }
 
-    public ArrayList<User> getBlockList() {
-        return blockList;
-    }
+//    public ArrayList<User> getBlockList() {
+//        return blockList;
+//    }
 
-    public void setFollowingList(ArrayList<User> followingList) {
+    public void setFollowingList(ArrayList<String> followingList) {
         this.followingList = followingList;
     }
 
-    public void setFollowerList(ArrayList<User> followerList) {
+    public void setFollowerList(ArrayList<String> followerList) {
         this.followerList = followerList;
     }
 
-    /**
-     * Adds a user to the sent requests list. Called when this user requests to follow another.
-     * @param user - the user this one wants to follow.
-     */
-    public void addToSentRequests(User user) {
-        this.sentRequestsList.add(user.getEmail());
+    public void setSentRequestsList(ArrayList<String> sentRequestsList) {
+        this.sentRequestsList = sentRequestsList;
+    }
+
+    public void setFollowRequestsList(ArrayList<String> followRequestsList) {
+        this.followRequestsList = followRequestsList;
     }
 
     public ArrayList<String> getSentRequestsList() {

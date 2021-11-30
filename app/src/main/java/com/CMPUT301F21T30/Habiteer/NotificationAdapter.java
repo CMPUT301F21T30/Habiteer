@@ -73,15 +73,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    System.out.println(getLayoutPosition());
-                    //acceptRequest(User user);
+                    String selectedUserEmail =  requested.get(getLayoutPosition());
+                    acceptRequest(selectedUserEmail);
                 }
             });
 
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //rejectRequest(User user);
+                    String selectedUserEmail =  requested.get(getLayoutPosition());
+                    rejectRequest(selectedUserEmail);
                 }
             });
         }
@@ -89,21 +90,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     }
 
-    public void acceptRequest( User requestUser){
-        ArrayList<User> followersList = new ArrayList<>();
-        ArrayList<User> followingList = new ArrayList<>();
-        currentUser = Session.getInstance().getUser();
-        followersList.add(requestUser);
-        Session.getInstance().updateFollowerList(currentUser, followersList);
-        followersList.add(currentUser);
+    public void acceptRequest( String email){
 
-        //user.get(pos).setFollowerList();
+        Session.getInstance().addFollower(email);
+        Session.getInstance().removeFollowRequest(email);
+
+
 
     }
 
-    public void rejectRequest (User requestUser){
+    public void rejectRequest (String email){
 
-//        currentUser.getSentRequestsList().remove(requestUser);
-//        Session.getInstance().followOtherUser(currentUser, currentUser.getSentRequestsList());
+        Session.getInstance().removeFollowRequest(email);
     }
 }
