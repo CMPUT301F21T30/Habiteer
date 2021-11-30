@@ -38,8 +38,8 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.CMPUT301F21T30.Habiteer.ui.Follow.SearchUserFragment"
-        android:label="Search"
-        tools:layout="@layout/search_user_fragment"/>
+        android:label="Search users"
+        tools:layout="@layout/search_user_fragment" />
     <activity
         android:id="@+id/addEditHabitActivity"
         android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity"
