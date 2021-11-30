@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F21T30.Habiteer.ui.habit.HabitAdapter;
-
 import java.util.ArrayList;
 
 public class UserNotification extends AppCompatActivity {
@@ -32,14 +30,14 @@ public class UserNotification extends AppCompatActivity {
 
     private void recyclerSetup() {
         NotificationAdapter notificationAdapter = new NotificationAdapter(requestedList);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        notificationAdapter.setLayoutManager(layoutManager);
-        requestRecycler.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         requestRecycler.setAdapter(notificationAdapter);
-        DividerItemDecoration divider = new DividerItemDecoration(notificationAdapter.getContext(),
-                ((LinearLayoutManager) layoutManager).getOrientation());
+        requestRecycler.setLayoutManager(layoutManager);
+
+        requestRecycler.setItemAnimator(new DefaultItemAnimator());
+        DividerItemDecoration divider = new DividerItemDecoration(requestRecycler.getContext(), layoutManager.getOrientation());
         requestRecycler.addItemDecoration(divider);
 
     }
+
 }
