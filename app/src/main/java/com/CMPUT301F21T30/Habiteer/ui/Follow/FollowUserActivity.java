@@ -97,7 +97,7 @@ public class FollowUserActivity extends AppCompatActivity {
         displayInfo(followers_count, following_count, bio_text, habitsList);
 
 
-        requested = currentUser.getSentRequestsList().contains(selectedUser);
+        requested = currentUser.getSentRequestsList().contains(selectedUser.getEmail());
         if (requested) {
             followBtn.setText("Requested");
         }
