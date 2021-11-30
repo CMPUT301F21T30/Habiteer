@@ -45,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+
         signupHeading = findViewById(R.id.signupHeading);
         alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount);
         signupEmail = findViewById(R.id.signupEmail);
@@ -62,6 +63,7 @@ public class SignupActivity extends AppCompatActivity {
              * registers the user to firebase
              */
             public void onClick(View view) {
+
                 String email = signupEmail.getText().toString().trim();
                 String password = signupPassword.getText().toString().trim();
                 String confirmPassword = signupConfirmPassword.getText().toString().trim();
@@ -105,23 +107,30 @@ public class SignupActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         FirebaseFirestore db;
 
                         if(task.isSuccessful()){
+
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.SignupActivity.this, "You have been registered", Toast.LENGTH_SHORT).show();
+
                             User newUser = new User(email);
+
                             // Add user to database
                             db = FirebaseFirestore.getInstance();
                             CollectionReference collectionReference = db.collection("Users");
+
                             collectionReference.document(email).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+
                                     Log.d(TAG, "Data has been added successfully!");
                                     Session session = Session.getInstance(email,getApplicationContext()); //if registered, start session and goes to the main activity
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+
                                     // These are a method which gets executed if there’s any problem
                                     Log.d(TAG, "Data could not be added!" + e.toString());
                                 }

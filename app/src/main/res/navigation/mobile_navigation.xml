@@ -19,6 +19,14 @@
             app:popEnterAnim="@anim/wait_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/navigation_listhabit" />
+        <action
+            android:id="@+id/action_navigation_listhabit_to_userNotification"
+            app:destination="@id/userNotification"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/navigation_listhabit" />
     </fragment>
 
     <fragment
@@ -28,12 +36,22 @@
         tools:layout="@layout/fragment_habit_events" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.CMPUT301F21T30.Habiteer.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_search"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.Follow.SearchUserFragment"
+        android:label="Search"
+        tools:layout="@layout/search_user_fragment"/>
     <activity
         android:id="@+id/addEditHabitActivity"
         android:name="com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity"
         android:label="AddEditHabitActivity" />
+    <fragment
+        android:id="@+id/userNotification"
+        android:name="com.CMPUT301F21T30.Habiteer.UserNotification"
+        android:label="Follow requests"
+        tools:layout="@layout/fragment_user_notification">
+        <action
+            android:id="@+id/action_userNotification_pop"
+            app:popUpTo="@id/userNotification"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

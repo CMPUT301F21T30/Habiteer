@@ -10,10 +10,14 @@ public class User implements Serializable {
     private String email;
     private ArrayList<String> habitIdList;
     private ArrayList<Event> eventList;
+    private ArrayList<Habit> publicHabits;
 
-    private ArrayList<User> followerList;
-    private ArrayList<User> followingList;
-    private ArrayList<User> blockList;
+    private ArrayList<String> sentRequestsList;
+    private ArrayList<String> followRequestsList;
+    private ArrayList<String> followerList;
+    private ArrayList<String> followingList;
+//    private ArrayList<User> blockList;
+
     public User() { }
 
     public User(String email) {
@@ -22,7 +26,11 @@ public class User implements Serializable {
         this.eventList = new ArrayList<>();
         this.followerList = new ArrayList<>();
         this.followingList = new ArrayList<>();
-        this.blockList = new ArrayList<>();
+//        this.blockList = new ArrayList<>();
+        this.publicHabits = new ArrayList<>();
+        this.sentRequestsList = new ArrayList<>();
+        this.followRequestsList = new ArrayList<>();
+
     }
 
     public String getEmail() {
@@ -39,16 +47,40 @@ public class User implements Serializable {
         this.habitIdList = habitIdList;
     }
 
-    public ArrayList<User> getFollowerList() {
+    public ArrayList<String> getFollowerList() {
         return followerList;
     }
 
-    public ArrayList<User> getFollowingList() {
+    public ArrayList<String> getFollowingList() {
         return followingList;
     }
 
-    public ArrayList<User> getBlockList() {
-        return blockList;
+//    public ArrayList<User> getBlockList() {
+//        return blockList;
+//    }
+
+    public void setFollowingList(ArrayList<String> followingList) {
+        this.followingList = followingList;
+    }
+
+    public void setFollowerList(ArrayList<String> followerList) {
+        this.followerList = followerList;
+    }
+
+    public void setSentRequestsList(ArrayList<String> sentRequestsList) {
+        this.sentRequestsList = sentRequestsList;
+    }
+
+    public void setFollowRequestsList(ArrayList<String> followRequestsList) {
+        this.followRequestsList = followRequestsList;
+    }
+
+    public ArrayList<String> getSentRequestsList() {
+        return sentRequestsList;
+    }
+
+    public ArrayList<String> getFollowRequestsList() {
+        return followRequestsList;
     }
 
     public ArrayList<Event> getEventList() {
@@ -64,12 +96,23 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
+        System.out.println("BRK 11");
         this.email = email;
     }
 
-    public void setFollowerList(ArrayList<User> followerList) {
-        this.followerList = followerList;
-    }
+    /*public ArrayList<Habit> getPublicHabits(){//Problem here
+        HashMap<String,Habit> userHabits = (HashMap<String, Habit>) Session.getInstance().getOthersHabits(this).clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
+        Iterator iterator = userHabits.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry habitPair = (Map.Entry)iterator.next();
+            Habit habit = (Habit) habitPair.getValue();
+            if (habit.getPublic()) {
+                publicHabits.add(habit);
+            }
+        }
+        return publicHabits;
+    }*/
+
 
     public void setFollowingList(ArrayList<User> followingList) {
         this.followingList = followingList;
