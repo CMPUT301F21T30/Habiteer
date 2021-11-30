@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +27,7 @@ import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelectedListener {
 
@@ -54,13 +55,17 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
         habitRecycler = root.findViewById(R.id.habit_recycler);
-        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<HashMap<String, Habit>>() {
+        listHabitViewModel.getHabits().observe(getViewLifecycleOwner(), new Observer<LinkedHashMap<String, Habit>>() {
             @Override
-            public void onChanged(@Nullable HashMap<String, Habit> habits) {
+            public void onChanged(@Nullable LinkedHashMap<String, Habit> habits) {
                 habitAdapter.notifyDataSetChanged();
                 todayHabitAdapter.notifyDataSetChanged();
             }
         });
+        // long press and drag to reorder habits
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(habitRecycler);
+        // Set up recycler view
         recyclerSetup();
 
         FloatingActionButton fab = root.findViewById(R.id.FAB_addHabit);
@@ -83,8 +88,8 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
 
     private void recyclerSetup() {
-        habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue());
-        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+        habitAdapter = new HabitAdapter(listHabitViewModel.getHabits().getValue(), Session.getInstance().getUser().getHabitIdList());
+        todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue(), listHabitViewModel.getTodayHabitIdList());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         habitRecycler.setLayoutManager(layoutManager);
         habitRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -92,6 +97,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         DividerItemDecoration divider = new DividerItemDecoration(habitRecycler.getContext(),
                 ((LinearLayoutManager) layoutManager).getOrientation());
         habitRecycler.addItemDecoration(divider);
+
     }
 
     @Override
@@ -113,7 +119,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     }
 
     /**
-     *
+     * Updates hashmaps and notifies adapters of change when "My Habits" page is navigated to
      */
     @Override
     public void onResume() {
@@ -139,10 +145,10 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onTabSelected(TabLayout.Tab tab) {
         if (tab.getText() == getString(R.string.tab_2_text)) { // if tab is "Today"
             /* Display today's habits */
-            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue());
+            todayHabitAdapter = new HabitAdapter(listHabitViewModel.getTodayHabits().getValue(), listHabitViewModel.getTodayHabitIdList());
             habitRecycler.setAdapter(todayHabitAdapter);
             todayHabitAdapter.notifyDataSetChanged();
-        } else {
+        } else { // tab is "All Habits"
             /* Display all habits */
             habitRecycler.setAdapter(habitAdapter);
             habitAdapter.notifyDataSetChanged();
@@ -158,4 +164,24 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+    /* Item touch helper allows habits to be dragged and reordered */
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int initialPos = viewHolder.getAbsoluteAdapterPosition();
+            int newPos = target.getAbsoluteAdapterPosition();
+
+            Session.getInstance().swapHabitOrder(initialPos,newPos);
+
+            recyclerView.getAdapter().notifyItemMoved(initialPos, newPos);
+
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 }

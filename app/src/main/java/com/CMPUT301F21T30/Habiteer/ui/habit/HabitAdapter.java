@@ -22,6 +22,7 @@ import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
 import java.text.DecimalFormat;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,12 +43,13 @@ import ca.antonious.materialdaypicker.MaterialDayPicker;
  * Allows for updates to the list as Habits are added, edited, or deleted
  */
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
-    private HashMap<String,Habit> habitHashMap;
-    ArrayList<Habit> habitList; // For when we need the hashmap as a list
+    private LinkedHashMap<String,Habit> habitHashMap;
+    private ArrayList<String> habitIdList;
     private int selectedIndex = RecyclerView.NO_POSITION;
 
-    public HabitAdapter(HashMap<String,Habit> habitHashMap) {
+    public HabitAdapter(LinkedHashMap<String,Habit> habitHashMap, ArrayList<String> habitIdList) {
         this.habitHashMap = habitHashMap;
+        this.habitIdList = habitIdList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -77,7 +79,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
             System.out.println(selectedIndex);
             notifyItemChanged(selectedIndex);
 
-            String habitID = habitList.get(selectedIndex).getId(); // g
+            String habitID = Session.getInstance().getUser().getHabitIdList().get(selectedIndex); // g
             // Create new intent to start view habit activity
             Intent intent = new Intent(view.getContext(),ViewHabitActivity.class);
             intent.putExtra("habitID",habitID); // pass through the index of the clicked item
@@ -105,18 +107,22 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull HabitAdapter.ViewHolder holder, int position) {
         // Set data in habit list
         holder.itemView.setSelected(selectedIndex == position);
-        habitList = new ArrayList<Habit>(habitHashMap.values()); // temp convert hashmap to list, in order to populate the recycler
-        String habitName = habitList.get(position).getHabitName();
+        System.out.println("ID LIst: " + habitIdList);
+        String currentHabitID = habitIdList.get(position);
+        System.out.println("Pos: " + position);
+        System.out.println("Look in Habits: " + habitHashMap + " for " + currentHabitID);
+        Habit currentHabit = habitHashMap.get(currentHabitID);
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
-        String habitDate = dateFormatter.format(habitList.get(position).getEndDate());
+        String habitDate = dateFormatter.format(currentHabit.getEndDate());
+        String habitName = currentHabit.getHabitName();
 
-        Date startDate = habitList.get(position).getStartDate();
-        Date endDate = habitList.get(position).getEndDate();
+        Date startDate = currentHabit.getStartDate();
+        Date endDate = currentHabit.getEndDate();
 
         //progress calculation
-        int countDays = countNumberOfDays(startDate, endDate, habitList.get(position).getWeekdayList());
-        double progressValue = calculateProgress(habitList.get(position).getEventIdList(), countDays);
-        habitList.get(position).setProgress(progressValue);
+        int countDays = countNumberOfDays(startDate, endDate, currentHabit.getWeekdayList());
+        double progressValue = calculateProgress(currentHabit.getEventIdList(), countDays);
+        currentHabit.setProgress(progressValue);
 
         //progress format to two decimal places
         DecimalFormat df = new DecimalFormat("####0.00");
@@ -128,7 +134,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
 
         // Public/Private indicator
-        Boolean publicHabit = habitList.get(position).getPublic();
+        Boolean publicHabit = currentHabit.getPublic();
         if (publicHabit){
             holder.publicImage.setImageResource(R.drawable.ic_baseline_lock_open_24); // open lock icon
         }
@@ -140,7 +146,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         holder.habitEndDate.setText(habitDate);
 
         // days of the week
-        List<MaterialDayPicker.Weekday> habitDays_raw = habitList.get(position).getWeekdayList(); // raw list of days
+        List<MaterialDayPicker.Weekday> habitDays_raw = currentHabit.getWeekdayList(); // raw list of days
         String daysString = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) { // Requires Java 8
             daysString = formatDayList(habitDays_raw); // format the list to a string

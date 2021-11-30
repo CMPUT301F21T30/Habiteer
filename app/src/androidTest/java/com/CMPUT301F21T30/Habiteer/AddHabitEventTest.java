@@ -50,7 +50,7 @@ public class AddHabitEventTest {
         solo.enterText((EditText)solo.getView(R.id.event_name_input), "Habit name2");
         solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment2");
         solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
-        solo.clickOnView(solo.getView(R.id.saveHabitEvent));
+        solo.clickOnText("Save");
         solo.clickOnView(solo.getView(R.id.navigation_habit_event));
         solo.clickInList(0);
         solo.clickOnView(solo.getView(R.id.deleteHabitEvent));

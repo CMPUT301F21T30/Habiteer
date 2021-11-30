@@ -24,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// To create a custom array adapter for storing and displaying habit events
 public class HabitEventAdapter extends ArrayAdapter<Event> {
     private List<Event> eventsArrayList;
     private Context context;
@@ -34,6 +36,14 @@ public class HabitEventAdapter extends ArrayAdapter<Event> {
         this.context = context;
     }
 
+    /**
+     * To set the layout for habit event denoting as the user selects the date from the calendar view
+     * to display only the event name on the list view for the events that occurred on the selected date
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // return super.getView(position, convertView, parent);
         View view = convertView;
