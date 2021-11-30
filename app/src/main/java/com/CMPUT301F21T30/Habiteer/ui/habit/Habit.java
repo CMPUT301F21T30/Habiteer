@@ -25,7 +25,7 @@ public class Habit {
     /**
      * No-argument constructor, used only for firebase.
      */
-    Habit() {} // no-argument constructor for firebase
+    public Habit() {} // no-argument constructor for firebase
 
     Habit(String habitName) {
         this.habitName = habitName;

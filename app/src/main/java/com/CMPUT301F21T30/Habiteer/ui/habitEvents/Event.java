@@ -22,7 +22,7 @@ public class Event implements Serializable {
     private Double longitude;
     private Double latitude;
     //    private Integer progress;
-    Event() {} // no-argument constructor for firebase
+    public Event() {} // no-argument constructor for firebase
     Event(String eventName) {
         this.eventName = eventName;
     }

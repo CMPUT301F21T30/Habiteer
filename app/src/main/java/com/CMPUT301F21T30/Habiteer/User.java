@@ -86,7 +86,9 @@ public class User implements Serializable {
     public ArrayList<Event> getEventList() {
         return eventList;
     }
+
     public void addEvent(Event event) {this.eventList.add(event);}
+
     public void deleteEvent(Event event) {this.habitIdList.remove(event);}
 
     public void setEventList(ArrayList<Event> eventList) {
@@ -110,8 +112,6 @@ public class User implements Serializable {
         }
         return publicHabits;
     }*/
-
-
 
 
 }
