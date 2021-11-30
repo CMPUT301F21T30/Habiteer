@@ -30,6 +30,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.userName.setText(requested.get(position).getEmail());
 
+
     }
 
     @Override
@@ -46,6 +47,19 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             userName = itemView.findViewById(R.id.user_name);
             accept = itemView.findViewById(R.id.button_accept);
             reject = itemView.findViewById(R.id.button_deny);
+
+            accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //acceptRequest();
+                }
+            });
         }
+
+    }
+
+    public void acceptRequest(ArrayList<User> user, Integer pos, User current){
+        //user.get(pos).setFollowerList();
+
     }
 }
