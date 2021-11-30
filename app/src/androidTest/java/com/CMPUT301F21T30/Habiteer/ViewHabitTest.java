@@ -30,15 +30,7 @@ public class ViewHabitTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         sharedActions.login(solo);
     }
-
-    /**
-     * Gets the Activity
-     * @throws Exception
-     */
-    @Test
-    public void start() throws Exception{
-        Activity activity = rule.getActivity();
-    }
+    
 
     /**
      * Add a habit and check if it can be viewed
