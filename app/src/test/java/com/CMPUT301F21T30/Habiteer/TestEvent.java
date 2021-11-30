@@ -14,7 +14,7 @@ public class TestEvent {
 
     //Creates a mock event
     private Event mockEvent(){
-        return new Event("event1", "new event", "11/12/2021");
+        return new Event("event1", "new event", "11/12/2021","","");
     }
 
     //tests getEventName method and also setEventName method
