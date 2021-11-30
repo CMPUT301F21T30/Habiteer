@@ -34,6 +34,10 @@ import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
+/**
+ *This activity allows the user to view details of thier habits, delete the habit and takes them
+ * to other activity where they can add habit event and edit habit details
+ */
 public class ViewHabitActivity extends AppCompatActivity {
     TextView habitNameHeading, habitName, datesHeading, dates, daysHeading, reasonHeading, reason, progressHeading, progressPer;
     Button addHabitEvent, delete, edit;
@@ -45,8 +49,10 @@ public class ViewHabitActivity extends AppCompatActivity {
     SimpleDateFormat dateFormat;
     String habitID;
 
-
-
+    /**
+     * This method creates ViewHabit Activity which displays all the details
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

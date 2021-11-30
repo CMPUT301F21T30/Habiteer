@@ -5,7 +5,8 @@
     android:id="@+id/habit_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/list_background"
+    android:background="@android:color/white"
+    android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
 

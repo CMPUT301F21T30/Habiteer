@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 
 /**
- * To get and set new event name, event date and event comment
+ * To get and set new event name, event date, event location and event comment
  * and create a new event object
  */
 public class Event implements Serializable {
@@ -22,7 +22,7 @@ public class Event implements Serializable {
     private Double longitude;
     private Double latitude;
     //    private Integer progress;
-    Event() {} // no-argument constructor for firebase
+    public Event() {} // no-argument constructor for firebase
     Event(String eventName) {
         this.eventName = eventName;
     }

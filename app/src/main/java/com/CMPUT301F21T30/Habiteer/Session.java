@@ -15,6 +15,7 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -24,6 +25,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 
 
 /**
@@ -36,7 +39,7 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private HashMap<String,Habit> habitHashMap;
+    private LinkedHashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
 
@@ -48,10 +51,8 @@ public class Session {
      */
     private Session(String email, Context context) {
         habitEventsList = new ArrayList<>();
-        habitHashMap = new HashMap<String,Habit>();
-        habitEventsList = new ArrayList<>();
+        habitHashMap = new LinkedHashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
-
 
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -59,7 +60,6 @@ public class Session {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
-
                 // Get habits that belong to User from Firestore and append to habitHashMap
                 if (user.getHabitIdList().size() != 0) {
                     for (int i = 0; i < user.getHabitIdList().size(); i++) {
@@ -150,7 +150,9 @@ public class Session {
      */
     public void addHabit(Habit habit) {
         /* Add to in-app list; use title as a temp ID */
-        habit.setId(habit.getHabitName());
+        String tempID = habit.getHabitName();
+        habit.setId(tempID);
+        user.getHabitIdList().add(tempID); // add the ID to local habit ID list
         habitHashMap.put(habit.getHabitName(),habit);
 
         /* Store onto Firebase Habits Collection */
@@ -164,7 +166,9 @@ public class Session {
                         /* Set the ID to the one generated on Firebase */
                         habit.setId(habitID);
                         habitHashMap.put(habitID, habitHashMap.remove(habit.getHabitName())); // replace the temp ID with the real ID as the key in the hashmap
-                        user.getHabitIdList().add(habitID); // add the ID to local habit ID list
+                        // replace ID in local habit ID list
+                        user.getHabitIdList().remove(tempID);
+                        user.getHabitIdList().add(habitID);
 
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
@@ -276,7 +280,30 @@ public class Session {
             }
         });
     }
+    public void swapHabitOrder(int initialPos, int newPos) {
+        ArrayList<String> habitIdList = user.getHabitIdList();
+        Collections.swap(habitIdList,initialPos,newPos);
+        user.setHabitIdList(habitIdList);
+        db.collection("Users").document(user.getEmail()).update("habitIdList", habitIdList)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Index " + initialPos + " and " + newPos + " swapped!") ;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error deleting document", e);
+            }
+        });
 
+    }
+
+    /**
+     * To store a habit event on the database
+     * @param event
+     * @param habitID
+     */
     public void addEvent(Event event, String habitID) {
         /* Getting habit id from Firebase */
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
@@ -318,6 +345,10 @@ public class Session {
 
     }
 
+    /**
+     * To update an event on the database
+     * @param event
+     */
     public void updateEvent(Event event) {
         for (int i = 0; i < habitEventsList.size(); i++)
         {
@@ -347,6 +378,10 @@ public class Session {
 
     }
 
+    /**
+     * To delete an event from the database
+     * @param event
+     */
     public void deleteEvent(Event event) {
         /* Delete habit event */
         for (int i = 0; i < habitEventsList.size(); i++)
@@ -390,11 +425,34 @@ public class Session {
 
     }
 
+
+    /**
+     * Given a User, this method gets the User's habits from Firebase. This is used to view habits of users that are not the current logged in user. Used in Follow classes.
+     * @param user
+     * @return
+     */
+    public HashMap<String,Habit> getOthersHabits(User user) {
+        HashMap<String,Habit> userHabits = new HashMap<>();
+        if (user.getHabitIdList().size() != 0) {
+            for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Habit habit = documentSnapshot.toObject(Habit.class);
+                        userHabits.put(habit.getId(), habit); // add habit to hashmap, with ID as the key
+                    }
+                });
+            }
+        }
+        return userHabits;
+    }
+
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
 
-    public HashMap<String,Habit> getHabitHashMap() {
+    public LinkedHashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
     }
 
@@ -439,6 +497,149 @@ public class Session {
         return returnUriLink;
     }
 
+    /**
+     * Wrapper function for updateFollowerList(), adds an email to the current user's follower list, and on firebase
+     * @param email - target user's email, to add to the list
+     */
+    public void addFollower(String email) {
+        updateFollowerList(email,true);
+    }
+    /**
+     * Wrapper function for updateFollowerList(), removes an email from the current user's follower list, and on firebase
+     * @param email- target user's email, to remove from the list
+     */
+    public void removeFollower(String email) {
+        updateFollowerList(email,false);
+    }
+
+    /**
+     * Updates following lists for current user and target user.
+     * @param thatEmail - target user email.
+     * @param add - Whether to add or remove a follower.
+     */
+    private void updateFollowerList(String thatEmail,boolean add){
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> followerList = this.user.getFollowerList();
+        if(add) {
+            followerList.add(thatEmail);
+        }
+        else {
+            followerList.remove(thatEmail);
+        }
+        // update local follower list
+        this.user.setFollowerList(followerList);
+
+        CollectionReference collection = db.collection("Users");
+        //update the this user's firebase
+        collection.document(thisEmail).update("followerList", followerList)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d(TAG, "Document successfully written for followers list");
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error while updating follower", e);
+                }
+            });
+
+        // update the other user's following list
+        DocumentReference doc = collection.document(thatEmail);
+        if (add) {
+            doc.update("followingList",FieldValue.arrayUnion(thisEmail));
+        }
+        else {
+            doc.update("followingList",FieldValue.arrayRemove(thisEmail));
+        }
 
 
+        }
+
+
+    public void updateFollowingList(User user, ArrayList<String>followingList){
+        user.setFollowingList(followingList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowingList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for following list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding following", e);
+            }
+        });
+    }
+
+
+    public void addSentRequest(String email){updateSentRequestsList(email,true);}
+    public void removeSentRequest(String email){updateSentRequestsList(email,false);}
+    public void updateSentRequestsList(String targetEmail,boolean add){
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> sentRequests = this.user.getSentRequestsList();
+
+        if (add){
+            sentRequests.add(targetEmail);
+        }
+        else {
+            sentRequests.remove(targetEmail);
+        }
+        this.user.setSentRequestsList(sentRequests);
+
+        CollectionReference collection = db.collection("Users");
+        // updates the logged in user's sent requests on firebase
+        collection.document(thisEmail).update("sentRequestsList", sentRequests)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+        DocumentReference targetDoc = collection.document(targetEmail);
+        FieldValue fieldValue;
+
+        if (add){
+            fieldValue =  FieldValue.arrayUnion(thisEmail);
+        }
+        else {
+            fieldValue = FieldValue.arrayRemove(thisEmail);
+        }
+
+        //update the other user's firebase
+        targetDoc.update("followRequestsList",fieldValue)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+
+    }
+    public void removeFollowRequest(String targetEmail) {
+        String thisEmail = this.user.getEmail();
+        ArrayList<String> followRequests = this.user.getFollowRequestsList();
+        followRequests.remove(targetEmail);
+        this.user.setFollowRequestsList(followRequests); // update local list
+
+        CollectionReference collection = db.collection("Users");
+        // updates the logged in user's follow requests on firebase
+        collection.document(thisEmail).update("followRequestsList",followRequests);
+        // update the target users sent requests on firebase
+        collection.document(targetEmail).update("sentRequestsList",FieldValue.arrayRemove(thisEmail));
+
+    }
 }

@@ -102,7 +102,7 @@ public class AddHabitTests {
 
         TextInputLayout dateField = (TextInputLayout) solo.getView(R.id.textInput_habitStartDate);
         assertNotNull("Date field is empty!",dateField.getEditText().getText().toString()); // cannot test correctness yet, see #44 on github
-
+        solo.clickOnText("Save");
     }
 
         @Test
