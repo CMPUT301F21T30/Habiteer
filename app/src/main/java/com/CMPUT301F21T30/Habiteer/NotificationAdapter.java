@@ -20,9 +20,10 @@ import java.util.ArrayList;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private ArrayList<String> requested;
     private User currentUser;
+    private int selectedIndex = RecyclerView.NO_POSITION;
 
     public NotificationAdapter(ArrayList<String> requested){
-
+        this.requested = requested;
     }
 
 
@@ -72,6 +73,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    System.out.println(getLayoutPosition());
                     //acceptRequest(User user);
                 }
             });
