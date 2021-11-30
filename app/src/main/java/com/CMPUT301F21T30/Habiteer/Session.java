@@ -24,6 +24,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -36,7 +39,7 @@ public class Session {
     private FirebaseFirestore db;
     private User user;
     private static Session instance = null;
-    private HashMap<String,Habit> habitHashMap;
+    private LinkedHashMap<String,Habit> habitHashMap;
     private ArrayList<Event> habitEventsList;
 
 
@@ -48,10 +51,8 @@ public class Session {
      */
     private Session(String email, Context context) {
         habitEventsList = new ArrayList<>();
-        habitHashMap = new HashMap<String,Habit>();
-        habitEventsList = new ArrayList<>();
+        habitHashMap = new LinkedHashMap<String,Habit>();
         db = FirebaseFirestore.getInstance();
-
 
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -150,7 +151,9 @@ public class Session {
      */
     public void addHabit(Habit habit) {
         /* Add to in-app list; use title as a temp ID */
-        habit.setId(habit.getHabitName());
+        String tempID = habit.getHabitName();
+        habit.setId(tempID);
+        user.getHabitIdList().add(tempID); // add the ID to local habit ID list
         habitHashMap.put(habit.getHabitName(),habit);
 
         /* Store onto Firebase Habits Collection */
@@ -164,7 +167,9 @@ public class Session {
                         /* Set the ID to the one generated on Firebase */
                         habit.setId(habitID);
                         habitHashMap.put(habitID, habitHashMap.remove(habit.getHabitName())); // replace the temp ID with the real ID as the key in the hashmap
-                        user.getHabitIdList().add(habitID); // add the ID to local habit ID list
+                        // replace ID in local habit ID list
+                        user.getHabitIdList().remove(tempID);
+                        user.getHabitIdList().add(habitID);
 
                         Log.d(TAG, "DocumentSnapshot successfully written! ID: " + habitID);
                         /* Store onto Firebase Users Collection */
@@ -275,6 +280,24 @@ public class Session {
                 Log.w(TAG, "Error updating document", e);
             }
         });
+    }
+    public void swapHabitOrder(int initialPos, int newPos) {
+        ArrayList<String> habitIdList = user.getHabitIdList();
+        Collections.swap(habitIdList,initialPos,newPos);
+        user.setHabitIdList(habitIdList);
+        db.collection("Users").document(user.getEmail()).update("habitIdList", habitIdList)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Index " + initialPos + " and " + newPos + " swapped!") ;
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error deleting document", e);
+            }
+        });
+
     }
 
     /**
@@ -407,7 +430,7 @@ public class Session {
         return this.habitEventsList;
     }
 
-    public HashMap<String,Habit> getHabitHashMap() {
+    public LinkedHashMap<String,Habit> getHabitHashMap() {
         return this.habitHashMap;
     }
 
