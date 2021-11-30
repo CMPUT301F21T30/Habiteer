@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 
 /**
@@ -536,11 +535,24 @@ public class Session {
         });
     }
 
-    public void updateRequestedList(User user, ArrayList<User>requestList){
-        user.setRequestedList(requestList);
+    public void followOtherUser(User user){
+        this.user.addToSentRequests(user);
 
-        //stores into firebase
-        db.collection("Users").document(user.getEmail()).update("requestedList", user.getRequestedList())
+        //stores into the other user's firebase
+        db.collection("Users").document(user.getEmail()).update("followRequestsList", this.user.getEmail())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+        // stores into the logged in user's sent requests on firebase
+        db.collection("Users").document(this.user.getEmail()).update("sentRequestsList", user.getEmail())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

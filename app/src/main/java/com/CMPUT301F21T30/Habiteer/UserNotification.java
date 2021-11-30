@@ -22,7 +22,7 @@ public class UserNotification extends AppCompatActivity {
         setContentView(R.layout.activity_user_notification);
         requestRecycler = findViewById(R.id.notification_recycler);
         currentUser = Session.getInstance().getUser();
-        requestedList = currentUser.getRequestedList();
+        requestedList = currentUser.getSentRequestsList();
 
         recyclerSetup();
 

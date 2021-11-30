@@ -81,7 +81,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public void rejectRequest (User requestUser){
 
-        currentUser.getRequestedList().remove(requestUser);
-        Session.getInstance().updateRequestedList(currentUser, currentUser.getRequestedList());
+//        currentUser.getSentRequestsList().remove(requestUser);
+//        Session.getInstance().followOtherUser(currentUser, currentUser.getSentRequestsList());
     }
 }
