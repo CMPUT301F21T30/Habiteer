@@ -14,7 +14,7 @@ public class UserNotification extends AppCompatActivity {
 
     private RecyclerView requestRecycler;
     private User currentUser;
-    private ArrayList<User> requestedList;
+    private ArrayList<String> requestedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

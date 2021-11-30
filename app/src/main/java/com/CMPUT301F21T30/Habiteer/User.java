@@ -12,7 +12,7 @@ public class User implements Serializable {
     private ArrayList<Event> eventList;
     private ArrayList<Habit> publicHabits;
 
-    private ArrayList<User> sentRequestsList;
+    private ArrayList<String> sentRequestsList;
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
     private ArrayList<User> blockList;
@@ -69,10 +69,10 @@ public class User implements Serializable {
      * @param user - the user this one wants to follow.
      */
     public void addToSentRequests(User user) {
-        this.sentRequestsList.add(user);
+        this.sentRequestsList.add(user.getEmail());
     }
 
-    public ArrayList<User> getSentRequestsList() {
+    public ArrayList<String> getSentRequestsList() {
         return sentRequestsList;
     }
 

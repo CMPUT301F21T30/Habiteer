@@ -59,7 +59,6 @@ public class Session {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(User.class);
                 user.setEmail(usersDocRef.getId()); // document does not set email to User, so we set manually
-
                 // Get habits that belong to User from Firestore and append to habitHashMap
                 if (user.getHabitIdList().size() != 0) {
                     for (int i = 0; i < user.getHabitIdList().size(); i++) {
@@ -539,7 +538,7 @@ public class Session {
         this.user.addToSentRequests(user);
 
         //stores into the other user's firebase
-        db.collection("Users").document(user.getEmail()).update("followRequestsList", this.user.getEmail())
+        db.collection("Users").document(user.getEmail()).update("followRequestsList", FieldValue.arrayUnion(this.user.getEmail()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -552,7 +551,7 @@ public class Session {
             }
         });
         // stores into the logged in user's sent requests on firebase
-        db.collection("Users").document(this.user.getEmail()).update("sentRequestsList", user.getEmail())
+        db.collection("Users").document(this.user.getEmail()).update("sentRequestsList", FieldValue.arrayUnion(user.getEmail()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

@@ -30,7 +30,8 @@ public class FollowUserActivity extends AppCompatActivity {
     private ArrayList<User> requestedList;
     private User selectedUser, currentUser;
     private FollowUserHabitAdapter followUserHabitAdapter;
-    private Boolean following;
+    private boolean following;
+    private boolean requested;
 
 
     /**
@@ -74,10 +75,10 @@ public class FollowUserActivity extends AppCompatActivity {
 
         //Checking if current user is already following the other user
         if(currentUser.getFollowingList().contains(selectedUser)){
-            following = Boolean.TRUE;
+            following = true;
         }
         else{
-            following = Boolean.FALSE;
+            following = false;
         }
 
         //Getting number of followers and following
@@ -95,6 +96,11 @@ public class FollowUserActivity extends AppCompatActivity {
 
         displayInfo(followers_count, following_count, bio_text, habitsList);
 
+
+        requested = currentUser.getSentRequestsList().contains(selectedUser);
+        if (requested) {
+            followBtn.setText("Requested");
+        }
         followBtn.setOnClickListener(new View.OnClickListener() {
             /**
              * This method allows the user to send a follow request to the other user
@@ -102,15 +108,15 @@ public class FollowUserActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                if (!following){
+                if (!following||!requested){
                     //TODO: Send a follow request
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
                     //selectedUser.setRequestedList(requestedList);
                     Session.getInstance().followOtherUser(selectedUser);
                 }
-                else{
-                    following = Boolean.FALSE;
+                else {
+                    following = false;
                 }
             }
         });
