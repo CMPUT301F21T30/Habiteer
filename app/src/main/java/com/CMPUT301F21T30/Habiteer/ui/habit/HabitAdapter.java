@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 
@@ -112,7 +114,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
         Habit currentHabit = habitHashMap.get(currentHabitID);
         SimpleDateFormat dateFormatter =  new SimpleDateFormat("MMM dd, yyyy");
         String habitDate = dateFormatter.format(currentHabit.getEndDate());
-        String habitName = currentHabit.getName();
+        String habitName = currentHabit.getHabitName();
 
         Date startDate = currentHabit.getStartDate();
         Date endDate = currentHabit.getEndDate();
