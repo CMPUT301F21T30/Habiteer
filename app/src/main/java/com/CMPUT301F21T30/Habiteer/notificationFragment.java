@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F21T30.Habiteer.placeholder.PlaceholderContent;
-
 /**
  * A fragment representing a list of Items.
  */
@@ -63,7 +61,8 @@ public class notificationFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MynotificationRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            //TODO: after merge change this
+            //recyclerView.setAdapter(new MynotificationRecyclerViewAdapter(User.getRequestedList()));
         }
         return view;
     }
