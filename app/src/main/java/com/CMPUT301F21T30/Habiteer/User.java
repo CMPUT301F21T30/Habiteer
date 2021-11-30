@@ -114,7 +114,4 @@ public class User implements Serializable {
     }*/
 
 
-    public void setFollowingList(ArrayList<User> followingList) {
-        this.followingList = followingList;
-    }
 }
