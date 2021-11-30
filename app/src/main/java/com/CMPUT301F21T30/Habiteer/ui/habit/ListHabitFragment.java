@@ -21,12 +21,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.CMPUT301F21T30.Habiteer.LoginActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.LinkedHashMap;
 
@@ -111,9 +113,16 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.user_profile_menu:
+            case R.id.notification_button:
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_listhabit_to_userNotification);
                 return true;
+            case R.id.logout_button:
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+                FirebaseAuth.getInstance().signOut();
+                Session.getInstance().destroy();
+
         }
 
         return super.onOptionsItemSelected(item);
