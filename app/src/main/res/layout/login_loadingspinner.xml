@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.progressindicator.CircularProgressIndicator
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_loadingSpinner"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/layout_round_bg"
+    android:indeterminate="true"
+    android:visibility="gone"
+    app:indicatorSize="100dp"
+    tools:visibility="visible" />

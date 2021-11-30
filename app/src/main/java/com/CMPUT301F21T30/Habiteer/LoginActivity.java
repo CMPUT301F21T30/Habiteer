@@ -4,7 +4,6 @@ package com.CMPUT301F21T30.Habiteer;
  * to log into the application.
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +57,7 @@ public class  LoginActivity extends AppCompatActivity {
                 String email = loginEmail.getText().toString().trim();
                 String password = loginPassword.getText().toString().trim();
 
+
                 /**
                  * Checking if email and password is entered
                  */
@@ -71,7 +70,7 @@ public class  LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-
+                findViewById(R.id.login_loadingSpinner).setVisibility(View.VISIBLE); // show loading indicator
 
                 /**
                  * Authenticating the user using Firebase
