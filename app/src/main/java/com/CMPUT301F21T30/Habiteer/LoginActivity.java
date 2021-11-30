@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -70,8 +71,8 @@ public class  LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                findViewById(R.id.login_loadingSpinner).setVisibility(View.VISIBLE); // show loading indicator
-
+                CircularProgressIndicator progressIndicator = findViewById(R.id.login_loadingSpinner); // show loading indicator
+                progressIndicator.setVisibility(View.VISIBLE);
                 /**
                  * Authenticating the user using Firebase
                  */
@@ -88,7 +89,7 @@ public class  LoginActivity extends AppCompatActivity {
 
                         }else{
                             Toast.makeText(com.CMPUT301F21T30.Habiteer.LoginActivity.this, "Error! "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                            progressIndicator.setVisibility(View.GONE);
                         }
                     }
                 });
