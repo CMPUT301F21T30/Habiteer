@@ -488,7 +488,7 @@ public class Session {
         user.setFollowingList(followingList);
 
         //stores into firebase
-        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowerList())
+        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowingList())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -506,7 +506,7 @@ public class Session {
         user.setRequestedList(requestList);
 
         //stores into firebase
-        db.collection("Users").document(user.getEmail()).update("requestedList", user.getFollowerList())
+        db.collection("Users").document(user.getEmail()).update("requestedList", user.getRequestedList())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
