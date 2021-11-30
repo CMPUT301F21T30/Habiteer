@@ -426,6 +426,29 @@ public class Session {
 
     }
 
+
+    /**
+     * Given a User, this method gets the User's habits from Firebase. This is used to view habits of users that are not the current logged in user. Used in Follow classes.
+     * @param user
+     * @return
+     */
+    public HashMap<String,Habit> getOthersHabits(User user) {
+        HashMap<String,Habit> userHabits = new HashMap<>();
+        if (user.getHabitIdList().size() != 0) {
+            for (int i = 0; i < user.getHabitIdList().size(); i++) {
+                DocumentReference habitsDocRef = db.collection("Habits").document(user.getHabitIdList().get(i));
+                habitsDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Habit habit = documentSnapshot.toObject(Habit.class);
+                        userHabits.put(habit.getId(), habit); // add habit to hashmap, with ID as the key
+                    }
+                });
+            }
+        }
+        return userHabits;
+    }
+
     public ArrayList<Event> getEventList() {
         return this.habitEventsList;
     }
@@ -476,5 +499,59 @@ public class Session {
     }
 
 
+
+    public void updateFollowerList(User user, ArrayList<User>followerList){
+        user.setFollowerList(followerList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Follower List", user.getFollowerList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for followers list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding follower", e);
+            }
+        });
+    }
+
+    public void updateFollowingList(User user, ArrayList<User>followingList){
+        user.setFollowingList(followingList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("Following List", user.getFollowingList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for following list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding following", e);
+            }
+        });
+    }
+
+    public void updateRequestedList(User user, ArrayList<User>requestList){
+        user.setRequestedList(requestList);
+
+        //stores into firebase
+        db.collection("Users").document(user.getEmail()).update("requestedList", user.getRequestedList())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Document successfully written for request list");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG ,"Error while adding user request", e);
+            }
+        });
+    }
 
 }

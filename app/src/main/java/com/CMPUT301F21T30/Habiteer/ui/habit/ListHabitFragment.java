@@ -3,6 +3,9 @@ package com.CMPUT301F21T30.Habiteer.ui.habit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.UserNotification;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,6 +50,9 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the binding first
         binding = FragmentListhabitBinding.inflate(inflater, container, false);
+
+        setHasOptionsMenu(true);
+
         View root = binding.getRoot();
         listHabitViewModel = new ViewModelProvider(this).get(ListHabitViewModel.class);
         habitRecycler = root.findViewById(R.id.habit_recycler);
@@ -94,6 +101,24 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.user_profile_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.user_profile_menu:
+                startActivity(new Intent(getContext(), UserNotification.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Updates hashmaps and notifies adapters of change when "My Habits" page is navigated to
      */
@@ -105,6 +130,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         super.onResume();
     }
 
+    
     @Override
     public void onDestroyView() {
         super.onDestroyView();
