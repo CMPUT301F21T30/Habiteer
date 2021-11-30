@@ -95,9 +95,9 @@ public class SignupActivity extends AppCompatActivity {
 
                 }else{
                     signupConfirmPassword.setError(("Passwords don't match!"));
-
+                    return;
                 }
-
+                findViewById(R.id.login_loadingSpinner).setVisibility(View.VISIBLE); // show loading indicator
 
 
 
