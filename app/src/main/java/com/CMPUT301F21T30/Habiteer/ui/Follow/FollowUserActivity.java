@@ -106,7 +106,7 @@ public class FollowUserActivity extends AppCompatActivity {
                     //TODO: Send a follow request
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
-                    selectedUser.setRequestedList(requestedList);
+                    //selectedUser.setRequestedList(requestedList);
                     Session.getInstance().updateRequestedList(selectedUser, requestedList);
                 }
                 else{

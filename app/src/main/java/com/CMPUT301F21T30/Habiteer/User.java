@@ -5,9 +5,6 @@ import com.CMPUT301F21T30.Habiteer.ui.habitEvents.Event;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 public class User implements Serializable {
     private String email;
@@ -19,6 +16,7 @@ public class User implements Serializable {
     private ArrayList<User> followerList;
     private ArrayList<User> followingList;
     private ArrayList<User> blockList;
+
     public User() { }
 
     public User(String email) {

@@ -506,7 +506,7 @@ public class Session {
         user.setRequestedList(requestList);
 
         //stores into firebase
-        db.collection("Users").document(user.getEmail()).update("Request List", user.getFollowerList())
+        db.collection("Users").document(user.getEmail()).update("requestedList", user.getFollowerList())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
