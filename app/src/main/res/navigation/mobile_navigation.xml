@@ -46,7 +46,7 @@
         android:label="AddEditHabitActivity" />
     <fragment
         android:id="@+id/userNotification"
-        android:name="com.CMPUT301F21T30.Habiteer.UserNotification"
+        android:name="com.CMPUT301F21T30.Habiteer.ui.UserNotifications.UserNotificationFragment"
         android:label="Follow requests"
         tools:layout="@layout/fragment_user_notification">
         <action
