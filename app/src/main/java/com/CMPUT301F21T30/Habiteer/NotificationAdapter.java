@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private ArrayList<User> requested;
+    private User currentUser;
 
     public NotificationAdapter(ArrayList<User> requested){
         this.requested = requested;
@@ -51,15 +52,36 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //acceptRequest();
+                    //acceptRequest(User user);
+                }
+            });
+
+            reject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //rejectRequest(User user);
                 }
             });
         }
 
+
     }
 
-    public void acceptRequest(ArrayList<User> user, Integer pos, User current){
+    public void acceptRequest( User requestUser){
+        ArrayList<User> followersList = new ArrayList<>();
+        ArrayList<User> followingList = new ArrayList<>();
+        currentUser = Session.getInstance().getUser();
+        followersList.add(requestUser);
+        Session.getInstance().updateFollowerList(currentUser, followersList);
+        followersList.add(currentUser);
+
         //user.get(pos).setFollowerList();
 
+    }
+
+    public void rejectRequest (User requestUser){
+
+        currentUser.getRequestedList().remove(requestUser);
+        Session.getInstance().updateRequestedList(currentUser, currentUser.getRequestedList());
     }
 }
