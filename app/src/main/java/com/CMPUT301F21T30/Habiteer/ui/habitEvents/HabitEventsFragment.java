@@ -19,6 +19,10 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
 
@@ -33,18 +37,14 @@ public class HabitEventsFragment extends Fragment
 {
     private ArrayAdapter<Event> habitEventAdapter;
     ListView eventsList;
-    private TextView monthYearText;
     private CalendarView calendar;
     private LocalDate selectedDate;
     String date = "";
     String TAG = "Sample";
-    Session session = Session.getInstance();
     Context context;
     ArrayList<Event> filteredList;
     ArrayList<Event> eventList;
-//    private Object HabitEventAdapter;
 
-//    DatePicker datePicker;
 
     /**
      * To set view for habit event denoting layout
@@ -74,8 +74,7 @@ public class HabitEventsFragment extends Fragment
         eventsList = root.findViewById(R.id.event_list);
         habitEventAdapter = new HabitEventAdapter(context, filteredList);
         eventsList.setAdapter(habitEventAdapter);
-        date = selectedDate.getMonthValue() + "/"
-                + selectedDate.getDayOfMonth() + "/" + selectedDate.getYear();
+        date = selectedDate.getMonthValue() + "/" + selectedDate.getDayOfMonth() + "/" + selectedDate.getYear();
         eventList = Session.getInstance().getEventList();
         filteredList.clear();
         for (int i = 0; i < eventList.size(); i++)
@@ -118,6 +117,9 @@ public class HabitEventsFragment extends Fragment
             }
         });
 
+        /**
+         * To start the edit habit event activity when the user clicks on an event on the list
+         */
         eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
@@ -133,7 +135,7 @@ public class HabitEventsFragment extends Fragment
         });
 
         return root;
-    }
+    }}
 
     /*@RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView()
@@ -147,63 +149,21 @@ public class HabitEventsFragment extends Fragment
         //calendarRecyclerView.setAdapter(HabitEventAdapter);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private ArrayList<String> daysInMonthArray(LocalDate date)
-    {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-
-        int daysInMonth = yearMonth.lengthOfMonth();
-
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-            {
-                daysInMonthArray.add("");
+        eventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int index, long l) {
+                Event item = filteredList.get(index);
+                Intent intent = new Intent(context, EditHabitEventActivity.class);
+                intent.putExtra("event", item);
+                //Log.d(TAG, item.getHabitId());
+                //intent.putExtra("eventDate", todayDate);
+                startActivity(intent);
+                filteredList.clear();
+                habitEventAdapter.notifyDataSetChanged();
             }
-            else
-            {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-            }
-        }
-        return  daysInMonthArray;
+        });
+
+        return root;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private String monthYearFromDate(LocalDate date)
-    {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void previousMonthAction(View view)
-    {
-        selectedDate = selectedDate.minusMonths(1);
-        setMonthView();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void nextMonthAction(View view)
-    {
-        selectedDate = selectedDate.plusMonths(1);
-        setMonthView();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    //@Override
-    public void onItemClick(int position, String dayText)
-    {
-        if(!dayText.equals(""))
-        {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-
-
-        }
-        String selected_date = dayText;
-    }*/
-}
+}*/

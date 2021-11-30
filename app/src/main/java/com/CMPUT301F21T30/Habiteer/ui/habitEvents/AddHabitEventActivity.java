@@ -50,8 +50,11 @@ import java.util.List;
 /**
  * Class to add new habit event
  */
-public class AddHabitEventActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
     // To initialize variables
+    
+
+
     String date = "";
     String habitID;
     TextInputLayout eventDateView;
@@ -115,10 +118,19 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
                 location.setVisibility(View.INVISIBLE);
             }
         });
+        handlePhotograph();
+
+
 
 
     }
 
+
+    /**
+     * To get and inflate options menu
+     * @param menu
+     * @return menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate options menu
@@ -126,6 +138,12 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *  To implement saving a habit event after
+     *  all necessary fields are obtained from user
+     * @param item
+     * @return bool
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -137,7 +155,11 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         return false;
     }
 
-
+    /**
+     * To set the map layout
+     * and record location marker
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -150,6 +172,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         getDeviceLocation();
     }
 
+    // To get location and camera permissions from user device
     public void getPermissions()
     {
         int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -176,6 +199,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
     }
 
+    // To update the location layout
     private void updateLocationUI() {
         if (map == null) {
             return;
@@ -194,6 +218,10 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
+    /**
+     * Function to obtain the device's current location and record the change in location
+     * and update location to where the user drags the location marker to
+     */
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare
@@ -245,7 +273,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         Habit currentHabit = Session.getInstance().getHabitHashMap().get(habitID);
 
-        Event event = new Event(eventName, eventComment, date, habitID);
+        Event event = new Event(eventName, eventComment, date,getUploadUri(), habitID);
 
         if (finalLocation != null) {
             event.setLongitude(finalLocation.getLongitude());
@@ -254,6 +282,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
         Session.getInstance().addEvent(event, habitID);
         finish();
+
     }
 
     @Override
@@ -266,9 +295,14 @@ public class AddHabitEventActivity extends AppCompatActivity implements OnMapRea
 
     }
 
+    /**
+     * update location after user has finished dragging the marker
+     * @param marker
+     */
     @Override
     public void onMarkerDragEnd(Marker marker) {
         LatLng temp = activeMarker.getPosition();
         finalLocation = new GeoPoint(temp.latitude, temp.longitude);
     }
+
 }

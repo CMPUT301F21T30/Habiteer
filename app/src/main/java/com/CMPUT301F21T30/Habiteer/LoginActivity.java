@@ -24,7 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity {
+public class  LoginActivity extends AppCompatActivity {
     TextView loginHeading, noAccount;
     EditText loginEmail, loginPassword;
     CheckBox rememberMe;
@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        System.out.println("BRK 1");
 
         loginHeading = findViewById(R.id.loginHeading);
         noAccount = findViewById(R.id.noAccount);
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
              * authenticates the user using Firestore
              */
             public void onClick(View view) {
+                System.out.println("BRK 2");
                 String email = loginEmail.getText().toString().trim();
                 String password = loginPassword.getText().toString().trim();
 
@@ -77,10 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        System.out.println("BRK 3");
                         if(task.isSuccessful()){
                             /**
                              * Get User object from Firestore
                              */
+                            System.out.println("BRK 4");
                             Session session = Session.getInstance(email,getApplicationContext());
 
                         }else{

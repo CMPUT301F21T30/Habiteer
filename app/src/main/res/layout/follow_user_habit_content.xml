@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/followUserHabit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Habit 1"
+        android:textSize="24dp"
+        tools:ignore="MissingConstraints">
+
+    </TextView>
+    <ProgressBar
+        android:id="@+id/followUserProgress"
+        android:layout_width="80dp"
+        android:layout_height="85dp"
+        tools:ignore="MissingConstraints"
+        android:indeterminateOnly="false"
+        android:progress="40"
+        android:progressDrawable="@drawable/circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
+        app:layout_constraintStart_toEndOf="@+id/followUserHabit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ProgressBar>
+    <TextView
+        android:id="@+id/progressPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="40"
+        app:layout_constraintBottom_toBottomOf="@+id/followUserProgress"
+        app:layout_constraintEnd_toEndOf="@+id/followUserProgress"
+        app:layout_constraintHorizontal_bias="0.406"
+        app:layout_constraintStart_toStartOf="@+id/followUserProgress"
+        app:layout_constraintTop_toTopOf="@+id/followUserProgress">
+
+    </TextView>
+    <TextView
+        android:id="@+id/progressPercentageSymbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="%"
+        app:layout_constraintBottom_toBottomOf="@+id/followUserProgress"
+        app:layout_constraintEnd_toEndOf="@+id/followUserProgress"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/progressPercentage"
+        app:layout_constraintTop_toTopOf="@+id/followUserProgress">
+
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

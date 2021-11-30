@@ -16,17 +16,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.CMPUT301F21T30.Habiteer.Session;
-import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class handles data sent to the HabitAdapter
@@ -34,10 +32,11 @@ import java.util.Map;
 public class ListHabitViewModel extends ViewModel {
 
     /* Habit list data */
-    private MutableLiveData<HashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
-    private HashMap<String,Habit> todayHabitList;
-    private MutableLiveData<HashMap<String,Habit>> mHabits = new MutableLiveData<>();
-    private HashMap<String,Habit> habitList;
+    private MutableLiveData<LinkedHashMap<String,Habit>> mTodayHabits = new MutableLiveData<>();
+    private LinkedHashMap<String,Habit> todayHabitList;
+    private MutableLiveData<LinkedHashMap<String,Habit>> mHabits = new MutableLiveData<>();
+    private LinkedHashMap<String,Habit> habitList;
+    private ArrayList<String> habitIdList;
 
     /* Tab data */
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
@@ -46,7 +45,7 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all habits belonging to the signed in user
      * @return Live data list of all habits
      */
-    public LiveData<HashMap<String,Habit>> getHabits() {
+    public LiveData<LinkedHashMap<String,Habit>> getHabits() {
         habitList = Session.getInstance().getHabitHashMap();
         System.out.println(habitList);
         mHabits.setValue(habitList);
@@ -58,8 +57,9 @@ public class ListHabitViewModel extends ViewModel {
      * This method gets all of today's habits belonging to the signed in user
      * @return Live data list of today's habits
      */
-    public LiveData<HashMap<String,Habit>> getTodayHabits() {
-        todayHabitList = (HashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone();
+    public LiveData<LinkedHashMap<String,Habit>> getTodayHabits() {
+        todayHabitList = (LinkedHashMap<String, Habit>) Session.getInstance().getHabitHashMap().clone(); // List of Habit hashmaps
+        habitIdList = (ArrayList<String>) Session.getInstance().getUser().getHabitIdList().clone(); // List of habit IDs
         String today = getDayOfWk();
         /* remove habits that do not contain today */
         Iterator iterator = todayHabitList.entrySet().iterator();
@@ -68,6 +68,7 @@ public class ListHabitViewModel extends ViewModel {
             Habit habit = (Habit) habitPair.getValue();
             if (!habit.getWeekdayList().contains(MaterialDayPicker.Weekday.valueOf(today))) {
                 iterator.remove();
+                habitIdList.remove(habit.getId());
             }
         }
         mTodayHabits.setValue(todayHabitList);
@@ -79,6 +80,10 @@ public class ListHabitViewModel extends ViewModel {
         int today = calendar.get(DAY_OF_WEEK);
         calendar.set(DAY_OF_WEEK,today);
         return calendar.getDisplayName(DAY_OF_WEEK, LONG, Locale.US).toUpperCase(Locale.ROOT);
+    }
+
+    public ArrayList<String> getTodayHabitIdList() {
+        return this.habitIdList;
     }
 
     public void setIndex(int index) {

@@ -26,7 +26,7 @@ public class AddHabitEventTest {
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         solo.clickOnView(solo.getView(R.id.goToLoginBtn));
-        solo.enterText((EditText) solo.getView(R.id.loginEmail), "s@g.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEmail), "rat6@g.ca");
         solo.enterText((EditText) solo.getView(R.id.loginPassword), "123456");
         solo.clickOnView(solo.getView(R.id.loginBtn));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -41,8 +41,21 @@ public class AddHabitEventTest {
         solo.clickOnView(solo.getView(R.id.addHabitEvent));
         solo.enterText((EditText)solo.getView(R.id.event_name_input), "Habit name");
         solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment");
-        solo.clickOnView(solo.getView(R.id.button_addHabitEvent));
-        solo.clickOnView(solo.getView(R.id.delete));
+        solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
+        solo.clickOnView(solo.getView(R.id.button_addHabit));
+        solo.goBack();
+        solo.clickOnView(solo.getView(R.id.navigation_habit_event));
+        solo.clickOnView(solo.getView(R.id.event_list));
+        solo.clickInList(0);
+        solo.enterText((EditText)solo.getView(R.id.event_name_input), "Habit name2");
+        solo.enterText((EditText)solo.getView(R.id.event_comment_input),"Comment2");
+        solo.clickOnView(solo.getView(R.id.button_addHabitEventLocation));
+        solo.clickOnText("Save");
+        solo.clickOnView(solo.getView(R.id.navigation_habit_event));
+        solo.clickInList(0);
+        solo.clickOnView(solo.getView(R.id.deleteHabitEvent));
+        solo.clickOnView(solo.getView(R.id.navigation_habit_event));
+        //solo.clickOnView(solo.getView(R.id.delete));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
     }
 
