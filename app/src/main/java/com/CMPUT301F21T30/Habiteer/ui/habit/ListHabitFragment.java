@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -112,7 +113,7 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.user_profile_menu:
-                startActivity(new Intent(getContext(), UserNotification.class));
+                Navigation.findNavController(requireView()).navigate(R.id.action_navigation_listhabit_to_userNotification);
                 return true;
         }
 
