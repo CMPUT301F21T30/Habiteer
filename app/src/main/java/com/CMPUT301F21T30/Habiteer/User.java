@@ -85,10 +85,11 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
+        System.out.println("BRK 11");
         this.email = email;
     }
 
-    public ArrayList<Habit> getPublicHabits(){
+    /*public ArrayList<Habit> getPublicHabits(){//Problem here
         HashMap<String,Habit> userHabits = (HashMap<String, Habit>) Session.getInstance().getOthersHabits(this).clone(); // TODO Get this User's habits from firebase based on habit ID and clone into publicHabits
         Iterator iterator = userHabits.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -99,7 +100,7 @@ public class User implements Serializable {
             }
         }
         return publicHabits;
-    }
+    }*/
 
 
 

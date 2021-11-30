@@ -53,6 +53,7 @@ public class Session {
         db = FirebaseFirestore.getInstance();
 
 
+
         DocumentReference usersDocRef = db.collection("Users").document(email);
         usersDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
