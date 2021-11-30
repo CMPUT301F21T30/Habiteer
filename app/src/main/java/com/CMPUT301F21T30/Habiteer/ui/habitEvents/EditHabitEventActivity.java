@@ -52,18 +52,13 @@ import com.squareup.picasso.Picasso;
 public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
     // To initialize variables
 
-    TextInputEditText eventNameInput;
-    String eventName;
-    TextInputEditText eventCommentInput;
-    String eventComment;
     String newTitle;
     String newComment;
-    String message;
+    Button saveButton;
     Button deleteButton;
     TextView title;
     TextView comment;
     TextInputLayout date;
-    Integer habitIndex;
     Button location;
     private GoogleMap map;
     private LinearLayout layout;
@@ -83,6 +78,7 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
     /**
      * To set habit event layout, get intent and set event date
      * Creates an on click listener for add button
+     * and creates an on click listener for location
      * @param savedInstanceState
      */
     @Override
@@ -197,6 +193,11 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
         return false;
     }
 
+    /**
+     * to set the map layout to what the user had previously saved
+     * and set an onclick listener on map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -228,12 +229,17 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
 
     }
 
+    /**
+     * To save the updated location
+     * @param marker
+     */
     @Override
     public void onMarkerDragEnd(Marker marker) {
         LatLng temp = activeMarker.getPosition();
         finalLocation = new GeoPoint(temp.latitude, temp.longitude);
     }
 
+    // Ask user for location and camera permissions
     public void getPermissions()
     {
         int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -278,6 +284,7 @@ public class EditHabitEventActivity extends AddEditHabitEvent_BaseActivity imple
         }
     }
 
+    // To get the device's current location and set the map layout accordingly
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare

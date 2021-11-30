@@ -126,6 +126,11 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
     }
 
 
+    /**
+     * To get and inflate options menu
+     * @param menu
+     * @return menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // inflate options menu
@@ -133,6 +138,12 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     *  To implement saving a habit event after
+     *  all necessary fields are obtained from user
+     * @param item
+     * @return bool
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -144,7 +155,11 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         return false;
     }
 
-
+    /**
+     * To set the map layout
+     * and record location marker
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -157,6 +172,7 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         getDeviceLocation();
     }
 
+    // To get location and camera permissions from user device
     public void getPermissions()
     {
         int permissionCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -183,6 +199,7 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
 
     }
 
+    // To update the location layout
     private void updateLocationUI() {
         if (map == null) {
             return;
@@ -201,6 +218,10 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
         }
     }
 
+    /**
+     * Function to obtain the device's current location and record the change in location
+     * and update location to where the user drags the location marker to
+     */
     private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare
@@ -274,6 +295,10 @@ public class AddHabitEventActivity extends AddEditHabitEvent_BaseActivity implem
 
     }
 
+    /**
+     * update location after user has finished dragging the marker
+     * @param marker
+     */
     @Override
     public void onMarkerDragEnd(Marker marker) {
         LatLng temp = activeMarker.getPosition();
