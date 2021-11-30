@@ -77,7 +77,7 @@ public class FollowUserActivity extends AppCompatActivity {
         User currentUser = Session.getInstance().getUser();
 
         //Checking if current user is already following the other user
-        if(currentUser.getFollowingList().contains(selectedUser)){
+        if(currentUser.getFollowingList().contains(selectedUser.getEmail())){
             following = true;
         }
         else{
