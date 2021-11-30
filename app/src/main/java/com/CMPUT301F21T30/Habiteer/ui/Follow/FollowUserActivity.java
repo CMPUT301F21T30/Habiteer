@@ -107,7 +107,7 @@ public class FollowUserActivity extends AppCompatActivity {
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
                     //selectedUser.setRequestedList(requestedList);
-                    Session.getInstance().updateRequestedList(selectedUser, requestedList);
+                    Session.getInstance().followOtherUser(selectedUser);
                 }
                 else{
                     following = Boolean.FALSE;
