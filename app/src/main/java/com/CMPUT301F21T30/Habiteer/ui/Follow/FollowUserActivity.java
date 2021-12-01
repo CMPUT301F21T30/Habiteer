@@ -100,6 +100,10 @@ public class FollowUserActivity extends AppCompatActivity {
         if (requested) {
             followBtn.setText("Requested");
         }
+        if (selectedUser.getEmail().equals(Session.getInstance().getUser().getEmail())) {
+            followBtn.setText("Can't follow yourself!");
+            followBtn.setEnabled(false);
+        }
         followBtn.setOnClickListener(new View.OnClickListener() {
             /**
              * This method allows the user to send a follow request to the other user
