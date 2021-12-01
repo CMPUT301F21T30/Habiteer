@@ -35,6 +35,7 @@ public class BaseAddEditFragment extends Fragment {
         }
         if (dayPicker.getSelectedDays().isEmpty()) {
             errorText.setVisibility(View.VISIBLE); // show error message on day picker
+            emptyFields = true;
         }
         else {
             errorText.setVisibility(View.GONE); // remove error message on day picker
