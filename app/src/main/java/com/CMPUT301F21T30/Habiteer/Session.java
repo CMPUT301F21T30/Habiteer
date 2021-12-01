@@ -34,6 +34,7 @@ import java.util.LinkedHashMap;
  * habits, following and followers, and blocked accounts. It is a Singleton class
  * which allows global access to the User object.
  * Handles getting and setting of Habits on Firebase
+ * Also handles following other users on Firebase.
  */
 public class Session {
     private FirebaseFirestore db;
