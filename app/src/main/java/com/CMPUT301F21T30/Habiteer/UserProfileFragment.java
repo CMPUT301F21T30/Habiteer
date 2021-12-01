@@ -20,6 +20,10 @@ import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
 
+/**
+ * This fragment shows the logged in user's profile.
+ * It has the number of followers and the number of users following.
+ */
 public class UserProfileFragment extends Fragment {
 
     private User user;
