@@ -107,7 +107,7 @@ public class FollowUserActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                if (!following||!requested){
+                if (!following&&!requested){
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
                     //selectedUser.setRequestedList(requestedList);
