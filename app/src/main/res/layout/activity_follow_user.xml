@@ -55,33 +55,13 @@
         android:layout_marginTop="160dp"
         android:text="Follow"/>
 
-    <TextView
-        android:id="@+id/bioHeading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bio"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="250dp"
-        android:background="@color/cardview_shadow_end_color"/>
-    <TextView
-        android:id="@+id/bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bioHeading"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="Bio comes here"
-        android:textSize="30dp"
-        android:background="@color/cardview_shadow_end_color"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/habitsRecycler"
-        android:layout_marginTop="330dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginEnd="10dp" />
+
 
 </RelativeLayout>

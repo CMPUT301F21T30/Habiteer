@@ -116,6 +116,10 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
             case R.id.notification_button:
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_listhabit_to_userNotification);
                 return true;
+
+            case R.id.user_profile:
+                Navigation.findNavController(requireView()).navigate(R.id.action_navigation_listhabit_to_userProfile);
+                return true;
             case R.id.logout_button:
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);

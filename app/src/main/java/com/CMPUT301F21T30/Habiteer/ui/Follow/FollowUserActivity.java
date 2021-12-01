@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * also the public habits of the user if the current user is already following them.
  */
 public class FollowUserActivity extends AppCompatActivity {
-    TextView followersCount, followingCount, bio;
+    TextView followersCount, followingCount;
     Button followBtn;
     RecyclerView habitsRecycler;
     private ArrayList<Habit> habitsList;
@@ -49,7 +49,6 @@ public class FollowUserActivity extends AppCompatActivity {
         followBtn = findViewById(R.id.followBtn);
         followersCount = findViewById(R.id.followersCount);
         followingCount = findViewById(R.id.followingCount);
-        bio = findViewById(R.id.bio);
 
         habitsList = new ArrayList<Habit>();
         requestedList = new ArrayList<User>();
@@ -88,16 +87,13 @@ public class FollowUserActivity extends AppCompatActivity {
         String followers_count = String.valueOf(selectedUser.getFollowerList().size());
         String following_count = String.valueOf(selectedUser.getFollowingList().size());
 
-        //Getting the bio for the user
-        //String bio_text = selectedUser.getBio();
-        String bio_text = "Sample Bio";//TODO: Remove test bio and uncomment the upper one when user profile is merged to main
 
 
         //TODO: Get only public habits
         //habitsList = selectedUser.getPublicHabits();
         //System.out.println(habitsList);
 
-        displayInfo(followers_count, following_count, bio_text, habitsList);
+        displayInfo(followers_count, following_count, habitsList);
 
 
         requested = currentUser.getSentRequestsList().contains(selectedUser.getEmail());
@@ -111,7 +107,7 @@ public class FollowUserActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                if (!following||!requested){
+                if (!following&&!requested){
                     followBtn.setText("Requested");
                     requestedList.add(currentUser);
                     //selectedUser.setRequestedList(requestedList);
@@ -130,13 +126,11 @@ public class FollowUserActivity extends AppCompatActivity {
      * bio and public habits, if the user is already following the other user
      * @param followers_count
      * @param following_count
-     * @param bio_text
      * @param habits_list
      */
-    private void displayInfo(String followers_count, String following_count, String bio_text, ArrayList<Habit> habits_list){
+    private void displayInfo(String followers_count, String following_count, ArrayList<Habit> habits_list){
         followersCount.setText(followers_count);
         followingCount.setText(following_count);
-        bio.setText(bio_text);
 
         if (following){
             followBtn.setText("Following");

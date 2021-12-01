@@ -20,10 +20,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -34,6 +36,7 @@ import java.util.LinkedHashMap;
  * habits, following and followers, and blocked accounts. It is a Singleton class
  * which allows global access to the User object.
  * Handles getting and setting of Habits on Firebase
+ * Also handles following other users on Firebase.
  */
 public class Session {
     private FirebaseFirestore db;
@@ -461,9 +464,9 @@ public class Session {
 
     /**
      * Upload the image to firebase
-     * @param fileName
-     * @param linkUri
-     * @param referenceStorage
+     * @param fileName - filename of the image
+     * @param linkUri - local path of the image
+     * @param referenceStorage - reference in firebase storage to upload the image to
      * @return returnUriLink
      */
 
@@ -578,9 +581,18 @@ public class Session {
         });
     }
 
-
+    /**
+     * Wrapper method for updateSentRequest(), adds the target email into this user's sent request list, and adds this user's email into the target user's follow request list on Firebase.
+     * @param email - the target user's email
+     */
     public void addSentRequest(String email){updateSentRequestsList(email,true);}
     public void removeSentRequest(String email){updateSentRequestsList(email,false);}
+
+    /**
+     * Updates the sent request lists for the current user, and updates the follow request list for the target user on Firebase.
+     * @param targetEmail target user
+     * @param add boolean, whether to add or remove a request
+     */
     public void updateSentRequestsList(String targetEmail,boolean add){
         String thisEmail = this.user.getEmail();
         ArrayList<String> sentRequests = this.user.getSentRequestsList();
@@ -632,6 +644,11 @@ public class Session {
         });
 
     }
+
+    /**
+     * Removes a follow request from the current and target user's firebase entries.
+     * @param targetEmail - the target user's email
+     */
     public void removeFollowRequest(String targetEmail) {
         String thisEmail = this.user.getEmail();
         ArrayList<String> followRequests = this.user.getFollowRequestsList();
@@ -643,6 +660,22 @@ public class Session {
         collection.document(thisEmail).update("followRequestsList",followRequests);
         // update the target users sent requests on firebase
         collection.document(targetEmail).update("sentRequestsList",FieldValue.arrayRemove(thisEmail));
+
+    }
+
+    /**
+     * Update the user's local follow request list with the one on Firebase.
+     */
+    public void fetchRequests() {
+        db.collection("Users").document(this.user.getEmail()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                ArrayList<String> requestList =  (ArrayList<String>) documentSnapshot.get("followRequestsList");
+
+                Session.getInstance().user.setFollowRequestsList(requestList);
+            }
+        });
+
 
     }
 }
