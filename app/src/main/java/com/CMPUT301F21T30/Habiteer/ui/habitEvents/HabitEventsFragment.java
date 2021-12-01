@@ -88,9 +88,14 @@ public class HabitEventsFragment extends Fragment
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String extraZero = "";
                 month+=1;
-                date = month + "/" + dayOfMonth + "/" + year;
+                if (dayOfMonth < 10) {
+                    extraZero = "0";
+                }
+                date = month + "/" +extraZero+ dayOfMonth + "/" + year;
 //                habitEventAdapter.notifyDataSetChanged();
+
                 eventList = Session.getInstance().getEventList();
                 filteredList.clear();
                 habitEventAdapter.notifyDataSetChanged();
