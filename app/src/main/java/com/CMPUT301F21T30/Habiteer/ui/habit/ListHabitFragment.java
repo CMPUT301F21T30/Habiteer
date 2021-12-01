@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F21T30.Habiteer.LoginActivity;
 import com.CMPUT301F21T30.Habiteer.R;
 import com.CMPUT301F21T30.Habiteer.Session;
+import com.CMPUT301F21T30.Habiteer.UserProfile;
 import com.CMPUT301F21T30.Habiteer.databinding.FragmentListhabitBinding;
 import com.CMPUT301F21T30.Habiteer.ui.addEditHabit.AddEditHabitActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -115,6 +116,10 @@ public class ListHabitFragment extends Fragment implements TabLayout.OnTabSelect
         switch (item.getItemId()){
             case R.id.notification_button:
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_listhabit_to_userNotification);
+                return true;
+
+            case R.id.user_profile:
+                startActivity(new Intent(getContext(), UserProfile.class));
                 return true;
             case R.id.logout_button:
                 Intent intent = new Intent(getContext(), LoginActivity.class);
