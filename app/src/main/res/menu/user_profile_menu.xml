@@ -14,7 +14,7 @@
         <menu>
             <item
                 android:id="@+id/user_profile"
-                android:title="profile"/>
+                android:title="@string/my_profile" />
             <item
                 android:id="@+id/logout_button"
                 android:title="Logout" />

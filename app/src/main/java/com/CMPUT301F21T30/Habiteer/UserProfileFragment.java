@@ -1,53 +1,48 @@
 package com.CMPUT301F21T30.Habiteer;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.CMPUT301F21T30.Habiteer.databinding.FragmentUserProfile2Binding;
 import com.CMPUT301F21T30.Habiteer.ui.habit.Habit;
 
 import java.util.ArrayList;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfileFragment extends Fragment {
 
     private User user;
     private String name;
 
-    private TextView bio_edit;
-    private AlertDialog dialog;
-    private EditText editText_bio;
-
     private TextView followers, following;
-    private RecyclerView habitListRecycler;
-    private ArrayList<Habit> habitList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile2);
+        View view = FragmentUserProfile2Binding.inflate(inflater, container, false).getRoot();
 
 
-        followers = findViewById(R.id.followers_count);
-        following = findViewById(R.id.following_count_text);
-
-
-        ActionBar ab = getSupportActionBar();
-        //enable back button
-        assert ab != null;
-        ab.setDisplayHomeAsUpEnabled(true);
+        followers = view.findViewById(R.id.followers_count);
+        following = view.findViewById(R.id.following_count_text);
 
 
         //gets the current logged in user
         user = Session.getInstance().getUser();
         name = user.getEmail();
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("My profile - "+ name);
 
-        this.setTitle(name);
+
 
 
         //displays the following and follower count of the user
@@ -56,21 +51,12 @@ public class UserProfile extends AppCompatActivity {
 
         followers.setText(String.valueOf(followers_count));
         following.setText(String.valueOf(following_count));
-
+        return view;
 
     }
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
 
-            case android.R.id.home: // back button
-                finish();
-                return true;
-        }
-        return false;
-    }
 
 }
