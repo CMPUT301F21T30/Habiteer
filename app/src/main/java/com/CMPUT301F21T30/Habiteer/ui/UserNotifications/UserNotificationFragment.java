@@ -30,6 +30,7 @@ public class UserNotificationFragment extends Fragment {
         View view = FragmentUserNotificationBinding.inflate(inflater, container, false).getRoot();
         RecyclerView requestRecycler = view.findViewById(R.id.notification_recycler);
         User currentUser = Session.getInstance().getUser();
+        Session.getInstance().fetchRequests(); // fetch new requests from firebase
         requestList = currentUser.getFollowRequestsList();
         TextView emptyMessage =  view.findViewById(R.id.no_notifications_message);
         if (requestList.isEmpty()) {
@@ -44,7 +45,7 @@ public class UserNotificationFragment extends Fragment {
     }
 
     private void recyclerSetup(RecyclerView requestRecycler) {
-        NotificationAdapter notificationAdapter = new NotificationAdapter(requestList);
+        NotificationAdapter notificationAdapter = new NotificationAdapter(Session.getInstance().getUser().getFollowRequestsList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         requestRecycler.setAdapter(notificationAdapter);
         requestRecycler.setLayoutManager(layoutManager);
@@ -54,6 +55,5 @@ public class UserNotificationFragment extends Fragment {
         requestRecycler.addItemDecoration(divider);
 
     }
-
 
 }

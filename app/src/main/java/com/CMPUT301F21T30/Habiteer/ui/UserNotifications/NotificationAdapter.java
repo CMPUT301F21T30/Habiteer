@@ -55,6 +55,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 public void onClick(View view) {
                     String selectedUserEmail =  requested.get(getLayoutPosition());
                     acceptRequest(selectedUserEmail);
+                    notifyItemRemoved(getLayoutPosition());
+                    requested = Session.getInstance().getUser().getFollowRequestsList(); // force update recyclerview
                 }
             });
 
@@ -63,6 +65,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 public void onClick(View view) {
                     String selectedUserEmail =  requested.get(getLayoutPosition());
                     rejectRequest(selectedUserEmail);
+                    notifyItemRemoved(getLayoutPosition());
+                    requested = Session.getInstance().getUser().getFollowRequestsList(); // force update recyclerview
                 }
             });
         }
